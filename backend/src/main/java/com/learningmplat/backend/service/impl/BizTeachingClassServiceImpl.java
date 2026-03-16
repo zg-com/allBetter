@@ -1,0 +1,22 @@
+package com.learningmplat.backend.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.learningmplat.backend.domain.BizTeachingClass;
+import com.learningmplat.backend.service.BizTeachingClassService;
+import com.learningmplat.backend.mapper.BizTeachingClassMapper;
+import org.springframework.stereotype.Service;
+
+/**
+* @author 13027
+* @description 针对表【biz_teaching_class(教学班排课表，讲老师与课程绑定的中间表)】的数据库操作Service实现
+* @createDate 2026-03-16 13:41:11
+*/
+@Service
+public class BizTeachingClassServiceImpl extends ServiceImpl<BizTeachingClassMapper, BizTeachingClass>
+    implements BizTeachingClassService{
+
+}
+
+
+
+
