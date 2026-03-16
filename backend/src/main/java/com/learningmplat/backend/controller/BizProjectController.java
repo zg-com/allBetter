@@ -1,7 +1,11 @@
 package com.learningmplat.backend.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.learningmplat.backend.common.Result;
+import com.learningmplat.backend.domain.BizProject;
 import com.learningmplat.backend.domain.dto.ProjectAuditDTO;
+import com.learningmplat.backend.domain.dto.ProjectQueryDTO;
 import com.learningmplat.backend.domain.dto.ProjectSubmitDTO;
 import com.learningmplat.backend.service.BizProjectService;
 import com.learningmplat.backend.utils.JwtUtils;
@@ -45,5 +49,40 @@ public class BizProjectController {
         projectService.auditProject(dto);
 
         return Result.success("审批操作完成！");
+    }
+
+    /**
+     * 分页查询：老师查看自己申报的项目列表
+     * 这里用 POST 请求传搜索参数更规范
+     */
+    @PostMapping("/myList")
+    public Result<Page<BizProject>> getMyProjectList(@RequestBody ProjectQueryDTO dto, HttpServletRequest request) {
+
+        // 1. 验明正身：从手环里拆出当前登录老师的 ID
+        String token = request.getHeader("token");
+        Long userId = JwtUtils.parseToken(token).get("userId", Long.class);
+
+        // 2. 创建分页对象 (告诉 MyBatis-Plus 查第几页，每页几条)
+        Page<BizProject> page = new Page<>(dto.getPageNum(), dto.getPageSize());
+
+        // 3. 构造极其强大的查询条件 (Wrapper)
+        LambdaQueryWrapper<BizProject> wrapper = new LambdaQueryWrapper<>();
+
+        // 条件A：只能查当前老师自己创建的项目！(数据隔离的核心)
+        wrapper.eq(BizProject::getCreateId, userId);
+
+        // 条件B：如果前端传了关键字，就按项目名字模糊查询 (LIKE '%关键字%')
+        if (dto.getKeyword() != null && !dto.getKeyword().isEmpty()) {
+            wrapper.like(BizProject::getProjectName, dto.getKeyword());
+        }
+
+        // 条件C：按创建时间或者ID倒序排列，让新申报的排在最前面
+        wrapper.orderByDesc(BizProject::getId);
+
+        // 4. 执行查询！这一行代码会自动帮你查总数 (COUNT) 和 分页数据 (LIMIT)
+        Page<BizProject> resultPage = projectService.page(page, wrapper);
+
+        // 5. 优雅地把包裹扔给前端
+        return Result.success(resultPage);
     }
 }
