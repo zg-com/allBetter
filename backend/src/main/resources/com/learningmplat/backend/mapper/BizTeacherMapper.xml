@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.learningmplat.backend.mapper.BizTeacherMapper">
+
+    <resultMap id="BaseResultMap" type="com.learningmplat.backend.domain.BizTeacher">
+            <id property="userId" column="user_id" />
+            <result property="teacherNo" column="teacher_no" />
+            <result property="title" column="title" />
+            <result property="workHours" column="work_hours" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,teacher_no,title,work_hours
+    </sql>
+</mapper>

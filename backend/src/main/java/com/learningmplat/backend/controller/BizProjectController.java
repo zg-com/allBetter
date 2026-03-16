@@ -10,6 +10,8 @@ import com.learningmplat.backend.domain.dto.ProjectSubmitDTO;
 import com.learningmplat.backend.service.BizProjectService;
 import com.learningmplat.backend.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,12 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/project")
+@Tag(name = "科研项目管理接口", description = "提供老师申报、系主任审批等核心功能")
 public class BizProjectController {
 
     @Autowired
     private BizProjectService projectService;
 
     @PostMapping("/submit")
+    @Operation(summary = "老师申报新项目", description = "前端只需传入项目名称和级别，后台自动绑定当前登录老师ID")
     public Result<String> submitProject(@RequestBody ProjectSubmitDTO dto, HttpServletRequest request) {
 
         // 1. 从请求头里拿到 VIP 手环

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.learningmplat.backend.mapper.BizStudentMapper">
+
+    <resultMap id="BaseResultMap" type="com.learningmplat.backend.domain.BizStudent">
+            <id property="userId" column="user_id" />
+            <result property="studentNo" column="student_no" />
+            <result property="enrollmentYear" column="enrollment_year" />
+            <result property="major" column="major" />
+            <result property="totalCredits" column="total_credits" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,student_no,enrollment_year,major,total_credits
+    </sql>
+</mapper>

@@ -2,6 +2,9 @@ package com.learningmplat.backend.mapper;
 
 import com.learningmplat.backend.domain.BizCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author 13027
@@ -10,7 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.learningmplat.backend.domain.BizCourse
 */
 public interface BizCourseMapper extends BaseMapper<BizCourse> {
-
+    List<BizCourse> selectCoursesByStudentId(@Param("studentId") Long studentId);
 }
 
 
