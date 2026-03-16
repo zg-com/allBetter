@@ -9,5 +9,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2026-03-16 13:41:11
 */
 public interface BizStudentCourseService extends IService<BizStudentCourse> {
-
+    // 学生选课核心业务
+    void selectCourse(Long courseId, Long studentId);
 }
