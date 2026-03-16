@@ -57,4 +57,5 @@ public class SysUserController {
         // 5. 把长长的手环字符串，装进包装盒，优雅地扔给前端！
         return Result.success(token);
     }
+
 }
