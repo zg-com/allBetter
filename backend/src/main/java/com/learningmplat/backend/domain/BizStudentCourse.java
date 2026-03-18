@@ -45,4 +45,6 @@ public class BizStudentCourse {
      * 选课时间
      */
     private Date selectTime;
+
+    private BigDecimal credit;
 }

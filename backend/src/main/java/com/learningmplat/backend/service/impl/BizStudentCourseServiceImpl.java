@@ -3,9 +3,14 @@ package com.learningmplat.backend.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.learningmplat.backend.domain.BizStudentCourse;
+import com.learningmplat.backend.domain.vo.CourseScoreVO;
+import com.learningmplat.backend.domain.vo.MajorRankVO;
 import com.learningmplat.backend.service.BizStudentCourseService;
 import com.learningmplat.backend.mapper.BizStudentCourseMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
 * @author 13027
@@ -38,6 +43,42 @@ public class BizStudentCourseServiceImpl extends ServiceImpl<BizStudentCourseMap
 
         // 3. 完美落库！
         this.save(studentCourse);
+    }
+
+    //获取学分
+    @Override
+    public Integer getCredit(Long studentId){
+        Integer totalCredit = this.baseMapper.sumCreditByStudentId(studentId);
+
+        if(totalCredit == null) {
+            return 0;
+        }
+
+        return totalCredit;
+    }
+
+    //获取各科成绩
+    @Override
+    public List<CourseScoreVO> getScore(Long studentId){
+        List<CourseScoreVO> allScore = this.baseMapper.getAllCourseScore(studentId);
+
+        if(allScore == null) {
+            return Collections.emptyList();
+        }
+
+        return allScore;
+    }
+
+    //获取专业排名
+    @Override
+    public MajorRankVO getRanking(Long studentId){
+        MajorRankVO rankingData = this.baseMapper.getRanking(studentId);
+
+        if(rankingData == null){
+            return null;
+        }
+
+        return rankingData;
     }
 }
 

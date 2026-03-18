@@ -16,4 +16,39 @@
     <sql id="Base_Column_List">
         id,student_id,teaching_class_id,score,status,select_time
     </sql>
+    
+    <select id="sumCreditByStudentId" resultType="java.lang.Integer">
+       SELECT
+           SUM(c.credit) FROM
+           biz_course c
+       INNER JOIN
+           biz_student_course sc
+       ON
+           c.id = sc.teaching_class_id
+       WHERE
+           sc.student_id = #{studentId}
+    </select>
+
+    <select id="getAllCourseScore" resultType="com.learningmplat.backend.domain.vo.CourseScoreVO">
+        SELECT
+            c.course_name AS courseName,
+            sc.score AS score, sc.credit AS credit
+        FROM biz_course c
+        INNER JOIN
+            biz_student_course sc ON c.id = sc.teaching_class_id
+        WHERE
+            sc.student_id = #{studentId}
+    </select>
+    <select id="getRanking" resultType="com.learningmplat.backend.domain.vo.MajorRankVO">
+        SELECT * FROM (SELECT s.student_no             AS studentId,
+                              sys.real_name            AS studentName,
+                              IFNULL(SUM(sc.score), 0) AS totalScore,
+                              COUNT(sc.id)             AS studentCount,
+                              RANK()                      OVER (ORDER BY SUM(sc.score) DESC) AS ranking
+                       From sys_user sys
+                                LEFT JOIN biz_student s ON s.student_no = sys.id
+                                LEFT JOIN biz_student_course sc ON s.student_no = sc.student_id
+                       GROUP BY sys.id, sys.real_name) AS rank_table
+        WHERE studentId = #{studentId}
+    </select>
 </mapper>
