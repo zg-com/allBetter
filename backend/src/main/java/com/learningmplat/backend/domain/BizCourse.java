@@ -40,4 +40,6 @@ public class BizCourse {
      * 开课时间
      */
     private Date createTime;
+
+    private BigDecimal workHours; //老师的工时
 }

@@ -2,6 +2,7 @@ package com.learningmplat.backend.service;
 
 import com.learningmplat.backend.domain.BizTeacher;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.learningmplat.backend.domain.vo.TeacherVO;
 
 /**
 * @author 13027
@@ -9,5 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2026-03-16 13:41:11
 */
 public interface BizTeacherService extends IService<BizTeacher> {
-
+    public TeacherVO getTeacherInfo(Long teacherId);
 }

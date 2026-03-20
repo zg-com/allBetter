@@ -2,6 +2,7 @@ package com.learningmplat.backend.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.learningmplat.backend.domain.BizTeacher;
+import com.learningmplat.backend.domain.vo.TeacherVO;
 import com.learningmplat.backend.service.BizTeacherService;
 import com.learningmplat.backend.mapper.BizTeacherMapper;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 public class BizTeacherServiceImpl extends ServiceImpl<BizTeacherMapper, BizTeacher>
     implements BizTeacherService{
 
+    @Override
+    public TeacherVO getTeacherInfo(Long userId) { return baseMapper.getTeacherInfo(userId);}
 }
 
 

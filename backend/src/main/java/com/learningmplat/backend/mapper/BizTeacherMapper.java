@@ -2,6 +2,8 @@ package com.learningmplat.backend.mapper;
 
 import com.learningmplat.backend.domain.BizTeacher;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.learningmplat.backend.domain.vo.TeacherVO;
+import org.apache.ibatis.annotations.Param;
 
 /**
 * @author 13027
@@ -10,7 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.learningmplat.backend.domain.BizTeacher
 */
 public interface BizTeacherMapper extends BaseMapper<BizTeacher> {
-
+    public TeacherVO getTeacherInfo(@Param("userId") Long userId);
 }
 
 
