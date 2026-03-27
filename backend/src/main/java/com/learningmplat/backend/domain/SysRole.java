@@ -27,5 +27,5 @@ public class SysRole {
     /**
      * 角色代码
      */
-    private String roleCode;
+    private Integer roleCode;
 }

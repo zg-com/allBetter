@@ -2,6 +2,8 @@ package com.learningmplat.backend.service;
 
 import com.learningmplat.backend.domain.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.learningmplat.backend.domain.dto.StudentAddDTO;
+import com.learningmplat.backend.domain.dto.TeacherAddDTO;
 
 /**
 * @author 13027
@@ -9,5 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2026-03-16 13:41:11
 */
 public interface SysUserService extends IService<SysUser> {
-
+    public void addStudent(StudentAddDTO dto);
+    public void addTeacher(TeacherAddDTO dto);
 }

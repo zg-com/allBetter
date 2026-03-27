@@ -50,4 +50,6 @@ public class BizProject {
      * 申报人ID (关联sys_user)
      */
     private Long createId;
+
+    private String creatorName; //创建者姓名
 }

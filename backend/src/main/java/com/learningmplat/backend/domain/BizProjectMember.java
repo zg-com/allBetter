@@ -39,4 +39,6 @@ public class BizProjectMember {
      * 加入时间
      */
     private Date joinTime;
+
+    private String memberName;//项目成员名称
 }
