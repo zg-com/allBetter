@@ -3,7 +3,6 @@ package com.ruoyi.system.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.domain.SysNoticeRead;
 import com.ruoyi.system.domain.SysNotice;
 import com.ruoyi.system.mapper.SysNoticeReadMapper;
@@ -67,8 +66,8 @@ public class SysNoticeReadServiceImpl implements ISysNoticeReadService
      * 删除公告时清理对应已读记录
      */
     @Override
-    public void deleteByNoticeIds(String ids)
+    public void deleteByNoticeIds(Long[] noticeIds)
     {
-        noticeReadMapper.deleteByNoticeIds(Convert.toStrArray(ids));
+        noticeReadMapper.deleteByNoticeIds(noticeIds);
     }
 }

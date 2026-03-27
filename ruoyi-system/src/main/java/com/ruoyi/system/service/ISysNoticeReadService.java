@@ -46,7 +46,7 @@ public interface ISysNoticeReadService
     /**
      * 删除公告时清理对应已读记录
      *
-     * @param ids 公告ID字符串（逗号分隔）
+     * @param noticeIds 公告ID数组
      */
-    public void deleteByNoticeIds(String ids);
+    public void deleteByNoticeIds(Long[] noticeIds);
 }

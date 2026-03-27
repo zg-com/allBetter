@@ -61,5 +61,5 @@ public interface SysNoticeReadMapper
      * @param noticeIds 公告ID数组
      * @return 结果
      */
-    public int deleteByNoticeIds(@Param("noticeIds") String[] noticeIds);
+    public int deleteByNoticeIds(@Param("noticeIds") Long[] noticeIds);
 }
