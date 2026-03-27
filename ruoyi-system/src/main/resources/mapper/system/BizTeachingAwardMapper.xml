@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BizTeachingAwardMapper">
+    
+    <resultMap type="BizTeachingAward" id="BizTeachingAwardResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="awardName"    column="award_name"    />
+        <result property="achievementName"    column="achievement_name"    />
+        <result property="awardLevel"    column="award_level"    />
+        <result property="awardDate"    column="award_date"    />
+        <result property="allContributors"    column="all_contributors"    />
+        <result property="issuingAuthority"    column="issuing_authority"    />
+        <result property="awardGrade"    column="award_grade"    />
+        <result property="certNumber"    column="cert_number"    />
+        <result property="mainAchievement"    column="main_achievement"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectBizTeachingAwardVo">
+        select id, user_id, award_name, achievement_name, award_level, award_date, all_contributors, issuing_authority, award_grade, cert_number, main_achievement, create_by, create_time, update_by, update_time, remark from biz_teaching_award
+    </sql>
+
+    <select id="selectBizTeachingAwardList" parameterType="BizTeachingAward" resultMap="BizTeachingAwardResult">
+        <include refid="selectBizTeachingAwardVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="awardName != null  and awardName != ''"> and award_name like concat('%', #{awardName}, '%')</if>
+            <if test="achievementName != null  and achievementName != ''"> and achievement_name like concat('%', #{achievementName}, '%')</if>
+            <if test="awardLevel != null  and awardLevel != ''"> and award_level = #{awardLevel}</if>
+            <if test="awardDate != null "> and award_date = #{awardDate}</if>
+            <if test="allContributors != null  and allContributors != ''"> and all_contributors = #{allContributors}</if>
+            <if test="issuingAuthority != null  and issuingAuthority != ''"> and issuing_authority = #{issuingAuthority}</if>
+            <if test="awardGrade != null  and awardGrade != ''"> and award_grade = #{awardGrade}</if>
+            <if test="certNumber != null  and certNumber != ''"> and cert_number = #{certNumber}</if>
+            <if test="mainAchievement != null  and mainAchievement != ''"> and main_achievement = #{mainAchievement}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizTeachingAwardById" parameterType="Long" resultMap="BizTeachingAwardResult">
+        <include refid="selectBizTeachingAwardVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBizTeachingAward" parameterType="BizTeachingAward" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_teaching_award
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="awardName != null and awardName != ''">award_name,</if>
+            <if test="achievementName != null and achievementName != ''">achievement_name,</if>
+            <if test="awardLevel != null">award_level,</if>
+            <if test="awardDate != null">award_date,</if>
+            <if test="allContributors != null">all_contributors,</if>
+            <if test="issuingAuthority != null">issuing_authority,</if>
+            <if test="awardGrade != null">award_grade,</if>
+            <if test="certNumber != null">cert_number,</if>
+            <if test="mainAchievement != null">main_achievement,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="awardName != null and awardName != ''">#{awardName},</if>
+            <if test="achievementName != null and achievementName != ''">#{achievementName},</if>
+            <if test="awardLevel != null">#{awardLevel},</if>
+            <if test="awardDate != null">#{awardDate},</if>
+            <if test="allContributors != null">#{allContributors},</if>
+            <if test="issuingAuthority != null">#{issuingAuthority},</if>
+            <if test="awardGrade != null">#{awardGrade},</if>
+            <if test="certNumber != null">#{certNumber},</if>
+            <if test="mainAchievement != null">#{mainAchievement},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizTeachingAward" parameterType="BizTeachingAward">
+        update biz_teaching_award
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="awardName != null and awardName != ''">award_name = #{awardName},</if>
+            <if test="achievementName != null and achievementName != ''">achievement_name = #{achievementName},</if>
+            <if test="awardLevel != null">award_level = #{awardLevel},</if>
+            <if test="awardDate != null">award_date = #{awardDate},</if>
+            <if test="allContributors != null">all_contributors = #{allContributors},</if>
+            <if test="issuingAuthority != null">issuing_authority = #{issuingAuthority},</if>
+            <if test="awardGrade != null">award_grade = #{awardGrade},</if>
+            <if test="certNumber != null">cert_number = #{certNumber},</if>
+            <if test="mainAchievement != null">main_achievement = #{mainAchievement},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizTeachingAwardById" parameterType="Long">
+        delete from biz_teaching_award where id = #{id}
+    </delete>
+
+    <delete id="deleteBizTeachingAwardByIds" parameterType="String">
+        delete from biz_teaching_award where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

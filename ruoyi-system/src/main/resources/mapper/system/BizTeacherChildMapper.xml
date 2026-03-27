@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BizTeacherChildMapper">
+    
+    <resultMap type="BizTeacherChild" id="BizTeacherChildResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="childName"    column="child_name"    />
+        <result property="birthDate"    column="birth_date"    />
+        <result property="gender"    column="gender"    />
+        <result property="schoolingStatus"    column="schooling_status"    />
+        <result property="nurseryFeeInfo"    column="nursery_fee_info"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectBizTeacherChildVo">
+        select id, user_id, child_name, birth_date, gender, schooling_status, nursery_fee_info, create_time from biz_teacher_child
+    </sql>
+
+    <select id="selectBizTeacherChildList" parameterType="BizTeacherChild" resultMap="BizTeacherChildResult">
+        <include refid="selectBizTeacherChildVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="childName != null  and childName != ''"> and child_name like concat('%', #{childName}, '%')</if>
+            <if test="birthDate != null "> and birth_date = #{birthDate}</if>
+            <if test="gender != null  and gender != ''"> and gender = #{gender}</if>
+            <if test="schoolingStatus != null  and schoolingStatus != ''"> and schooling_status = #{schoolingStatus}</if>
+            <if test="nurseryFeeInfo != null  and nurseryFeeInfo != ''"> and nursery_fee_info = #{nurseryFeeInfo}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizTeacherChildById" parameterType="Long" resultMap="BizTeacherChildResult">
+        <include refid="selectBizTeacherChildVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBizTeacherChild" parameterType="BizTeacherChild" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_teacher_child
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="childName != null and childName != ''">child_name,</if>
+            <if test="birthDate != null">birth_date,</if>
+            <if test="gender != null">gender,</if>
+            <if test="schoolingStatus != null">schooling_status,</if>
+            <if test="nurseryFeeInfo != null">nursery_fee_info,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="childName != null and childName != ''">#{childName},</if>
+            <if test="birthDate != null">#{birthDate},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="schoolingStatus != null">#{schoolingStatus},</if>
+            <if test="nurseryFeeInfo != null">#{nurseryFeeInfo},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizTeacherChild" parameterType="BizTeacherChild">
+        update biz_teacher_child
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="childName != null and childName != ''">child_name = #{childName},</if>
+            <if test="birthDate != null">birth_date = #{birthDate},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="schoolingStatus != null">schooling_status = #{schoolingStatus},</if>
+            <if test="nurseryFeeInfo != null">nursery_fee_info = #{nurseryFeeInfo},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizTeacherChildById" parameterType="Long">
+        delete from biz_teacher_child where id = #{id}
+    </delete>
+
+    <delete id="deleteBizTeacherChildByIds" parameterType="String">
+        delete from biz_teacher_child where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

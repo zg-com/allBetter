@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BizTeacherProfileMapper">
+    
+    <resultMap type="BizTeacherProfile" id="BizTeacherProfileResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="teacherNo"    column="teacher_no"    />
+        <result property="realName"    column="real_name"    />
+        <result property="gender"    column="gender"    />
+        <result property="nation"    column="nation"    />
+        <result property="birthDate"    column="birth_date"    />
+        <result property="age"    column="age"    />
+        <result property="comingTime"    column="coming_time"    />
+        <result property="retireAge"    column="retire_age"    />
+        <result property="department"    column="department"    />
+        <result property="nativePlace"    column="native_place"    />
+        <result property="maritalStatus"    column="marital_status"    />
+        <result property="religion"    column="religion"    />
+        <result property="emergencyContact"    column="emergency_contact"    />
+        <result property="emergencyPhone"    column="emergency_phone"    />
+        <result property="email"    column="email"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="phoneNumber"    column="phone_number"    />
+        <result property="homeAddress"    column="home_address"    />
+        <result property="highestDegree"    column="highest_degree"    />
+        <result property="highestEducation"    column="highest_education"    />
+        <result property="highestGradSchool"    column="highest_grad_school"    />
+        <result property="major"    column="major"    />
+        <result property="belongCategory"    column="belong_category"    />
+        <result property="highestEducationBeginTime"    column="highest_education_begin_time"    />
+        <result property="highestEducationEndTime"    column="highest_education_end_time"    />
+        <result property="firstDegree"    column="first_degree"    />
+        <result property="firstEducation"    column="first_education"    />
+        <result property="politicalParty"    column="political_party"    />
+        <result property="professionalTitle"    column="professional_title"    />
+        <result property="talentTitle"    column="talent_title"    />
+        <result property="isDualShoulder"    column="is_dual_shoulder"    />
+        <result property="counselorType"    column="counselor_type"    />
+        <result property="joinPartyDate"    column="join_party_date"    />
+        <result property="partyRegularDate"    column="party_regular_date"    />
+        <result property="adminPost"    column="admin_post"    />
+        <result property="postAppointDate"    column="post_appoint_date"    />
+        <result property="titleEvalDate"    column="title_eval_date"    />
+        <result property="staffCategory"    column="staff_category"    />
+        <result property="postName"    column="post_name"    />
+        <result property="currentPostDate"    column="current_post_date"    />
+        <result property="talentEvalDate"    column="talent_eval_date"    />
+        <result property="firstHireDate"    column="first_hire_date"    />
+        <result property="regularDate"    column="regular_date"    />
+        <result property="introLevel"    column="intro_level"    />
+        <result property="specialLevel"    column="special_level"    />
+        <result property="contractDate"    column="contract_date"    />
+        <result property="contractFileUrl"    column="contract_file_url"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectBizTeacherProfileVo">
+        select id, user_id, teacher_no, real_name, gender, nation, birth_date, age, coming_time, retire_age, department, native_place, marital_status, religion, emergency_contact, emergency_phone, email, id_card, phone_number, home_address, highest_degree, highest_education, highest_grad_school, major, belong_category, highest_education_begin_time, highest_education_end_time, first_degree, first_education, political_party, professional_title, talent_title, is_dual_shoulder, counselor_type, join_party_date, party_regular_date, admin_post, post_appoint_date, title_eval_date, staff_category, post_name, current_post_date, talent_eval_date, first_hire_date, regular_date, intro_level, special_level, contract_date, contract_file_url, create_by, create_time, update_by, update_time, remark from biz_teacher_profile
+    </sql>
+
+    <select id="selectBizTeacherProfileList" parameterType="BizTeacherProfile" resultMap="BizTeacherProfileResult">
+        <include refid="selectBizTeacherProfileVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="teacherNo != null  and teacherNo != ''"> and teacher_no = #{teacherNo}</if>
+            <if test="realName != null  and realName != ''"> and real_name like concat('%', #{realName}, '%')</if>
+            <if test="gender != null  and gender != ''"> and gender = #{gender}</if>
+            <if test="nation != null  and nation != ''"> and nation = #{nation}</if>
+            <if test="birthDate != null "> and birth_date = #{birthDate}</if>
+            <if test="age != null "> and age = #{age}</if>
+            <if test="comingTime != null "> and coming_time = #{comingTime}</if>
+            <if test="retireAge != null "> and retire_age = #{retireAge}</if>
+            <if test="department != null  and department != ''"> and department = #{department}</if>
+            <if test="nativePlace != null  and nativePlace != ''"> and native_place = #{nativePlace}</if>
+            <if test="maritalStatus != null  and maritalStatus != ''"> and marital_status = #{maritalStatus}</if>
+            <if test="religion != null  and religion != ''"> and religion = #{religion}</if>
+            <if test="emergencyContact != null  and emergencyContact != ''"> and emergency_contact = #{emergencyContact}</if>
+            <if test="emergencyPhone != null  and emergencyPhone != ''"> and emergency_phone = #{emergencyPhone}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="idCard != null  and idCard != ''"> and id_card = #{idCard}</if>
+            <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
+            <if test="homeAddress != null  and homeAddress != ''"> and home_address = #{homeAddress}</if>
+            <if test="highestDegree != null  and highestDegree != ''"> and highest_degree = #{highestDegree}</if>
+            <if test="highestEducation != null  and highestEducation != ''"> and highest_education = #{highestEducation}</if>
+            <if test="highestGradSchool != null  and highestGradSchool != ''"> and highest_grad_school = #{highestGradSchool}</if>
+            <if test="major != null  and major != ''"> and major = #{major}</if>
+            <if test="belongCategory != null  and belongCategory != ''"> and belong_category = #{belongCategory}</if>
+            <if test="highestEducationBeginTime != null "> and highest_education_begin_time = #{highestEducationBeginTime}</if>
+            <if test="highestEducationEndTime != null "> and highest_education_end_time = #{highestEducationEndTime}</if>
+            <if test="firstDegree != null  and firstDegree != ''"> and first_degree = #{firstDegree}</if>
+            <if test="firstEducation != null  and firstEducation != ''"> and first_education = #{firstEducation}</if>
+            <if test="politicalParty != null  and politicalParty != ''"> and political_party = #{politicalParty}</if>
+            <if test="professionalTitle != null  and professionalTitle != ''"> and professional_title = #{professionalTitle}</if>
+            <if test="talentTitle != null  and talentTitle != ''"> and talent_title = #{talentTitle}</if>
+            <if test="isDualShoulder != null  and isDualShoulder != ''"> and is_dual_shoulder = #{isDualShoulder}</if>
+            <if test="counselorType != null  and counselorType != ''"> and counselor_type = #{counselorType}</if>
+            <if test="joinPartyDate != null "> and join_party_date = #{joinPartyDate}</if>
+            <if test="partyRegularDate != null "> and party_regular_date = #{partyRegularDate}</if>
+            <if test="adminPost != null  and adminPost != ''"> and admin_post = #{adminPost}</if>
+            <if test="postAppointDate != null "> and post_appoint_date = #{postAppointDate}</if>
+            <if test="titleEvalDate != null "> and title_eval_date = #{titleEvalDate}</if>
+            <if test="staffCategory != null  and staffCategory != ''"> and staff_category = #{staffCategory}</if>
+            <if test="postName != null  and postName != ''"> and post_name like concat('%', #{postName}, '%')</if>
+            <if test="currentPostDate != null "> and current_post_date = #{currentPostDate}</if>
+            <if test="talentEvalDate != null "> and talent_eval_date = #{talentEvalDate}</if>
+            <if test="firstHireDate != null "> and first_hire_date = #{firstHireDate}</if>
+            <if test="regularDate != null "> and regular_date = #{regularDate}</if>
+            <if test="introLevel != null  and introLevel != ''"> and intro_level = #{introLevel}</if>
+            <if test="specialLevel != null  and specialLevel != ''"> and special_level = #{specialLevel}</if>
+            <if test="contractDate != null "> and contract_date = #{contractDate}</if>
+            <if test="contractFileUrl != null  and contractFileUrl != ''"> and contract_file_url = #{contractFileUrl}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizTeacherProfileById" parameterType="Long" resultMap="BizTeacherProfileResult">
+        <include refid="selectBizTeacherProfileVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBizTeacherProfile" parameterType="BizTeacherProfile" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_teacher_profile
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="teacherNo != null">teacher_no,</if>
+            <if test="realName != null">real_name,</if>
+            <if test="gender != null">gender,</if>
+            <if test="nation != null and nation != ''">nation,</if>
+            <if test="birthDate != null">birth_date,</if>
+            <if test="age != null">age,</if>
+            <if test="comingTime != null">coming_time,</if>
+            <if test="retireAge != null">retire_age,</if>
+            <if test="department != null">department,</if>
+            <if test="nativePlace != null">native_place,</if>
+            <if test="maritalStatus != null">marital_status,</if>
+            <if test="religion != null">religion,</if>
+            <if test="emergencyContact != null">emergency_contact,</if>
+            <if test="emergencyPhone != null">emergency_phone,</if>
+            <if test="email != null">email,</if>
+            <if test="idCard != null">id_card,</if>
+            <if test="phoneNumber != null">phone_number,</if>
+            <if test="homeAddress != null">home_address,</if>
+            <if test="highestDegree != null">highest_degree,</if>
+            <if test="highestEducation != null">highest_education,</if>
+            <if test="highestGradSchool != null">highest_grad_school,</if>
+            <if test="major != null">major,</if>
+            <if test="belongCategory != null">belong_category,</if>
+            <if test="highestEducationBeginTime != null">highest_education_begin_time,</if>
+            <if test="highestEducationEndTime != null">highest_education_end_time,</if>
+            <if test="firstDegree != null">first_degree,</if>
+            <if test="firstEducation != null">first_education,</if>
+            <if test="politicalParty != null">political_party,</if>
+            <if test="professionalTitle != null">professional_title,</if>
+            <if test="talentTitle != null">talent_title,</if>
+            <if test="isDualShoulder != null">is_dual_shoulder,</if>
+            <if test="counselorType != null">counselor_type,</if>
+            <if test="joinPartyDate != null">join_party_date,</if>
+            <if test="partyRegularDate != null">party_regular_date,</if>
+            <if test="adminPost != null">admin_post,</if>
+            <if test="postAppointDate != null">post_appoint_date,</if>
+            <if test="titleEvalDate != null">title_eval_date,</if>
+            <if test="staffCategory != null">staff_category,</if>
+            <if test="postName != null">post_name,</if>
+            <if test="currentPostDate != null">current_post_date,</if>
+            <if test="talentEvalDate != null">talent_eval_date,</if>
+            <if test="firstHireDate != null">first_hire_date,</if>
+            <if test="regularDate != null">regular_date,</if>
+            <if test="introLevel != null">intro_level,</if>
+            <if test="specialLevel != null">special_level,</if>
+            <if test="contractDate != null">contract_date,</if>
+            <if test="contractFileUrl != null">contract_file_url,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="teacherNo != null">#{teacherNo},</if>
+            <if test="realName != null">#{realName},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="nation != null and nation != ''">#{nation},</if>
+            <if test="birthDate != null">#{birthDate},</if>
+            <if test="age != null">#{age},</if>
+            <if test="comingTime != null">#{comingTime},</if>
+            <if test="retireAge != null">#{retireAge},</if>
+            <if test="department != null">#{department},</if>
+            <if test="nativePlace != null">#{nativePlace},</if>
+            <if test="maritalStatus != null">#{maritalStatus},</if>
+            <if test="religion != null">#{religion},</if>
+            <if test="emergencyContact != null">#{emergencyContact},</if>
+            <if test="emergencyPhone != null">#{emergencyPhone},</if>
+            <if test="email != null">#{email},</if>
+            <if test="idCard != null">#{idCard},</if>
+            <if test="phoneNumber != null">#{phoneNumber},</if>
+            <if test="homeAddress != null">#{homeAddress},</if>
+            <if test="highestDegree != null">#{highestDegree},</if>
+            <if test="highestEducation != null">#{highestEducation},</if>
+            <if test="highestGradSchool != null">#{highestGradSchool},</if>
+            <if test="major != null">#{major},</if>
+            <if test="belongCategory != null">#{belongCategory},</if>
+            <if test="highestEducationBeginTime != null">#{highestEducationBeginTime},</if>
+            <if test="highestEducationEndTime != null">#{highestEducationEndTime},</if>
+            <if test="firstDegree != null">#{firstDegree},</if>
+            <if test="firstEducation != null">#{firstEducation},</if>
+            <if test="politicalParty != null">#{politicalParty},</if>
+            <if test="professionalTitle != null">#{professionalTitle},</if>
+            <if test="talentTitle != null">#{talentTitle},</if>
+            <if test="isDualShoulder != null">#{isDualShoulder},</if>
+            <if test="counselorType != null">#{counselorType},</if>
+            <if test="joinPartyDate != null">#{joinPartyDate},</if>
+            <if test="partyRegularDate != null">#{partyRegularDate},</if>
+            <if test="adminPost != null">#{adminPost},</if>
+            <if test="postAppointDate != null">#{postAppointDate},</if>
+            <if test="titleEvalDate != null">#{titleEvalDate},</if>
+            <if test="staffCategory != null">#{staffCategory},</if>
+            <if test="postName != null">#{postName},</if>
+            <if test="currentPostDate != null">#{currentPostDate},</if>
+            <if test="talentEvalDate != null">#{talentEvalDate},</if>
+            <if test="firstHireDate != null">#{firstHireDate},</if>
+            <if test="regularDate != null">#{regularDate},</if>
+            <if test="introLevel != null">#{introLevel},</if>
+            <if test="specialLevel != null">#{specialLevel},</if>
+            <if test="contractDate != null">#{contractDate},</if>
+            <if test="contractFileUrl != null">#{contractFileUrl},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizTeacherProfile" parameterType="BizTeacherProfile">
+        update biz_teacher_profile
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="teacherNo != null">teacher_no = #{teacherNo},</if>
+            <if test="realName != null">real_name = #{realName},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="nation != null and nation != ''">nation = #{nation},</if>
+            <if test="birthDate != null">birth_date = #{birthDate},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="comingTime != null">coming_time = #{comingTime},</if>
+            <if test="retireAge != null">retire_age = #{retireAge},</if>
+            <if test="department != null">department = #{department},</if>
+            <if test="nativePlace != null">native_place = #{nativePlace},</if>
+            <if test="maritalStatus != null">marital_status = #{maritalStatus},</if>
+            <if test="religion != null">religion = #{religion},</if>
+            <if test="emergencyContact != null">emergency_contact = #{emergencyContact},</if>
+            <if test="emergencyPhone != null">emergency_phone = #{emergencyPhone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="idCard != null">id_card = #{idCard},</if>
+            <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
+            <if test="homeAddress != null">home_address = #{homeAddress},</if>
+            <if test="highestDegree != null">highest_degree = #{highestDegree},</if>
+            <if test="highestEducation != null">highest_education = #{highestEducation},</if>
+            <if test="highestGradSchool != null">highest_grad_school = #{highestGradSchool},</if>
+            <if test="major != null">major = #{major},</if>
+            <if test="belongCategory != null">belong_category = #{belongCategory},</if>
+            <if test="highestEducationBeginTime != null">highest_education_begin_time = #{highestEducationBeginTime},</if>
+            <if test="highestEducationEndTime != null">highest_education_end_time = #{highestEducationEndTime},</if>
+            <if test="firstDegree != null">first_degree = #{firstDegree},</if>
+            <if test="firstEducation != null">first_education = #{firstEducation},</if>
+            <if test="politicalParty != null">political_party = #{politicalParty},</if>
+            <if test="professionalTitle != null">professional_title = #{professionalTitle},</if>
+            <if test="talentTitle != null">talent_title = #{talentTitle},</if>
+            <if test="isDualShoulder != null">is_dual_shoulder = #{isDualShoulder},</if>
+            <if test="counselorType != null">counselor_type = #{counselorType},</if>
+            <if test="joinPartyDate != null">join_party_date = #{joinPartyDate},</if>
+            <if test="partyRegularDate != null">party_regular_date = #{partyRegularDate},</if>
+            <if test="adminPost != null">admin_post = #{adminPost},</if>
+            <if test="postAppointDate != null">post_appoint_date = #{postAppointDate},</if>
+            <if test="titleEvalDate != null">title_eval_date = #{titleEvalDate},</if>
+            <if test="staffCategory != null">staff_category = #{staffCategory},</if>
+            <if test="postName != null">post_name = #{postName},</if>
+            <if test="currentPostDate != null">current_post_date = #{currentPostDate},</if>
+            <if test="talentEvalDate != null">talent_eval_date = #{talentEvalDate},</if>
+            <if test="firstHireDate != null">first_hire_date = #{firstHireDate},</if>
+            <if test="regularDate != null">regular_date = #{regularDate},</if>
+            <if test="introLevel != null">intro_level = #{introLevel},</if>
+            <if test="specialLevel != null">special_level = #{specialLevel},</if>
+            <if test="contractDate != null">contract_date = #{contractDate},</if>
+            <if test="contractFileUrl != null">contract_file_url = #{contractFileUrl},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizTeacherProfileById" parameterType="Long">
+        delete from biz_teacher_profile where id = #{id}
+    </delete>
+
+    <delete id="deleteBizTeacherProfileByIds" parameterType="String">
+        delete from biz_teacher_profile where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

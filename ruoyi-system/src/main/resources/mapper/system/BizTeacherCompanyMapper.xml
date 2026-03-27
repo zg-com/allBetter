@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BizTeacherCompanyMapper">
+    
+    <resultMap type="BizTeacherCompany" id="BizTeacherCompanyResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="companyName"    column="company_name"    />
+        <result property="legalPerson"    column="legal_person"    />
+        <result property="establishDate"    column="establish_date"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectBizTeacherCompanyVo">
+        select id, user_id, company_name, legal_person, establish_date, create_time from biz_teacher_company
+    </sql>
+
+    <select id="selectBizTeacherCompanyList" parameterType="BizTeacherCompany" resultMap="BizTeacherCompanyResult">
+        <include refid="selectBizTeacherCompanyVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="companyName != null  and companyName != ''"> and company_name like concat('%', #{companyName}, '%')</if>
+            <if test="legalPerson != null  and legalPerson != ''"> and legal_person = #{legalPerson}</if>
+            <if test="establishDate != null "> and establish_date = #{establishDate}</if>
+        </where>
+    </select>
+    
+    <select id="selectBizTeacherCompanyById" parameterType="Long" resultMap="BizTeacherCompanyResult">
+        <include refid="selectBizTeacherCompanyVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBizTeacherCompany" parameterType="BizTeacherCompany" useGeneratedKeys="true" keyProperty="id">
+        insert into biz_teacher_company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="companyName != null and companyName != ''">company_name,</if>
+            <if test="legalPerson != null">legal_person,</if>
+            <if test="establishDate != null">establish_date,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="companyName != null and companyName != ''">#{companyName},</if>
+            <if test="legalPerson != null">#{legalPerson},</if>
+            <if test="establishDate != null">#{establishDate},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBizTeacherCompany" parameterType="BizTeacherCompany">
+        update biz_teacher_company
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="companyName != null and companyName != ''">company_name = #{companyName},</if>
+            <if test="legalPerson != null">legal_person = #{legalPerson},</if>
+            <if test="establishDate != null">establish_date = #{establishDate},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizTeacherCompanyById" parameterType="Long">
+        delete from biz_teacher_company where id = #{id}
+    </delete>
+
+    <delete id="deleteBizTeacherCompanyByIds" parameterType="String">
+        delete from biz_teacher_company where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
