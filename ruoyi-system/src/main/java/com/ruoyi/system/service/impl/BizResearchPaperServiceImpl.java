@@ -53,7 +53,14 @@ public class BizResearchPaperServiceImpl implements IBizResearchPaperService
     @Override
     public int insertBizResearchPaper(BizResearchPaper bizResearchPaper)
     {
+
         bizResearchPaper.setCreateTime(DateUtils.getNowDate());
+        //// 获取当前登录用户的 ID，并自动绑定给这篇论文
+        //Long currentUserId = com.ruoyi.common.utils.SecurityUtils.getUserId();
+        //bizResearchPaper.setUserId(currentUserId);
+        if(bizResearchPaper.getPaperType() == null){
+            bizResearchPaper.setPaperType("1");
+        }
         return bizResearchPaperMapper.insertBizResearchPaper(bizResearchPaper);
     }
 

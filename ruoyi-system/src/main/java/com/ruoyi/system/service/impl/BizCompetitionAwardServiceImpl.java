@@ -54,6 +54,8 @@ public class BizCompetitionAwardServiceImpl implements IBizCompetitionAwardServi
     public int insertBizCompetitionAward(BizCompetitionAward bizCompetitionAward)
     {
         bizCompetitionAward.setCreateTime(DateUtils.getNowDate());
+        //Long currentUserId = com.ruoyi.common.utils.SecurityUtils.getUserId();
+        //bizCompetitionAward.setStudentNo(currentUserId.toString());
         return bizCompetitionAwardMapper.insertBizCompetitionAward(bizCompetitionAward);
     }
 
