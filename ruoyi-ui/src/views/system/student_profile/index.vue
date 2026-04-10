@@ -1,18 +1,11 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="关联sys_user的ID" prop="userId">
-        <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入关联sys_user的ID"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="学号(登录账号)" prop="studentNo">
+
+      <el-form-item label="学号" prop="studentNo">
         <el-input
           v-model="queryParams.studentNo"
-          placeholder="请输入学号(登录账号)"
+          placeholder="请输入学号"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -25,54 +18,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="性别(0男 1女)" prop="gender">
-        <el-input
-          v-model="queryParams.gender"
-          placeholder="请输入性别(0男 1女)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="身份证号" prop="idCard">
-        <el-input
-          v-model="queryParams.idCard"
-          placeholder="请输入身份证号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="所属学院" prop="college">
-        <el-input
-          v-model="queryParams.college"
-          placeholder="请输入所属学院"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="所属专业" prop="major">
-        <el-input
-          v-model="queryParams.major"
-          placeholder="请输入所属专业"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="所属班级" prop="className">
-        <el-input
-          v-model="queryParams.className"
-          placeholder="请输入所属班级"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="入学年份(如:2023级)" prop="enrollmentYear">
-        <el-input
-          v-model="queryParams.enrollmentYear"
-          placeholder="请输入入学年份(如:2023级)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -127,17 +73,15 @@
 
     <el-table v-loading="loading" :data="student_profileList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键ID" align="center" prop="id" />
-      <el-table-column label="关联sys_user的ID" align="center" prop="userId" />
-      <el-table-column label="学号(登录账号)" align="center" prop="studentNo" />
+      <el-table-column label="学号" align="center" prop="studentNo" />
       <el-table-column label="姓名" align="center" prop="realName" />
-      <el-table-column label="性别(0男 1女)" align="center" prop="gender" />
+      <el-table-column label="性别" align="center" prop="gender" />
       <el-table-column label="身份证号" align="center" prop="idCard" />
       <el-table-column label="所属学院" align="center" prop="college" />
       <el-table-column label="所属专业" align="center" prop="major" />
       <el-table-column label="所属班级" align="center" prop="className" />
-      <el-table-column label="入学年份(如:2023级)" align="center" prop="enrollmentYear" />
-      <el-table-column label="学籍状态(在读/毕业/休学)" align="center" prop="status" />
+      <el-table-column label="入学年份" align="center" prop="enrollmentYear" />
+      <el-table-column label="学籍状态" align="center" prop="status" />
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -158,7 +102,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"

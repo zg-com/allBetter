@@ -9,30 +9,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="关联的课程ID" prop="courseId">
-        <el-input
-          v-model="queryParams.courseId"
-          placeholder="请输入关联的课程ID"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="最终成绩" prop="score">
-        <el-input
-          v-model="queryParams.score"
-          placeholder="请输入最终成绩"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="已获学分(及格后才给)" prop="earnedCredits">
-        <el-input
-          v-model="queryParams.earnedCredits"
-          placeholder="请输入已获学分(及格后才给)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -87,11 +64,10 @@
 
     <el-table v-loading="loading" :data="student_courseList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键ID" align="center" prop="id" />
       <el-table-column label="学号" align="center" prop="studentNo" />
       <el-table-column label="关联的课程ID" align="center" prop="courseId" />
       <el-table-column label="最终成绩" align="center" prop="score" />
-      <el-table-column label="已获学分(及格后才给)" align="center" prop="earnedCredits" />
+      <el-table-column label="已获学分" align="center" prop="earnedCredits" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -111,7 +87,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"

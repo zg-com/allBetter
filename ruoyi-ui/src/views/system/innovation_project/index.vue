@@ -1,26 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="项目编号" prop="projectNo">
-        <el-input
-          v-model="queryParams.projectNo"
-          placeholder="请输入项目编号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="项目名称" prop="projectName">
         <el-input
           v-model="queryParams.projectName"
           placeholder="请输入项目名称"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="项目级别(国家级/省级/校级)" prop="projectLevel">
-        <el-input
-          v-model="queryParams.projectLevel"
-          placeholder="请输入项目级别(国家级/省级/校级)"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -111,17 +95,15 @@
 
     <el-table v-loading="loading" :data="innovation_projectList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键ID" align="center" prop="id" />
-      <el-table-column label="项目编号" align="center" prop="projectNo" />
       <el-table-column label="项目名称" align="center" prop="projectName" />
-      <el-table-column label="项目级别(国家级/省级/校级)" align="center" prop="projectLevel" />
-      <el-table-column label="项目类型(创新/创业等)" align="center" prop="projectType" />
+      <el-table-column label="项目级别" align="center" prop="projectLevel" />
+      <el-table-column label="项目类型" align="center" prop="projectType" />
       <el-table-column label="负责人学号" align="center" prop="leaderNo" />
       <el-table-column label="负责人姓名" align="center" prop="leaderName" />
       <el-table-column label="团队其他成员" align="center" prop="teamMembers" />
       <el-table-column label="指导教师" align="center" prop="instructorName" />
       <el-table-column label="立项年份" align="center" prop="approvalYear" />
-      <el-table-column label="项目状态(0进行中 1已结题)" align="center" prop="status" />
+      <el-table-column label="项目状态" align="center" prop="status" />
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -142,7 +124,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"

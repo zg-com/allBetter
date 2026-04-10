@@ -33,94 +33,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="通讯作者信息" prop="corrAuthorInfo">
-        <el-input
-          v-model="queryParams.corrAuthorInfo"
-          placeholder="请输入通讯作者信息"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="青大是否第一单位(0否 1是)" prop="isFirstUnit">
-        <el-input
-          v-model="queryParams.isFirstUnit"
-          placeholder="请输入青大是否第一单位(0否 1是)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="论文归属" prop="attribution">
-        <el-input
-          v-model="queryParams.attribution"
-          placeholder="请输入论文归属"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="积分" prop="points">
-        <el-input
-          v-model="queryParams.points"
-          placeholder="请输入积分"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="SCI分区" prop="sciZone">
-        <el-input
-          v-model="queryParams.sciZone"
-          placeholder="请输入SCI分区"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="是否推荐期刊(0否 1是)" prop="isRecommended">
-        <el-input
-          v-model="queryParams.isRecommended"
-          placeholder="请输入是否推荐期刊(0否 1是)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="CCF分区/会议类型(CCF A等)" prop="ccfZone">
-        <el-input
-          v-model="queryParams.ccfZone"
-          placeholder="请输入CCF分区/会议类型(CCF A等)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="是否卓越领军期刊(0否 1是)" prop="isExcellentLeading">
-        <el-input
-          v-model="queryParams.isExcellentLeading"
-          placeholder="请输入是否卓越领军期刊(0否 1是)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="是否高被引(0否 1是)" prop="isHighlyCited">
-        <el-input
-          v-model="queryParams.isHighlyCited"
-          placeholder="请输入是否高被引(0否 1是)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="是否ESI论文(0否 1是)" prop="isEsi">
-        <el-input
-          v-model="queryParams.isEsi"
-          placeholder="请输入是否ESI论文(0否 1是)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="奖励级别" prop="awardLevel">
-        <el-input
-          v-model="queryParams.awardLevel"
-          placeholder="请输入奖励级别"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -175,24 +88,22 @@
 
     <el-table v-loading="loading" :data="paperList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键ID" align="center" prop="id" />
-      <el-table-column label="关联教师的主键(归属人)" align="center" prop="userId" />
-      <el-table-column label="论文类型(1:SCI论文 2:卓越期刊论文 3:CCF会议论文)" align="center" prop="paperType" />
+      <el-table-column label="论文类型" align="center" prop="paperType" />
       <el-table-column label="论文题目" align="center" prop="paperTitle" />
       <el-table-column label="发表期刊/会议名称" align="center" prop="journalOrConf" />
       <el-table-column label="作者信息/一作" align="center" prop="authorInfo" />
       <el-table-column label="通讯作者信息" align="center" prop="corrAuthorInfo" />
-      <el-table-column label="青大是否第一单位(0否 1是)" align="center" prop="isFirstUnit" />
+      <el-table-column label="青大是否第一单位" align="center" prop="isFirstUnit" />
       <el-table-column label="论文归属" align="center" prop="attribution" />
       <el-table-column label="积分" align="center" prop="points" />
       <el-table-column label="SCI分区" align="center" prop="sciZone" />
-      <el-table-column label="是否推荐期刊(0否 1是)" align="center" prop="isRecommended" />
-      <el-table-column label="CCF分区/会议类型(CCF A等)" align="center" prop="ccfZone" />
-      <el-table-column label="是否卓越领军期刊(0否 1是)" align="center" prop="isExcellentLeading" />
-      <el-table-column label="是否高被引(0否 1是)" align="center" prop="isHighlyCited" />
-      <el-table-column label="是否ESI论文(0否 1是)" align="center" prop="isEsi" />
+      <el-table-column label="是否推荐期刊" align="center" prop="isRecommended" />
+      <el-table-column label="CCF分区/会议类型" align="center" prop="ccfZone" />
+      <el-table-column label="是否卓越领军期刊" align="center" prop="isExcellentLeading" />
+      <el-table-column label="是否高被引" align="center" prop="isHighlyCited" />
+      <el-table-column label="是否ESI论文" align="center" prop="isEsi" />
       <el-table-column label="奖励级别" align="center" prop="awardLevel" />
-      <el-table-column label="备注(所有论文专属备注列)" align="center" prop="remark" />
+      <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button

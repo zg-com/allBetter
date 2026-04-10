@@ -1,14 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="课程代码" prop="courseCode">
-        <el-input
-          v-model="queryParams.courseCode"
-          placeholder="请输入课程代码"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="课程名称" prop="courseName">
         <el-input
           v-model="queryParams.courseName"
@@ -17,14 +10,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="课程学分(如:2.5)" prop="credits">
-        <el-input
-          v-model="queryParams.credits"
-          placeholder="请输入课程学分(如:2.5)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="任课教师" prop="teacherName">
         <el-input
           v-model="queryParams.teacherName"
@@ -33,14 +19,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="开课学期(如:2025-2026-1)" prop="semester">
-        <el-input
-          v-model="queryParams.semester"
-          placeholder="请输入开课学期(如:2025-2026-1)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -95,12 +74,11 @@
 
     <el-table v-loading="loading" :data="courseList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="课程ID" align="center" prop="id" />
       <el-table-column label="课程代码" align="center" prop="courseCode" />
       <el-table-column label="课程名称" align="center" prop="courseName" />
-      <el-table-column label="课程学分(如:2.5)" align="center" prop="credits" />
+      <el-table-column label="课程学分" align="center" prop="credits" />
       <el-table-column label="任课教师" align="center" prop="teacherName" />
-      <el-table-column label="开课学期(如:2025-2026-1)" align="center" prop="semester" />
+      <el-table-column label="开课学期" align="center" prop="semester" />
       <el-table-column label="课程描述" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -121,7 +99,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"

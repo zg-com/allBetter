@@ -1,22 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="关联教师的主键(负责人)" prop="userId">
-        <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入关联教师的主键(负责人)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="项目编号" prop="projectNo">
-        <el-input
-          v-model="queryParams.projectNo"
-          placeholder="请输入项目编号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="项目名称" prop="projectName">
         <el-input
           v-model="queryParams.projectName"
@@ -25,14 +10,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="项目来源" prop="projectSource">
-        <el-input
-          v-model="queryParams.projectSource"
-          placeholder="请输入项目来源"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="负责人" prop="leaderName">
         <el-input
           v-model="queryParams.leaderName"
@@ -41,46 +19,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="项目签署所属年度" prop="signYear">
-        <el-input
-          v-model="queryParams.signYear"
-          placeholder="请输入项目签署所属年度"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="合同签订日期" prop="contractStartDate">
-        <el-date-picker clearable
-          v-model="queryParams.contractStartDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择合同签订日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="合同截止日期" prop="contractEndDate">
-        <el-date-picker clearable
-          v-model="queryParams.contractEndDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择合同截止日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="合同金额(万元)" prop="contractAmount">
-        <el-input
-          v-model="queryParams.contractAmount"
-          placeholder="请输入合同金额(万元)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="到账金额(万元)" prop="arrivedAmount">
-        <el-input
-          v-model="queryParams.arrivedAmount"
-          placeholder="请输入到账金额(万元)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -135,9 +74,6 @@
 
     <el-table v-loading="loading" :data="research_projectList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键ID" align="center" prop="id" />
-      <el-table-column label="关联教师的主键(负责人)" align="center" prop="userId" />
-      <el-table-column label="项目编号" align="center" prop="projectNo" />
       <el-table-column label="项目名称" align="center" prop="projectName" />
       <el-table-column label="项目来源" align="center" prop="projectSource" />
       <el-table-column label="负责人" align="center" prop="leaderName" />
@@ -152,8 +88,8 @@
           <span>{{ parseTime(scope.row.contractEndDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="合同金额(万元)" align="center" prop="contractAmount" />
-      <el-table-column label="到账金额(万元)" align="center" prop="arrivedAmount" />
+      <el-table-column label="合同金额" align="center" prop="contractAmount" />
+      <el-table-column label="到账金额" align="center" prop="arrivedAmount" />
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -174,7 +110,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"

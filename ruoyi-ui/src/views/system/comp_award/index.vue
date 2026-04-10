@@ -1,14 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="学号" prop="studentNo">
-        <el-input
-          v-model="queryParams.studentNo"
-          placeholder="请输入学号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="姓名" prop="studentName">
         <el-input
           v-model="queryParams.studentName"
@@ -17,14 +10,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="专业" prop="major">
-        <el-input
-          v-model="queryParams.major"
-          placeholder="请输入专业"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="年级/参赛年份" prop="compYear">
         <el-input
           v-model="queryParams.compYear"
@@ -41,134 +27,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="主办单位" prop="organizer">
-        <el-input
-          v-model="queryParams.organizer"
-          placeholder="请输入主办单位"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="证书编号" prop="certNumber">
-        <el-input
-          v-model="queryParams.certNumber"
-          placeholder="请输入证书编号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="获奖时间(以主办方公布时间为准)" prop="awardDate">
-        <el-date-picker clearable
-          v-model="queryParams.awardDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择获奖时间(以主办方公布时间为准)">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="获奖级别(如:国创/省创等)" prop="compLevel">
-        <el-input
-          v-model="queryParams.compLevel"
-          placeholder="请输入获奖级别(如:国创/省创等)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="获奖等次(如:一等奖/特等奖)" prop="awardGrade">
-        <el-input
-          v-model="queryParams.awardGrade"
-          placeholder="请输入获奖等次(如:一等奖/特等奖)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="赛届(如:第十三届)" prop="compEdition">
-        <el-input
-          v-model="queryParams.compEdition"
-          placeholder="请输入赛届(如:第十三届)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="赛类(如:软件类/电子类)" prop="compCategory">
-        <el-input
-          v-model="queryParams.compCategory"
-          placeholder="请输入赛类(如:软件类/电子类)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="比赛科目(如:C/C++程序设计)" prop="compSubject">
-        <el-input
-          v-model="queryParams.compSubject"
-          placeholder="请输入比赛科目(如:C/C++程序设计)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="比赛组别(如:研究生组/大学A组)" prop="compGroup">
-        <el-input
-          v-model="queryParams.compGroup"
-          placeholder="请输入比赛组别(如:研究生组/大学A组)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="参赛类型(0个人 1团队)" prop="isTeam">
-        <el-input
-          v-model="queryParams.isTeam"
-          placeholder="请输入参赛类型(0个人 1团队)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="团队人数" prop="teamSize">
-        <el-input
-          v-model="queryParams.teamSize"
-          placeholder="请输入团队人数"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="个人位次" prop="myRank">
-        <el-input
-          v-model="queryParams.myRank"
-          placeholder="请输入个人位次"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="指导教师1姓名" prop="instructor1Name">
-        <el-input
-          v-model="queryParams.instructor1Name"
-          placeholder="请输入指导教师1姓名"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="指导教师1所在学院" prop="instructor1College">
-        <el-input
-          v-model="queryParams.instructor1College"
-          placeholder="请输入指导教师1所在学院"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="指导教师2姓名" prop="instructor2Name">
-        <el-input
-          v-model="queryParams.instructor2Name"
-          placeholder="请输入指导教师2姓名"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="指导教师2所在学院" prop="instructor2College">
-        <el-input
-          v-model="queryParams.instructor2College"
-          placeholder="请输入指导教师2所在学院"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -223,30 +82,29 @@
 
     <el-table v-loading="loading" :data="comp_awardList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键ID" align="center" prop="id" />
       <el-table-column label="学号" align="center" prop="studentNo" />
       <el-table-column label="姓名" align="center" prop="studentName" />
       <el-table-column label="专业" align="center" prop="major" />
       <el-table-column label="年级/参赛年份" align="center" prop="compYear" />
-      <el-table-column label="赛事名称(含获批项目名称)" align="center" prop="compName" />
+      <el-table-column label="赛事名称" align="center" prop="compName" />
       <el-table-column label="主办单位" align="center" prop="organizer" />
       <el-table-column label="证书编号" align="center" prop="certNumber" />
-      <el-table-column label="获奖时间(以主办方公布时间为准)" align="center" prop="awardDate" width="180">
+      <el-table-column label="获奖时间" align="center" prop="awardDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.awardDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="获奖批文或官网公示网址" align="center" prop="certUrl" />
-      <el-table-column label="获奖级别(如:国创/省创等)" align="center" prop="compLevel" />
-      <el-table-column label="获奖等次(如:一等奖/特等奖)" align="center" prop="awardGrade" />
-      <el-table-column label="赛届(如:第十三届)" align="center" prop="compEdition" />
-      <el-table-column label="赛类(如:软件类/电子类)" align="center" prop="compCategory" />
-      <el-table-column label="比赛科目(如:C/C++程序设计)" align="center" prop="compSubject" />
-      <el-table-column label="比赛组别(如:研究生组/大学A组)" align="center" prop="compGroup" />
-      <el-table-column label="参赛类型(0个人 1团队)" align="center" prop="isTeam" />
+      <el-table-column label="获奖级别" align="center" prop="compLevel" />
+      <el-table-column label="获奖等次" align="center" prop="awardGrade" />
+      <el-table-column label="赛届" align="center" prop="compEdition" />
+      <el-table-column label="赛类" align="center" prop="compCategory" />
+      <el-table-column label="比赛科目" align="center" prop="compSubject" />
+      <el-table-column label="比赛组别" align="center" prop="compGroup" />
+      <el-table-column label="参赛类型" align="center" prop="isTeam" />
       <el-table-column label="团队人数" align="center" prop="teamSize" />
       <el-table-column label="个人位次" align="center" prop="myRank" />
-      <el-table-column label="团队成员姓名(顿号分隔)" align="center" prop="teamMembers" />
+      <el-table-column label="团队成员姓名" align="center" prop="teamMembers" />
       <el-table-column label="指导教师1姓名" align="center" prop="instructor1Name" />
       <el-table-column label="指导教师1所在学院" align="center" prop="instructor1College" />
       <el-table-column label="指导教师2姓名" align="center" prop="instructor2Name" />

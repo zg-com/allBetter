@@ -1,14 +1,6 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="关联sys_user表的user_id" prop="userId">
-        <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入关联sys_user表的user_id"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="教职工号" prop="teacherNo">
         <el-input
           v-model="queryParams.teacherNo"
@@ -25,342 +17,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="性别(0女 1男)" prop="gender">
-        <el-input
-          v-model="queryParams.gender"
-          placeholder="请输入性别(0女 1男)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="民族" prop="nation">
-        <el-input
-          v-model="queryParams.nation"
-          placeholder="请输入民族"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="出生年月" prop="birthDate">
-        <el-date-picker clearable
-          v-model="queryParams.birthDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择出生年月">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="年龄" prop="age">
-        <el-input
-          v-model="queryParams.age"
-          placeholder="请输入年龄"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="来校时间" prop="comingTime">
-        <el-date-picker clearable
-          v-model="queryParams.comingTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择来校时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="拟退休年" prop="retireAge">
-        <el-date-picker clearable
-          v-model="queryParams.retireAge"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择拟退休年">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="所在部门" prop="department">
-        <el-input
-          v-model="queryParams.department"
-          placeholder="请输入所在部门"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="籍贯" prop="nativePlace">
-        <el-input
-          v-model="queryParams.nativePlace"
-          placeholder="请输入籍贯"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="宗教信仰" prop="religion">
-        <el-input
-          v-model="queryParams.religion"
-          placeholder="请输入宗教信仰"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="紧急联系人" prop="emergencyContact">
-        <el-input
-          v-model="queryParams.emergencyContact"
-          placeholder="请输入紧急联系人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="紧急联系人手机号" prop="emergencyPhone">
-        <el-input
-          v-model="queryParams.emergencyPhone"
-          placeholder="请输入紧急联系人手机号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="邮箱" prop="email">
-        <el-input
-          v-model="queryParams.email"
-          placeholder="请输入邮箱"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="身份证号" prop="idCard">
-        <el-input
-          v-model="queryParams.idCard"
-          placeholder="请输入身份证号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="手机号" prop="phoneNumber">
-        <el-input
-          v-model="queryParams.phoneNumber"
-          placeholder="请输入手机号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="住址" prop="homeAddress">
-        <el-input
-          v-model="queryParams.homeAddress"
-          placeholder="请输入住址"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="最高学位" prop="highestDegree">
-        <el-input
-          v-model="queryParams.highestDegree"
-          placeholder="请输入最高学位"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="最高学历" prop="highestEducation">
-        <el-input
-          v-model="queryParams.highestEducation"
-          placeholder="请输入最高学历"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="最高毕业院校" prop="highestGradSchool">
-        <el-input
-          v-model="queryParams.highestGradSchool"
-          placeholder="请输入最高毕业院校"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="所学专业" prop="major">
-        <el-input
-          v-model="queryParams.major"
-          placeholder="请输入所学专业"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="所属门类" prop="belongCategory">
-        <el-input
-          v-model="queryParams.belongCategory"
-          placeholder="请输入所属门类"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="最高学历开始时间" prop="highestEducationBeginTime">
-        <el-date-picker clearable
-          v-model="queryParams.highestEducationBeginTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择最高学历开始时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="最高学历毕业时间" prop="highestEducationEndTime">
-        <el-date-picker clearable
-          v-model="queryParams.highestEducationEndTime"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择最高学历毕业时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="第一学位" prop="firstDegree">
-        <el-input
-          v-model="queryParams.firstDegree"
-          placeholder="请输入第一学位"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="第一学历" prop="firstEducation">
-        <el-input
-          v-model="queryParams.firstEducation"
-          placeholder="请输入第一学历"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="党派" prop="politicalParty">
-        <el-input
-          v-model="queryParams.politicalParty"
-          placeholder="请输入党派"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="专业技术职务(职称)" prop="professionalTitle">
-        <el-input
-          v-model="queryParams.professionalTitle"
-          placeholder="请输入专业技术职务(职称)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="人才称号" prop="talentTitle">
-        <el-input
-          v-model="queryParams.talentTitle"
-          placeholder="请输入人才称号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="是否双肩挑(0否 1是)" prop="isDualShoulder">
-        <el-input
-          v-model="queryParams.isDualShoulder"
-          placeholder="请输入是否双肩挑(0否 1是)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="入党时间" prop="joinPartyDate">
-        <el-date-picker clearable
-          v-model="queryParams.joinPartyDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择入党时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="转正时间" prop="partyRegularDate">
-        <el-date-picker clearable
-          v-model="queryParams.partyRegularDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择转正时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="党政职务" prop="adminPost">
-        <el-input
-          v-model="queryParams.adminPost"
-          placeholder="请输入党政职务"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="任职时间" prop="postAppointDate">
-        <el-date-picker clearable
-          v-model="queryParams.postAppointDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择任职时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="评聘时间" prop="titleEvalDate">
-        <el-date-picker clearable
-          v-model="queryParams.titleEvalDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择评聘时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="分类" prop="staffCategory">
-        <el-input
-          v-model="queryParams.staffCategory"
-          placeholder="请输入分类"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="岗位" prop="postName">
-        <el-input
-          v-model="queryParams.postName"
-          placeholder="请输入岗位"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="现岗位聘用时间" prop="currentPostDate">
-        <el-date-picker clearable
-          v-model="queryParams.currentPostDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择现岗位聘用时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="人才评聘时间" prop="talentEvalDate">
-        <el-date-picker clearable
-          v-model="queryParams.talentEvalDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择人才评聘时间">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="首聘期日期" prop="firstHireDate">
-        <el-date-picker clearable
-          v-model="queryParams.firstHireDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择首聘期日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="转正日期" prop="regularDate">
-        <el-date-picker clearable
-          v-model="queryParams.regularDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择转正日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="引进层次" prop="introLevel">
-        <el-input
-          v-model="queryParams.introLevel"
-          placeholder="请输入引进层次"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="特聘层次" prop="specialLevel">
-        <el-input
-          v-model="queryParams.specialLevel"
-          placeholder="请输入特聘层次"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="特聘合同日期" prop="contractDate">
-        <el-date-picker clearable
-          v-model="queryParams.contractDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择特聘合同日期">
-        </el-date-picker>
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -415,11 +72,9 @@
 
     <el-table v-loading="loading" :data="profileList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键ID" align="center" prop="id" />
-      <el-table-column label="关联sys_user表的user_id" align="center" prop="userId" />
       <el-table-column label="教职工号" align="center" prop="teacherNo" />
       <el-table-column label="教职工姓名" align="center" prop="realName" />
-      <el-table-column label="性别(0女 1男)" align="center" prop="gender" />
+      <el-table-column label="性别" align="center" prop="gender" />
       <el-table-column label="民族" align="center" prop="nation" />
       <el-table-column label="出生年月" align="center" prop="birthDate" width="180">
         <template slot-scope="scope">
@@ -465,9 +120,9 @@
       <el-table-column label="第一学位" align="center" prop="firstDegree" />
       <el-table-column label="第一学历" align="center" prop="firstEducation" />
       <el-table-column label="党派" align="center" prop="politicalParty" />
-      <el-table-column label="专业技术职务(职称)" align="center" prop="professionalTitle" />
+      <el-table-column label="专业技术职务" align="center" prop="professionalTitle" />
       <el-table-column label="人才称号" align="center" prop="talentTitle" />
-      <el-table-column label="是否双肩挑(0否 1是)" align="center" prop="isDualShoulder" />
+      <el-table-column label="是否双肩挑" align="center" prop="isDualShoulder" />
       <el-table-column label="辅导员类别" align="center" prop="counselorType" />
       <el-table-column label="入党时间" align="center" prop="joinPartyDate" width="180">
         <template slot-scope="scope">
@@ -540,7 +195,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"

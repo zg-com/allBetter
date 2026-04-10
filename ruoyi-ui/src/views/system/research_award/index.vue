@@ -1,14 +1,6 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="关联教师的主键(申报人)" prop="userId">
-        <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入关联教师的主键(申报人)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="奖励名称" prop="awardName">
         <el-input
           v-model="queryParams.awardName"
@@ -25,14 +17,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="获奖级别" prop="awardLevel">
-        <el-input
-          v-model="queryParams.awardLevel"
-          placeholder="请输入获奖级别"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="获奖日期" prop="awardDate">
         <el-date-picker clearable
           v-model="queryParams.awardDate"
@@ -40,38 +24,6 @@
           value-format="yyyy-MM-dd"
           placeholder="请选择获奖日期">
         </el-date-picker>
-      </el-form-item>
-      <el-form-item label="发证机关" prop="issuingAuthority">
-        <el-input
-          v-model="queryParams.issuingAuthority"
-          placeholder="请输入发证机关"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="获奖等级" prop="awardGrade">
-        <el-input
-          v-model="queryParams.awardGrade"
-          placeholder="请输入获奖等级"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="单位排名" prop="unitRank">
-        <el-input
-          v-model="queryParams.unitRank"
-          placeholder="请输入单位排名"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="证书号" prop="certNumber">
-        <el-input
-          v-model="queryParams.certNumber"
-          placeholder="请输入证书号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -127,8 +79,6 @@
 
     <el-table v-loading="loading" :data="research_awardList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键ID" align="center" prop="id" />
-      <el-table-column label="关联教师的主键(申报人)" align="center" prop="userId" />
       <el-table-column label="奖励名称" align="center" prop="awardName" />
       <el-table-column label="成果名称" align="center" prop="achievementName" />
       <el-table-column label="获奖级别" align="center" prop="awardLevel" />
@@ -137,7 +87,7 @@
           <span>{{ parseTime(scope.row.awardDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="所有完成人(逗号/顿号分隔)" align="center" prop="allContributors" />
+      <el-table-column label="所有完成人" align="center" prop="allContributors" />
       <el-table-column label="发证机关" align="center" prop="issuingAuthority" />
       <el-table-column label="获奖等级" align="center" prop="awardGrade" />
       <el-table-column label="单位排名" align="center" prop="unitRank" />
@@ -163,7 +113,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"

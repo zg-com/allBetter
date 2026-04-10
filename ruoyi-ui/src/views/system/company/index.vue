@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="教师的user_id" prop="userId">
+      <el-form-item label="教师id" prop="userId">
         <el-input
           v-model="queryParams.userId"
-          placeholder="请输入教师的user_id"
+          placeholder="请输入教师id"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -17,22 +17,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="法人代表" prop="legalPerson">
-        <el-input
-          v-model="queryParams.legalPerson"
-          placeholder="请输入法人代表"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="成立日期" prop="establishDate">
-        <el-date-picker clearable
-          v-model="queryParams.establishDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择成立日期">
-        </el-date-picker>
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -88,7 +73,7 @@
     <el-table v-loading="loading" :data="companyList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="id" />
-      <el-table-column label="教师的user_id" align="center" prop="userId" />
+      <el-table-column label="教师id" align="center" prop="userId" />
       <el-table-column label="兼职创办公司名称" align="center" prop="companyName" />
       <el-table-column label="法人代表" align="center" prop="legalPerson" />
       <el-table-column label="成立日期" align="center" prop="establishDate" width="180">
@@ -115,7 +100,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -127,7 +112,7 @@
     <!-- 添加或修改教师个人创业情况对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="教师的user_id" prop="userId">
+        <el-form-item label="教师id" prop="userId">
           <el-input v-model="form.userId" placeholder="请输入教师的user_id" />
         </el-form-item>
         <el-form-item label="兼职创办公司名称" prop="companyName">

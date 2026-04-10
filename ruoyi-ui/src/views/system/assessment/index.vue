@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="教师的user_id" prop="userId">
+      <el-form-item label="教师id" prop="userId">
         <el-input
           v-model="queryParams.userId"
-          placeholder="请输入教师的user_id"
+          placeholder="请输入教师id"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -25,30 +25,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="颁发单位" prop="awardUnit">
-        <el-input
-          v-model="queryParams.awardUnit"
-          placeholder="请输入颁发单位"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="发文年号" prop="docNumber">
-        <el-input
-          v-model="queryParams.docNumber"
-          placeholder="请输入发文年号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="发文日期/获奖日期" prop="awardDate">
-        <el-date-picker clearable
-          v-model="queryParams.awardDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择发文日期/获奖日期">
-        </el-date-picker>
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -103,9 +80,8 @@
 
     <el-table v-loading="loading" :data="assessmentList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键" align="center" prop="id" />
-      <el-table-column label="教师的user_id" align="center" prop="userId" />
-      <el-table-column label="记录类型(1荣誉称号 2年度考核)" align="center" prop="recordType" />
+      <el-table-column label="教师id" align="center" prop="userId" />
+      <el-table-column label="记录类型" align="center" prop="recordType" />
       <el-table-column label="年份" align="center" prop="recordYear" />
       <el-table-column label="荣誉名称或考核结果" align="center" prop="honorNameOrResult" />
       <el-table-column label="颁发单位" align="center" prop="awardUnit" />
@@ -134,7 +110,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
