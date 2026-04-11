@@ -10,7 +10,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 学生选课与成绩对象 biz_student_course
  * 
  * @author ruoyi
- * @date 2026-04-03
+ * @date 2026-04-10
  */
 public class BizStudentCourse extends BaseEntity
 {
@@ -34,6 +34,18 @@ public class BizStudentCourse extends BaseEntity
     /** 已获学分(及格后才给) */
     @Excel(name = "已获学分(及格后才给)")
     private BigDecimal earnedCredits;
+
+    /** 选课状态：0：未选中，1：已选中 */
+    @Excel(name = "选课状态：0：未选中，1：已选中")
+    private Long chooseStatus;
+
+    /** 修读状态：0：未修读，1：正在修读，2：已修读 */
+    @Excel(name = "修读状态：0：未修读，1：正在修读，2：已修读")
+    private Long learnStatus;
+
+    /** 学生用户ID */
+    @Excel(name = "学生用户ID")
+    private Long userId;
 
     public void setId(Long id) 
     {
@@ -85,6 +97,36 @@ public class BizStudentCourse extends BaseEntity
         return earnedCredits;
     }
 
+    public void setChooseStatus(Long chooseStatus) 
+    {
+        this.chooseStatus = chooseStatus;
+    }
+
+    public Long getChooseStatus() 
+    {
+        return chooseStatus;
+    }
+
+    public void setLearnStatus(Long learnStatus) 
+    {
+        this.learnStatus = learnStatus;
+    }
+
+    public Long getLearnStatus() 
+    {
+        return learnStatus;
+    }
+
+    public void setUserId(Long userId) 
+    {
+        this.userId = userId;
+    }
+
+    public Long getUserId() 
+    {
+        return userId;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -95,6 +137,9 @@ public class BizStudentCourse extends BaseEntity
             .append("earnedCredits", getEarnedCredits())
             .append("createTime", getCreateTime())
             .append("updateTime", getUpdateTime())
+            .append("chooseStatus", getChooseStatus())
+            .append("learnStatus", getLearnStatus())
+            .append("userId", getUserId())
             .toString();
     }
 }

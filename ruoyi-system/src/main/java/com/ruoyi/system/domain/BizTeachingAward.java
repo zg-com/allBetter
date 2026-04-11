@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 教研奖励对象 biz_teaching_award
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-10
  */
 public class BizTeachingAward extends BaseEntity
 {
@@ -60,6 +60,18 @@ public class BizTeachingAward extends BaseEntity
     /** 主要成果简述 */
     @Excel(name = "主要成果简述")
     private String mainAchievement;
+
+    /** 教师名称 */
+    @Excel(name = "教师名称")
+    private String teacherName;
+
+    /** 当前状态（0：申请中、1：审核已通过、2：申请已驳回） */
+    @Excel(name = "当前状态", readConverterExp = "0=：申请中、1：审核已通过、2：申请已驳回")
+    private Long status;
+
+    /** 驳回原因 */
+    @Excel(name = "驳回原因")
+    private String cause;
 
     public void setId(Long id) 
     {
@@ -171,6 +183,36 @@ public class BizTeachingAward extends BaseEntity
         return mainAchievement;
     }
 
+    public void setTeacherName(String teacherName) 
+    {
+        this.teacherName = teacherName;
+    }
+
+    public String getTeacherName() 
+    {
+        return teacherName;
+    }
+
+    public void setStatus(Long status) 
+    {
+        this.status = status;
+    }
+
+    public Long getStatus() 
+    {
+        return status;
+    }
+
+    public void setCause(String cause) 
+    {
+        this.cause = cause;
+    }
+
+    public String getCause() 
+    {
+        return cause;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -190,6 +232,9 @@ public class BizTeachingAward extends BaseEntity
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
+            .append("teacherName", getTeacherName())
+            .append("status", getStatus())
+            .append("cause", getCause())
             .toString();
     }
 }

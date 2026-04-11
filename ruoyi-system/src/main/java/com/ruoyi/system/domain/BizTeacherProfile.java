@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 教师人事基础档案对象 biz_teacher_profile
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-10
  */
 public class BizTeacherProfile extends BaseEntity
 {
@@ -225,6 +225,14 @@ public class BizTeacherProfile extends BaseEntity
     /** 特聘合同附件地址 */
     @Excel(name = "特聘合同附件地址")
     private String contractFileUrl;
+
+    /** 当前状态（0：申请中、1：审核已通过、2：申请已驳回） */
+    @Excel(name = "当前状态", readConverterExp = "0=：申请中、1：审核已通过、2：申请已驳回")
+    private Long status;
+
+    /** 驳回原因 */
+    @Excel(name = "驳回原因")
+    private String cause;
 
     public void setId(Long id) 
     {
@@ -716,6 +724,26 @@ public class BizTeacherProfile extends BaseEntity
         return contractFileUrl;
     }
 
+    public void setStatus(Long status) 
+    {
+        this.status = status;
+    }
+
+    public Long getStatus() 
+    {
+        return status;
+    }
+
+    public void setCause(String cause) 
+    {
+        this.cause = cause;
+    }
+
+    public String getCause() 
+    {
+        return cause;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -773,6 +801,8 @@ public class BizTeacherProfile extends BaseEntity
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
+            .append("status", getStatus())
+            .append("cause", getCause())
             .toString();
     }
 }

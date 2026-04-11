@@ -15,10 +15,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="degreeCertUrl"    column="degree_cert_url"    />
         <result property="gradCertUrl"    column="grad_cert_url"    />
         <result property="createTime"    column="create_time"    />
+        <result property="status"    column="status"    />
+        <result property="cause"    column="cause"    />
     </resultMap>
 
     <sql id="selectBizTeacherEducationVo">
-        select id, user_id, edu_stage, school_name, major, start_date, end_date, degree_cert_url, grad_cert_url, create_time from biz_teacher_education
+        select id, user_id, edu_stage, school_name, major, start_date, end_date, degree_cert_url, grad_cert_url, create_time, status, cause from biz_teacher_education
     </sql>
 
     <select id="selectBizTeacherEducationList" parameterType="BizTeacherEducation" resultMap="BizTeacherEducationResult">
@@ -32,6 +34,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="endDate != null "> and end_date = #{endDate}</if>
             <if test="degreeCertUrl != null  and degreeCertUrl != ''"> and degree_cert_url = #{degreeCertUrl}</if>
             <if test="gradCertUrl != null  and gradCertUrl != ''"> and grad_cert_url = #{gradCertUrl}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="cause != null  and cause != ''"> and cause = #{cause}</if>
         </where>
     </select>
     
@@ -52,6 +56,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="degreeCertUrl != null">degree_cert_url,</if>
             <if test="gradCertUrl != null">grad_cert_url,</if>
             <if test="createTime != null">create_time,</if>
+            <if test="status != null">status,</if>
+            <if test="cause != null">cause,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
@@ -63,6 +69,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="degreeCertUrl != null">#{degreeCertUrl},</if>
             <if test="gradCertUrl != null">#{gradCertUrl},</if>
             <if test="createTime != null">#{createTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="cause != null">#{cause},</if>
          </trim>
     </insert>
 
@@ -78,6 +86,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="degreeCertUrl != null">degree_cert_url = #{degreeCertUrl},</if>
             <if test="gradCertUrl != null">grad_cert_url = #{gradCertUrl},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="cause != null">cause = #{cause},</if>
         </trim>
         where id = #{id}
     </update>

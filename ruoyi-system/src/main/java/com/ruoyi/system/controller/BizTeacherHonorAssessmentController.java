@@ -25,7 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 教师荣誉与历年考核记录Controller
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-10
  */
 @RestController
 @RequestMapping("/system/assessment")

@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="教师id" prop="userId">
+      <el-form-item label="教师的user_id" prop="userId">
         <el-input
           v-model="queryParams.userId"
-          placeholder="请输入教师id"
+          placeholder="请输入教师的user_id"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -25,7 +25,22 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-
+      <el-form-item label="起止时间-开始" prop="startDate">
+        <el-date-picker clearable
+          v-model="queryParams.startDate"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择起止时间-开始">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="起止时间-结束" prop="endDate">
+        <el-date-picker clearable
+          v-model="queryParams.endDate"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择起止时间-结束">
+        </el-date-picker>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -80,8 +95,9 @@
 
     <el-table v-loading="loading" :data="experienceList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="教师id" align="center" prop="userId" />
-      <el-table-column label="记录类型" align="center" prop="expType" />
+      <el-table-column label="主键" align="center" prop="id" />
+      <el-table-column label="教师的user_id" align="center" prop="userId" />
+      <el-table-column label="记录类型(1社会兼职 2留学访学)" align="center" prop="expType" />
       <el-table-column label="兼职头衔或访学国家" align="center" prop="titleOrCountry" />
       <el-table-column label="研究领域" align="center" prop="researchField" />
       <el-table-column label="获得的荣誉或成果" align="center" prop="achievements" />
@@ -95,6 +111,8 @@
           <span>{{ parseTime(scope.row.endDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="当前状态" align="center" prop="status" />
+      <el-table-column label="驳回原因" align="center" prop="cause" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -114,7 +132,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -153,6 +171,9 @@
             value-format="yyyy-MM-dd"
             placeholder="请选择起止时间-结束">
           </el-date-picker>
+        </el-form-item>
+        <el-form-item label="驳回原因" prop="cause">
+          <el-input v-model="form.cause" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -199,6 +220,8 @@ export default {
         achievements: null,
         startDate: null,
         endDate: null,
+        status: null,
+        cause: null
       },
       // 表单参数
       form: {},
@@ -239,7 +262,9 @@ export default {
         achievements: null,
         startDate: null,
         endDate: null,
-        createTime: null
+        createTime: null,
+        status: null,
+        cause: null
       }
       this.resetForm("form")
     },

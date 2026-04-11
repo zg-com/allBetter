@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 教师兼职与访学经历对象 biz_teacher_experience
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-10
  */
 public class BizTeacherExperience extends BaseEntity
 {
@@ -49,6 +49,14 @@ public class BizTeacherExperience extends BaseEntity
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "起止时间-结束", width = 30, dateFormat = "yyyy-MM-dd")
     private Date endDate;
+
+    /** 当前状态（0：申请中、1：审核已通过、2：申请已驳回） */
+    @Excel(name = "当前状态", readConverterExp = "0=：申请中、1：审核已通过、2：申请已驳回")
+    private Long status;
+
+    /** 驳回原因 */
+    @Excel(name = "驳回原因")
+    private String cause;
 
     public void setId(Long id) 
     {
@@ -130,6 +138,26 @@ public class BizTeacherExperience extends BaseEntity
         return endDate;
     }
 
+    public void setStatus(Long status) 
+    {
+        this.status = status;
+    }
+
+    public Long getStatus() 
+    {
+        return status;
+    }
+
+    public void setCause(String cause) 
+    {
+        this.cause = cause;
+    }
+
+    public String getCause() 
+    {
+        return cause;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -142,6 +170,8 @@ public class BizTeacherExperience extends BaseEntity
             .append("startDate", getStartDate())
             .append("endDate", getEndDate())
             .append("createTime", getCreateTime())
+            .append("status", getStatus())
+            .append("cause", getCause())
             .toString();
     }
 }

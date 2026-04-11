@@ -14,10 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="startDate"    column="start_date"    />
         <result property="endDate"    column="end_date"    />
         <result property="createTime"    column="create_time"    />
+        <result property="status"    column="status"    />
+        <result property="cause"    column="cause"    />
     </resultMap>
 
     <sql id="selectBizTeacherExperienceVo">
-        select id, user_id, exp_type, title_or_country, research_field, achievements, start_date, end_date, create_time from biz_teacher_experience
+        select id, user_id, exp_type, title_or_country, research_field, achievements, start_date, end_date, create_time, status, cause from biz_teacher_experience
     </sql>
 
     <select id="selectBizTeacherExperienceList" parameterType="BizTeacherExperience" resultMap="BizTeacherExperienceResult">
@@ -30,6 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="achievements != null  and achievements != ''"> and achievements = #{achievements}</if>
             <if test="startDate != null "> and start_date = #{startDate}</if>
             <if test="endDate != null "> and end_date = #{endDate}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="cause != null  and cause != ''"> and cause = #{cause}</if>
         </where>
     </select>
     
@@ -49,6 +53,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="startDate != null">start_date,</if>
             <if test="endDate != null">end_date,</if>
             <if test="createTime != null">create_time,</if>
+            <if test="status != null">status,</if>
+            <if test="cause != null">cause,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
@@ -59,6 +65,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="startDate != null">#{startDate},</if>
             <if test="endDate != null">#{endDate},</if>
             <if test="createTime != null">#{createTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="cause != null">#{cause},</if>
          </trim>
     </insert>
 
@@ -73,6 +81,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="startDate != null">start_date = #{startDate},</if>
             <if test="endDate != null">end_date = #{endDate},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="cause != null">cause = #{cause},</if>
         </trim>
         where id = #{id}
     </update>

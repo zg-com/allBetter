@@ -1,7 +1,14 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-
+      <el-form-item label="课程代码" prop="courseCode">
+        <el-input
+          v-model="queryParams.courseCode"
+          placeholder="请输入课程代码"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="课程名称" prop="courseName">
         <el-input
           v-model="queryParams.courseName"
@@ -10,7 +17,14 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-
+      <el-form-item label="课程学分(如:2.5)" prop="credits">
+        <el-input
+          v-model="queryParams.credits"
+          placeholder="请输入课程学分(如:2.5)"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="任课教师" prop="teacherName">
         <el-input
           v-model="queryParams.teacherName"
@@ -19,7 +33,38 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-
+      <el-form-item label="开课学期(如:2025-2026-1)" prop="semester">
+        <el-input
+          v-model="queryParams.semester"
+          placeholder="请输入开课学期(如:2025-2026-1)"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="任课教师id" prop="teacherNo">
+        <el-input
+          v-model="queryParams.teacherNo"
+          placeholder="请输入任课教师id"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="课程容量" prop="volume">
+        <el-input
+          v-model="queryParams.volume"
+          placeholder="请输入课程容量"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="当前选课人数" prop="currentNumofpeople">
+        <el-input
+          v-model="queryParams.currentNumofpeople"
+          placeholder="请输入当前选课人数"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -74,12 +119,18 @@
 
     <el-table v-loading="loading" :data="courseList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="课程ID" align="center" prop="id" />
       <el-table-column label="课程代码" align="center" prop="courseCode" />
       <el-table-column label="课程名称" align="center" prop="courseName" />
-      <el-table-column label="课程学分" align="center" prop="credits" />
+      <el-table-column label="课程学分(如:2.5)" align="center" prop="credits" />
       <el-table-column label="任课教师" align="center" prop="teacherName" />
-      <el-table-column label="开课学期" align="center" prop="semester" />
+      <el-table-column label="开课学期(如:2025-2026-1)" align="center" prop="semester" />
       <el-table-column label="课程描述" align="center" prop="remark" />
+      <el-table-column label="任课教师id" align="center" prop="teacherNo" />
+      <el-table-column label="课程当前状态" align="center" prop="status" />
+      <el-table-column label="课程驳回原因" align="center" prop="cause" />
+      <el-table-column label="课程容量" align="center" prop="volume" />
+      <el-table-column label="当前选课人数" align="center" prop="currentNumofpeople" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -99,7 +150,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -128,6 +179,18 @@
         </el-form-item>
         <el-form-item label="课程描述" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+        <el-form-item label="任课教师id" prop="teacherNo">
+          <el-input v-model="form.teacherNo" placeholder="请输入任课教师id" />
+        </el-form-item>
+        <el-form-item label="课程驳回原因" prop="cause">
+          <el-input v-model="form.cause" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+        <el-form-item label="课程容量" prop="volume">
+          <el-input v-model="form.volume" placeholder="请输入课程容量" />
+        </el-form-item>
+        <el-form-item label="当前选课人数" prop="currentNumofpeople">
+          <el-input v-model="form.currentNumofpeople" placeholder="请输入当前选课人数" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -172,6 +235,11 @@ export default {
         credits: null,
         teacherName: null,
         semester: null,
+        teacherNo: null,
+        status: null,
+        cause: null,
+        volume: null,
+        currentNumofpeople: null
       },
       // 表单参数
       form: {},
@@ -185,6 +253,9 @@ export default {
         ],
         credits: [
           { required: true, message: "课程学分(如:2.5)不能为空", trigger: "blur" }
+        ],
+        teacherNo: [
+          { required: true, message: "任课教师id不能为空", trigger: "blur" }
         ],
       }
     }
@@ -217,7 +288,12 @@ export default {
         teacherName: null,
         semester: null,
         createTime: null,
-        remark: null
+        remark: null,
+        teacherNo: null,
+        status: null,
+        cause: null,
+        volume: null,
+        currentNumofpeople: null
       }
       this.resetForm("form")
     },

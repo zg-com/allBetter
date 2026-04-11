@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.BizTeacherHonorAssessment;
  * 教师荣誉与历年考核记录Mapper接口
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-10
  */
 public interface BizTeacherHonorAssessmentMapper 
 {

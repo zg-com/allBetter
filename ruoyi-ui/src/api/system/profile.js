@@ -42,3 +42,22 @@ export function delProfile(id) {
     method: 'delete'
   })
 }
+
+//同意教师认识档案批准
+export function approveProfile(id) {
+  return request({
+    url: '/system/profile/approve',
+    method: 'put',
+    data: { id : id}
+  })
+}
+
+
+// 🔴 驳回教师档案申请
+export function rejectProfile(data) {
+  return request({
+    url: '/system/profile/reject', // 这是你刚才测试的那个驳回接口
+    method: 'put',
+    data: data // 包含 id 和 cause
+  })
+}

@@ -9,7 +9,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 学生基础学籍档案对象 biz_student_profile
  * 
  * @author ruoyi
- * @date 2026-04-03
+ * @date 2026-04-10
  */
 public class BizStudentProfile extends BaseEntity
 {

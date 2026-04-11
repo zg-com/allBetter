@@ -10,7 +10,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 课程信息对象 biz_course
  * 
  * @author ruoyi
- * @date 2026-04-03
+ * @date 2026-04-10
  */
 public class BizCourse extends BaseEntity
 {
@@ -38,6 +38,26 @@ public class BizCourse extends BaseEntity
     /** 开课学期(如:2025-2026-1) */
     @Excel(name = "开课学期(如:2025-2026-1)")
     private String semester;
+
+    /** 任课教师id */
+    @Excel(name = "任课教师id")
+    private Long teacherNo;
+
+    /** 课程当前状态（0：申请开课中、1：审核已通过、2：申请已驳回） */
+    @Excel(name = "课程当前状态", readConverterExp = "0=：申请开课中、1：审核已通过、2：申请已驳回")
+    private Long status;
+
+    /** 课程驳回原因 */
+    @Excel(name = "课程驳回原因")
+    private String cause;
+
+    /** 课程容量 */
+    @Excel(name = "课程容量")
+    private Long volume;
+
+    /** 当前选课人数 */
+    @Excel(name = "当前选课人数")
+    private Long currentNumofpeople;
 
     public void setId(Long id) 
     {
@@ -99,6 +119,56 @@ public class BizCourse extends BaseEntity
         return semester;
     }
 
+    public void setTeacherNo(Long teacherNo) 
+    {
+        this.teacherNo = teacherNo;
+    }
+
+    public Long getTeacherNo() 
+    {
+        return teacherNo;
+    }
+
+    public void setStatus(Long status) 
+    {
+        this.status = status;
+    }
+
+    public Long getStatus() 
+    {
+        return status;
+    }
+
+    public void setCause(String cause) 
+    {
+        this.cause = cause;
+    }
+
+    public String getCause() 
+    {
+        return cause;
+    }
+
+    public void setVolume(Long volume) 
+    {
+        this.volume = volume;
+    }
+
+    public Long getVolume() 
+    {
+        return volume;
+    }
+
+    public void setCurrentNumofpeople(Long currentNumofpeople) 
+    {
+        this.currentNumofpeople = currentNumofpeople;
+    }
+
+    public Long getCurrentNumofpeople() 
+    {
+        return currentNumofpeople;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -110,6 +180,11 @@ public class BizCourse extends BaseEntity
             .append("semester", getSemester())
             .append("createTime", getCreateTime())
             .append("remark", getRemark())
+            .append("teacherNo", getTeacherNo())
+            .append("status", getStatus())
+            .append("cause", getCause())
+            .append("volume", getVolume())
+            .append("currentNumofpeople", getCurrentNumofpeople())
             .toString();
     }
 }

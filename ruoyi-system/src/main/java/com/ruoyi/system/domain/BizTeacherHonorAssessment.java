@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 教师荣誉与历年考核记录对象 biz_teacher_honor_assessment
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-10
  */
 public class BizTeacherHonorAssessment extends BaseEntity
 {
@@ -48,6 +48,14 @@ public class BizTeacherHonorAssessment extends BaseEntity
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "发文日期/获奖日期", width = 30, dateFormat = "yyyy-MM-dd")
     private Date awardDate;
+
+    /** 当前状态（0：申请中、1：审核已通过、2：申请已驳回） */
+    @Excel(name = "当前状态", readConverterExp = "0=：申请中、1：审核已通过、2：申请已驳回")
+    private Long status;
+
+    /** 驳回原因 */
+    @Excel(name = "驳回原因")
+    private String cause;
 
     public void setId(Long id) 
     {
@@ -129,6 +137,26 @@ public class BizTeacherHonorAssessment extends BaseEntity
         return awardDate;
     }
 
+    public void setStatus(Long status) 
+    {
+        this.status = status;
+    }
+
+    public Long getStatus() 
+    {
+        return status;
+    }
+
+    public void setCause(String cause) 
+    {
+        this.cause = cause;
+    }
+
+    public String getCause() 
+    {
+        return cause;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -141,6 +169,8 @@ public class BizTeacherHonorAssessment extends BaseEntity
             .append("docNumber", getDocNumber())
             .append("awardDate", getAwardDate())
             .append("createTime", getCreateTime())
+            .append("status", getStatus())
+            .append("cause", getCause())
             .toString();
     }
 }

@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.BizCourse;
  * 课程信息Mapper接口
  * 
  * @author ruoyi
- * @date 2026-04-03
+ * @date 2026-04-10
  */
 public interface BizCourseMapper 
 {

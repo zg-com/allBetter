@@ -25,7 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 教师兼职与访学经历Controller
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-10
  */
 @RestController
 @RequestMapping("/system/experience")

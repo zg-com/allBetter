@@ -59,10 +59,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"    column="update_by"    />
         <result property="updateTime"    column="update_time"    />
         <result property="remark"    column="remark"    />
+        <result property="status"    column="status"    />
+        <result property="cause"    column="cause"    />
     </resultMap>
 
     <sql id="selectBizTeacherProfileVo">
-        select id, user_id, teacher_no, real_name, gender, nation, birth_date, age, coming_time, retire_age, department, native_place, marital_status, religion, emergency_contact, emergency_phone, email, id_card, phone_number, home_address, highest_degree, highest_education, highest_grad_school, major, belong_category, highest_education_begin_time, highest_education_end_time, first_degree, first_education, political_party, professional_title, talent_title, is_dual_shoulder, counselor_type, join_party_date, party_regular_date, admin_post, post_appoint_date, title_eval_date, staff_category, post_name, current_post_date, talent_eval_date, first_hire_date, regular_date, intro_level, special_level, contract_date, contract_file_url, create_by, create_time, update_by, update_time, remark from biz_teacher_profile
+        select id, user_id, teacher_no, real_name, gender, nation, birth_date, age, coming_time, retire_age, department, native_place, marital_status, religion, emergency_contact, emergency_phone, email, id_card, phone_number, home_address, highest_degree, highest_education, highest_grad_school, major, belong_category, highest_education_begin_time, highest_education_end_time, first_degree, first_education, political_party, professional_title, talent_title, is_dual_shoulder, counselor_type, join_party_date, party_regular_date, admin_post, post_appoint_date, title_eval_date, staff_category, post_name, current_post_date, talent_eval_date, first_hire_date, regular_date, intro_level, special_level, contract_date, contract_file_url, create_by, create_time, update_by, update_time, remark, status, cause from biz_teacher_profile
     </sql>
 
     <select id="selectBizTeacherProfileList" parameterType="BizTeacherProfile" resultMap="BizTeacherProfileResult">
@@ -116,6 +118,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="specialLevel != null  and specialLevel != ''"> and special_level = #{specialLevel}</if>
             <if test="contractDate != null "> and contract_date = #{contractDate}</if>
             <if test="contractFileUrl != null  and contractFileUrl != ''"> and contract_file_url = #{contractFileUrl}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="cause != null  and cause != ''"> and cause = #{cause}</if>
         </where>
     </select>
     
@@ -180,6 +184,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="remark != null">remark,</if>
+            <if test="status != null">status,</if>
+            <if test="cause != null">cause,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
@@ -235,6 +241,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="remark != null">#{remark},</if>
+            <if test="status != null">#{status},</if>
+            <if test="cause != null">#{cause},</if>
          </trim>
     </insert>
 
@@ -294,6 +302,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="remark != null">remark = #{remark},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="cause != null">cause = #{cause},</if>
         </trim>
         where id = #{id}
     </update>

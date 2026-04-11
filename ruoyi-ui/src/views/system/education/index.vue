@@ -1,15 +1,54 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="教师id" prop="userId">
+      <el-form-item label="教师的user_id" prop="userId">
         <el-input
           v-model="queryParams.userId"
-          placeholder="请输入教师id"
+          placeholder="请输入教师的user_id"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-
+      <el-form-item label="学习阶段(大专/本科/硕士/博士)" prop="eduStage">
+        <el-input
+          v-model="queryParams.eduStage"
+          placeholder="请输入学习阶段(大专/本科/硕士/博士)"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="就读院校名称" prop="schoolName">
+        <el-input
+          v-model="queryParams.schoolName"
+          placeholder="请输入就读院校名称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="所学专业" prop="major">
+        <el-input
+          v-model="queryParams.major"
+          placeholder="请输入所学专业"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="开始日期" prop="startDate">
+        <el-date-picker clearable
+          v-model="queryParams.startDate"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择开始日期">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="毕业日期" prop="endDate">
+        <el-date-picker clearable
+          v-model="queryParams.endDate"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择毕业日期">
+        </el-date-picker>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -65,8 +104,8 @@
     <el-table v-loading="loading" :data="educationList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="id" />
-      <el-table-column label="教师id" align="center" prop="userId" />
-      <el-table-column label="学习阶段" align="center" prop="eduStage" />
+      <el-table-column label="教师的user_id" align="center" prop="userId" />
+      <el-table-column label="学习阶段(大专/本科/硕士/博士)" align="center" prop="eduStage" />
       <el-table-column label="就读院校名称" align="center" prop="schoolName" />
       <el-table-column label="所学专业" align="center" prop="major" />
       <el-table-column label="开始日期" align="center" prop="startDate" width="180">
@@ -81,6 +120,8 @@
       </el-table-column>
       <el-table-column label="学位证书扫描件地址" align="center" prop="degreeCertUrl" />
       <el-table-column label="毕业证书扫描件地址" align="center" prop="gradCertUrl" />
+      <el-table-column label="当前状态" align="center" prop="status" />
+      <el-table-column label="驳回原因" align="center" prop="cause" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -100,7 +141,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -145,6 +186,9 @@
         </el-form-item>
         <el-form-item label="毕业证书扫描件地址" prop="gradCertUrl">
           <el-input v-model="form.gradCertUrl" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
+        <el-form-item label="驳回原因" prop="cause">
+          <el-input v-model="form.cause" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -192,6 +236,8 @@ export default {
         endDate: null,
         degreeCertUrl: null,
         gradCertUrl: null,
+        status: null,
+        cause: null
       },
       // 表单参数
       form: {},
@@ -233,7 +279,9 @@ export default {
         endDate: null,
         degreeCertUrl: null,
         gradCertUrl: null,
-        createTime: null
+        createTime: null,
+        status: null,
+        cause: null
       }
       this.resetForm("form")
     },

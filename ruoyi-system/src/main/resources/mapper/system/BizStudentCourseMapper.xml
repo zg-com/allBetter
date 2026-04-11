@@ -12,10 +12,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="earnedCredits"    column="earned_credits"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateTime"    column="update_time"    />
+        <result property="chooseStatus"    column="choose_status"    />
+        <result property="learnStatus"    column="learn_status"    />
+        <result property="userId"    column="user_id"    />
     </resultMap>
 
     <sql id="selectBizStudentCourseVo">
-        select id, student_no, course_id, score, earned_credits, create_time, update_time from biz_student_course
+        select id, student_no, course_id, score, earned_credits, create_time, update_time, choose_status, learn_status, user_id from biz_student_course
     </sql>
 
     <select id="selectBizStudentCourseList" parameterType="BizStudentCourse" resultMap="BizStudentCourseResult">
@@ -25,6 +28,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="courseId != null "> and course_id = #{courseId}</if>
             <if test="score != null "> and score = #{score}</if>
             <if test="earnedCredits != null "> and earned_credits = #{earnedCredits}</if>
+            <if test="chooseStatus != null "> and choose_status = #{chooseStatus}</if>
+            <if test="learnStatus != null "> and learn_status = #{learnStatus}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
         </where>
     </select>
     
@@ -42,6 +48,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="earnedCredits != null">earned_credits,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
+            <if test="chooseStatus != null">choose_status,</if>
+            <if test="learnStatus != null">learn_status,</if>
+            <if test="userId != null">user_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="studentNo != null and studentNo != ''">#{studentNo},</if>
@@ -50,6 +59,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="earnedCredits != null">#{earnedCredits},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
+            <if test="chooseStatus != null">#{chooseStatus},</if>
+            <if test="learnStatus != null">#{learnStatus},</if>
+            <if test="userId != null">#{userId},</if>
          </trim>
     </insert>
 
@@ -62,6 +74,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="earnedCredits != null">earned_credits = #{earnedCredits},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="chooseStatus != null">choose_status = #{chooseStatus},</if>
+            <if test="learnStatus != null">learn_status = #{learnStatus},</if>
+            <if test="userId != null">user_id = #{userId},</if>
         </trim>
         where id = #{id}
     </update>

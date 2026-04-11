@@ -21,10 +21,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"    column="update_by"    />
         <result property="updateTime"    column="update_time"    />
         <result property="remark"    column="remark"    />
+        <result property="teacherName"    column="teacher_name"    />
+        <result property="status"    column="status"    />
+        <result property="cause"    column="cause"    />
     </resultMap>
 
     <sql id="selectBizTeachingAwardVo">
-        select id, user_id, award_name, achievement_name, award_level, award_date, all_contributors, issuing_authority, award_grade, cert_number, main_achievement, create_by, create_time, update_by, update_time, remark from biz_teaching_award
+        select id, user_id, award_name, achievement_name, award_level, award_date, all_contributors, issuing_authority, award_grade, cert_number, main_achievement, create_by, create_time, update_by, update_time, remark, teacher_name, status, cause from biz_teaching_award
     </sql>
 
     <select id="selectBizTeachingAwardList" parameterType="BizTeachingAward" resultMap="BizTeachingAwardResult">
@@ -40,6 +43,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="awardGrade != null  and awardGrade != ''"> and award_grade = #{awardGrade}</if>
             <if test="certNumber != null  and certNumber != ''"> and cert_number = #{certNumber}</if>
             <if test="mainAchievement != null  and mainAchievement != ''"> and main_achievement = #{mainAchievement}</if>
+            <if test="teacherName != null  and teacherName != ''"> and teacher_name like concat('%', #{teacherName}, '%')</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="cause != null  and cause != ''"> and cause = #{cause}</if>
         </where>
     </select>
     
@@ -66,6 +72,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="remark != null">remark,</if>
+            <if test="teacherName != null and teacherName != ''">teacher_name,</if>
+            <if test="status != null">status,</if>
+            <if test="cause != null">cause,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
@@ -83,6 +92,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="remark != null">#{remark},</if>
+            <if test="teacherName != null and teacherName != ''">#{teacherName},</if>
+            <if test="status != null">#{status},</if>
+            <if test="cause != null">#{cause},</if>
          </trim>
     </insert>
 
@@ -104,6 +116,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="remark != null">remark = #{remark},</if>
+            <if test="teacherName != null and teacherName != ''">teacher_name = #{teacherName},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="cause != null">cause = #{cause},</if>
         </trim>
         where id = #{id}
     </update>
