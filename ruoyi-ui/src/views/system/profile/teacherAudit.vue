@@ -24,6 +24,29 @@
       </el-form-item>
     </el-form>
 
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+        >申请</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExport"
+          v-hasPermi="['system:profile:export']"
+        >导出</el-button>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
+
 
     <el-table v-loading="loading" :data="profileList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
@@ -133,26 +156,6 @@
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="当前状态" align="center" prop="status" />
       <el-table-column label="驳回原因" align="center" prop="cause" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleApprove(scope.row)"
-            style="color:#67C23A;"
-            v-hasPermi="['system:profile:edit']"
-          >同意</el-button>
-          <el-button
-            size="mini"
-            type="text"
-            icon="el-icon-delete"
-            @click="handleReject(scope.row)"
-            style="color: #F56C6C;"
-            v-hasPermi="['system:profile:remove']"
-          >驳回</el-button>
-        </template>
-      </el-table-column>
     </el-table>
 
     <pagination
@@ -166,12 +169,6 @@
     <!-- 添加或修改教师人事基础档案对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="关联sys_user表的user_id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入关联sys_user表的user_id" />
-        </el-form-item>
-        <el-form-item label="教职工号" prop="teacherNo">
-          <el-input v-model="form.teacherNo" placeholder="请输入教职工号" />
-        </el-form-item>
         <el-form-item label="教职工姓名" prop="realName">
           <el-input v-model="form.realName" placeholder="请输入教职工姓名" />
         </el-form-item>
@@ -377,12 +374,9 @@
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="驳回原因" prop="cause">
-          <el-input v-model="form.cause" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="submitForm">提交申请</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -466,15 +460,15 @@ export default {
         specialLevel: null,
         contractDate: null,
         contractFileUrl: null,
-        status: 0,
+        status: null,
         cause: null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        userId: [
-          { required: true, message: "关联sys_user表的user_id不能为空", trigger: "blur" }
+        realName: [
+          { required: true, message: "姓名不能为空", trigger: "blur" }
         ],
         nation: [
           { required: true, message: "民族不能为空", trigger: "blur" }
@@ -486,6 +480,10 @@ export default {
     }
   },
   created() {
+    // console.log("6666"+ this.$store.state.user.id);
+    this.queryParams.userId = this.$store.state.user.id;
+
+    // 👉 赋值完成后，再去调用向后端发请求查数据的函数
     this.getList()
   },
   methods: {

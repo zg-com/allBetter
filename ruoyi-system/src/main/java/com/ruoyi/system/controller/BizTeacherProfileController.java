@@ -119,6 +119,7 @@ public class BizTeacherProfileController extends BaseController {
     @Log(title = "教师人事基础档案", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody BizTeacherProfile bizTeacherProfile) {
+        bizTeacherProfile.setUserId(SecurityUtils.getUserId());
         return toAjax(bizTeacherProfileService.insertBizTeacherProfile(bizTeacherProfile));
     }
 
