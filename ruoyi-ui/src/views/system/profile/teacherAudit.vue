@@ -156,7 +156,27 @@
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="当前状态" align="center" prop="status" />
       <el-table-column label="驳回原因" align="center" prop="cause" />
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['system:student_profile:edit']"
+          >修改申请</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+            v-hasPermi="['system:student_profile:remove']"
+
+          >撤回申请</el-button>
+        </template>
+      </el-table-column>
     </el-table>
+
 
     <pagination
       v-show="total>0"
@@ -384,7 +404,8 @@
 </template>
 
 <script>
-import { listProfile, getProfile, delProfile, addProfile, updateProfile,approveProfile,rejectProfile} from "@/api/system/profile"
+import { listProfile, getProfile, delProfile, addProfile, updateProfile,approveProfile,rejectProfile,applyProfile} from "@/api/system/profile"
+
 
 export default {
   name: "Profile",
@@ -606,7 +627,7 @@ export default {
               this.getList()
             })
           } else {
-            addProfile(this.form).then(response => {
+            applyProfile(this.form).then(response => {
               this.$modal.msgSuccess("新增成功")
               this.open = false
               this.getList()

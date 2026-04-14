@@ -1,6 +1,9 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.domain.BizTeacherProfile;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +28,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 学生基础学籍档案Controller
  * 
  * @author ruoyi
- * @date 2026-04-10
+ * @date 2026-04-14
  */
 @RestController
 @RequestMapping("/system/student_profile")
@@ -33,6 +36,40 @@ public class BizStudentProfileController extends BaseController
 {
     @Autowired
     private IBizStudentProfileService bizStudentProfileService;
+
+    //自定义接口部分
+
+    /*
+     * 学生提交档案申请*/
+    @Log(title = "学生提交档案申请", businessType = BusinessType.INSERT)
+    @PostMapping("/apply")
+    public AjaxResult apply(@RequestBody BizStudentProfile bizStudentProfile) {
+        //自动设置用户id
+        bizStudentProfile.setUserId(SecurityUtils.getUserId());
+        bizStudentProfile.setStatusProfile(0L);
+        bizStudentProfile.setStudentNo(SecurityUtils.getUsername());
+        return toAjax(bizStudentProfileService.insertBizStudentProfile(bizStudentProfile));
+    }
+
+    /*
+     * 学生档案审批同意*/
+    @Log(title = "学生档案审批", businessType = BusinessType.UPDATE)
+    @PutMapping("/approve")
+    public AjaxResult approve(@RequestBody BizStudentProfile bizStudentProfile) {
+        bizStudentProfile.setStatusProfile(1L);
+        bizStudentProfile.setCause("");
+        return toAjax(bizStudentProfileService.updateBizStudentProfile(bizStudentProfile));
+    }
+
+    /*
+     * 学生档案审批驳回*/
+    @Log(title = "学生档案审批", businessType = BusinessType.UPDATE)
+    @PutMapping("/reject")
+    public AjaxResult reject(@RequestBody BizStudentProfile bizStudentProfile) {
+        bizStudentProfile.setStatusProfile(2L);
+        bizStudentProfile.setCause(bizStudentProfile.getCause());
+        return toAjax(bizStudentProfileService.updateBizStudentProfile(bizStudentProfile));
+    }
 
     /**
      * 查询学生基础学籍档案列表

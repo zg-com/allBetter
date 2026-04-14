@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.BizStudentProfile;
  * 学生基础学籍档案Service接口
  * 
  * @author ruoyi
- * @date 2026-04-10
+ * @date 2026-04-14
  */
 public interface IBizStudentProfileService 
 {

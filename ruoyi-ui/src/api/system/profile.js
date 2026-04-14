@@ -43,6 +43,15 @@ export function delProfile(id) {
   })
 }
 
+//老师提交申请
+export function applyProfile(data){
+  return request({
+    url: '/system/profile/apply',
+    method:'post',
+    data:data
+  })
+}
+
 //同意教师认识档案批准
 export function approveProfile(id) {
   return request({
@@ -53,7 +62,7 @@ export function approveProfile(id) {
 }
 
 
-// 🔴 驳回教师档案申请
+//  驳回教师档案申请
 export function rejectProfile(data) {
   return request({
     url: '/system/profile/reject', // 这是你刚才测试的那个驳回接口

@@ -12,7 +12,7 @@ import com.ruoyi.system.service.IBizStudentProfileService;
  * 学生基础学籍档案Service业务层处理
  * 
  * @author ruoyi
- * @date 2026-04-10
+ * @date 2026-04-14
  */
 @Service
 public class BizStudentProfileServiceImpl implements IBizStudentProfileService 

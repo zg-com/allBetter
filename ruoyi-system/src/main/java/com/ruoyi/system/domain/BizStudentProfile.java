@@ -9,7 +9,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 学生基础学籍档案对象 biz_student_profile
  * 
  * @author ruoyi
- * @date 2026-04-10
+ * @date 2026-04-14
  */
 public class BizStudentProfile extends BaseEntity
 {
@@ -57,6 +57,14 @@ public class BizStudentProfile extends BaseEntity
     /** 学籍状态(在读/毕业/休学) */
     @Excel(name = "学籍状态(在读/毕业/休学)")
     private String status;
+
+    /** 当前状态（0：申请中、1：审核已通过、2：申请已驳回） */
+    @Excel(name = "当前状态", readConverterExp = "0=：申请中、1：审核已通过、2：申请已驳回")
+    private Long statusProfile;
+
+    /** 驳回原因 */
+    @Excel(name = "驳回原因")
+    private String cause;
 
     public void setId(Long id) 
     {
@@ -168,6 +176,26 @@ public class BizStudentProfile extends BaseEntity
         return status;
     }
 
+    public void setStatusProfile(Long statusProfile) 
+    {
+        this.statusProfile = statusProfile;
+    }
+
+    public Long getStatusProfile() 
+    {
+        return statusProfile;
+    }
+
+    public void setCause(String cause) 
+    {
+        this.cause = cause;
+    }
+
+    public String getCause() 
+    {
+        return cause;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -187,6 +215,8 @@ public class BizStudentProfile extends BaseEntity
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
+            .append("statusProfile", getStatusProfile())
+            .append("cause", getCause())
             .toString();
     }
 }

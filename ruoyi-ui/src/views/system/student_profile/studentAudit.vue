@@ -1,14 +1,6 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="关联sys_user的ID" prop="userId">
-        <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入关联sys_user的ID"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="学号(登录账号)" prop="studentNo">
         <el-input
           v-model="queryParams.studentNo"
@@ -21,54 +13,6 @@
         <el-input
           v-model="queryParams.realName"
           placeholder="请输入姓名"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="性别(0男 1女)" prop="gender">
-        <el-input
-          v-model="queryParams.gender"
-          placeholder="请输入性别(0男 1女)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="身份证号" prop="idCard">
-        <el-input
-          v-model="queryParams.idCard"
-          placeholder="请输入身份证号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="所属学院" prop="college">
-        <el-input
-          v-model="queryParams.college"
-          placeholder="请输入所属学院"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="所属专业" prop="major">
-        <el-input
-          v-model="queryParams.major"
-          placeholder="请输入所属专业"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="所属班级" prop="className">
-        <el-input
-          v-model="queryParams.className"
-          placeholder="请输入所属班级"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="入学年份(如:2023级)" prop="enrollmentYear">
-        <el-input
-          v-model="queryParams.enrollmentYear"
-          placeholder="请输入入学年份(如:2023级)"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -87,30 +31,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['system:student_profile:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['system:student_profile:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['system:student_profile:remove']"
-        >删除</el-button>
+        >申请</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -119,7 +40,6 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['system:student_profile:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -127,8 +47,6 @@
 
     <el-table v-loading="loading" :data="student_profileList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键ID" align="center" prop="id" />
-      <el-table-column label="关联sys_user的ID" align="center" prop="userId" />
       <el-table-column label="学号(登录账号)" align="center" prop="studentNo" />
       <el-table-column label="姓名" align="center" prop="realName" />
       <el-table-column label="性别(0男 1女)" align="center" prop="gender" />
@@ -148,15 +66,13 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:student_profile:edit']"
-          >修改</el-button>
+          >修改申请</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:student_profile:remove']"
-          >删除</el-button>
+          >撤回申请</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -172,12 +88,6 @@
     <!-- 添加或修改学生基础学籍档案对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="关联sys_user的ID" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入关联sys_user的ID" />
-        </el-form-item>
-        <el-form-item label="学号(登录账号)" prop="studentNo">
-          <el-input v-model="form.studentNo" placeholder="请输入学号(登录账号)" />
-        </el-form-item>
         <el-form-item label="姓名" prop="realName">
           <el-input v-model="form.realName" placeholder="请输入姓名" />
         </el-form-item>
@@ -202,12 +112,6 @@
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="当前状态" prop="statusProfile">
-          <file-upload v-model="form.statusProfile"/>
-        </el-form-item>
-        <el-form-item label="驳回原因" prop="cause">
-          <el-input v-model="form.cause" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -218,7 +122,13 @@
 </template>
 
 <script>
-import { listStudent_profile, getStudent_profile, delStudent_profile, addStudent_profile, updateStudent_profile } from "@/api/system/student_profile"
+import { listStudent_profile, getStudent_profile, delStudent_profile, addStudent_profile, updateStudent_profile,applyProfile} from "@/api/system/student_profile"
+
+// 1. 从 localStorage 拿用户信息
+const user = JSON.parse(localStorage.getItem('userInfo') || '{}')
+
+// 2. 拿到 id
+const userId = user.id || user.userId
 
 export default {
   name: "Student_profile",
@@ -246,7 +156,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        userId: null,
+        userId: userId,
         studentNo: null,
         realName: null,
         gender: null,
@@ -263,12 +173,6 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        userId: [
-          { required: true, message: "关联sys_user的ID不能为空", trigger: "blur" }
-        ],
-        studentNo: [
-          { required: true, message: "学号(登录账号)不能为空", trigger: "blur" }
-        ],
         realName: [
           { required: true, message: "姓名不能为空", trigger: "blur" }
         ],
@@ -360,7 +264,7 @@ export default {
               this.getList()
             })
           } else {
-            addStudent_profile(this.form).then(response => {
+            applyProfile(this.form).then(response => {
               this.$modal.msgSuccess("新增成功")
               this.open = false
               this.getList()
