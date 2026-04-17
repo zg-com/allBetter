@@ -13,10 +13,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="schoolingStatus"    column="schooling_status"    />
         <result property="nurseryFeeInfo"    column="nursery_fee_info"    />
         <result property="createTime"    column="create_time"    />
+        <result property="status"    column="status"    />
+        <result property="cause"    column="cause"    />
     </resultMap>
 
     <sql id="selectBizTeacherChildVo">
-        select id, user_id, child_name, birth_date, gender, schooling_status, nursery_fee_info, create_time from biz_teacher_child
+        select id, user_id, child_name, birth_date, gender, schooling_status, nursery_fee_info, create_time, status, cause from biz_teacher_child
     </sql>
 
     <select id="selectBizTeacherChildList" parameterType="BizTeacherChild" resultMap="BizTeacherChildResult">
@@ -28,6 +30,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="gender != null  and gender != ''"> and gender = #{gender}</if>
             <if test="schoolingStatus != null  and schoolingStatus != ''"> and schooling_status = #{schoolingStatus}</if>
             <if test="nurseryFeeInfo != null  and nurseryFeeInfo != ''"> and nursery_fee_info = #{nurseryFeeInfo}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="cause != null  and cause != ''"> and cause = #{cause}</if>
         </where>
     </select>
     
@@ -46,6 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="schoolingStatus != null">schooling_status,</if>
             <if test="nurseryFeeInfo != null">nursery_fee_info,</if>
             <if test="createTime != null">create_time,</if>
+            <if test="status != null">status,</if>
+            <if test="cause != null">cause,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
@@ -55,6 +61,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="schoolingStatus != null">#{schoolingStatus},</if>
             <if test="nurseryFeeInfo != null">#{nurseryFeeInfo},</if>
             <if test="createTime != null">#{createTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="cause != null">#{cause},</if>
          </trim>
     </insert>
 
@@ -68,6 +76,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="schoolingStatus != null">schooling_status = #{schoolingStatus},</if>
             <if test="nurseryFeeInfo != null">nursery_fee_info = #{nurseryFeeInfo},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="cause != null">cause = #{cause},</if>
         </trim>
         where id = #{id}
     </update>

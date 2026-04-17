@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 教师个人创业情况对象 biz_teacher_company
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-17
  */
 public class BizTeacherCompany extends BaseEntity
 {
@@ -36,6 +36,14 @@ public class BizTeacherCompany extends BaseEntity
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "成立日期", width = 30, dateFormat = "yyyy-MM-dd")
     private Date establishDate;
+
+    /** 当前状态（0：申请中、1：审核已通过、2：申请已驳回） */
+    @Excel(name = "当前状态", readConverterExp = "0=：申请中、1：审核已通过、2：申请已驳回")
+    private Long status;
+
+    /** 驳回原因 */
+    @Excel(name = "驳回原因")
+    private String cause;
 
     public void setId(Long id) 
     {
@@ -87,6 +95,26 @@ public class BizTeacherCompany extends BaseEntity
         return establishDate;
     }
 
+    public void setStatus(Long status) 
+    {
+        this.status = status;
+    }
+
+    public Long getStatus() 
+    {
+        return status;
+    }
+
+    public void setCause(String cause) 
+    {
+        this.cause = cause;
+    }
+
+    public String getCause() 
+    {
+        return cause;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -96,6 +124,8 @@ public class BizTeacherCompany extends BaseEntity
             .append("legalPerson", getLegalPerson())
             .append("establishDate", getEstablishDate())
             .append("createTime", getCreateTime())
+            .append("status", getStatus())
+            .append("cause", getCause())
             .toString();
     }
 }

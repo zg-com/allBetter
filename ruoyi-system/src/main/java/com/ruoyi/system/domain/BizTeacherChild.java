@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 教师子女与妇幼档案对象 biz_teacher_child
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-17
  */
 public class BizTeacherChild extends BaseEntity
 {
@@ -44,6 +44,14 @@ public class BizTeacherChild extends BaseEntity
     /** 幼儿费用及上学问题详细备注 */
     @Excel(name = "幼儿费用及上学问题详细备注")
     private String nurseryFeeInfo;
+
+    /** 当前状态（0：申请中、1：审核已通过、2：申请已驳回） */
+    @Excel(name = "当前状态", readConverterExp = "0=：申请中、1：审核已通过、2：申请已驳回")
+    private Long status;
+
+    /** 驳回原因 */
+    @Excel(name = "驳回原因")
+    private String cause;
 
     public void setId(Long id) 
     {
@@ -115,6 +123,26 @@ public class BizTeacherChild extends BaseEntity
         return nurseryFeeInfo;
     }
 
+    public void setStatus(Long status) 
+    {
+        this.status = status;
+    }
+
+    public Long getStatus() 
+    {
+        return status;
+    }
+
+    public void setCause(String cause) 
+    {
+        this.cause = cause;
+    }
+
+    public String getCause() 
+    {
+        return cause;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -126,6 +154,8 @@ public class BizTeacherChild extends BaseEntity
             .append("schoolingStatus", getSchoolingStatus())
             .append("nurseryFeeInfo", getNurseryFeeInfo())
             .append("createTime", getCreateTime())
+            .append("status", getStatus())
+            .append("cause", getCause())
             .toString();
     }
 }

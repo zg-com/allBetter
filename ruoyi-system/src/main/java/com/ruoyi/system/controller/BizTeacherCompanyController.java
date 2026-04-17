@@ -1,6 +1,8 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 教师个人创业情况Controller
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-17
  */
 @RestController
 @RequestMapping("/system/company")
@@ -33,6 +35,42 @@ public class BizTeacherCompanyController extends BaseController
 {
     @Autowired
     private IBizTeacherCompanyService bizTeacherCompanyService;
+
+    //自定义接口部分
+
+     /*
+     * 教师提交创业申请
+      */
+    @Log(title = "教师创业信息申请", businessType = BusinessType.INSERT)
+    @PostMapping("/apply")
+    public AjaxResult apply(@RequestBody BizTeacherCompany bizTeacherCompany){
+        bizTeacherCompany.setUserId(SecurityUtils.getUserId());
+        bizTeacherCompany.setStatus(0L);
+        return toAjax(bizTeacherCompanyService.insertBizTeacherCompany(bizTeacherCompany));
+    }
+    /*
+     * 同意创业信息申请
+     */
+    @Log(title = "教师创业信息申请", businessType = BusinessType.UPDATE)
+    @PutMapping("/approve")
+    public AjaxResult approve(@RequestBody BizTeacherCompany bizTeacherCompany){
+        bizTeacherCompany.setStatus(1L);
+        bizTeacherCompany.setCause("");
+        return toAjax(bizTeacherCompanyService.updateBizTeacherCompany(bizTeacherCompany));
+    }
+
+    /*
+     * 拒绝创业信息申请
+     */
+    @Log(title = "教师创业信息申请", businessType = BusinessType.UPDATE)
+    @PutMapping("/reject")
+    public AjaxResult reject(@RequestBody BizTeacherCompany bizTeacherCompany){
+        bizTeacherCompany.setStatus(2L);
+        bizTeacherCompany.setCause(bizTeacherCompany.getCause());
+        return toAjax(bizTeacherCompanyService.updateBizTeacherCompany(bizTeacherCompany));
+    }
+
+
 
     /**
      * 查询教师个人创业情况列表
@@ -77,6 +115,7 @@ public class BizTeacherCompanyController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody BizTeacherCompany bizTeacherCompany)
     {
+        bizTeacherCompany.setUserId(SecurityUtils.getUserId());
         return toAjax(bizTeacherCompanyService.insertBizTeacherCompany(bizTeacherCompany));
     }
 

@@ -1,6 +1,8 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 教师子女与妇幼档案Controller
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-17
  */
 @RestController
 @RequestMapping("/system/child")
@@ -33,6 +35,41 @@ public class BizTeacherChildController extends BaseController
 {
     @Autowired
     private IBizTeacherChildService bizTeacherChildService;
+
+    //自定义接口部分
+
+     /*
+     * 教师提交子女信息申请
+      */
+    @Log(title = "教师子女信息申请", businessType = BusinessType.INSERT)
+    @PostMapping("/apply")
+    public AjaxResult apply(@RequestBody BizTeacherChild bizTeacherChild){
+        bizTeacherChild.setUserId(SecurityUtils.getUserId());
+        bizTeacherChild.setStatus(0L);
+        return toAjax(bizTeacherChildService.insertBizTeacherChild(bizTeacherChild));
+    }
+
+    /*
+      * 同意子女信息申请
+     */
+    @Log(title = "教师子女信息申请同意", businessType = BusinessType.UPDATE)
+    @PutMapping("/approve")
+    public AjaxResult approve(@RequestBody BizTeacherChild bizTeacherChild){
+        bizTeacherChild.setStatus(1L);
+        bizTeacherChild.setCause("");
+        return toAjax(bizTeacherChildService.updateBizTeacherChild(bizTeacherChild));
+    }
+
+    /*
+      * 拒绝子女信息申请
+     */
+    @Log(title = "教师子女信息申请拒绝", businessType = BusinessType.UPDATE)
+    @PutMapping("/reject")
+    public AjaxResult reject(@RequestBody BizTeacherChild bizTeacherChild){
+        bizTeacherChild.setStatus(2L);
+        bizTeacherChild.setCause(bizTeacherChild.getCause());
+        return toAjax(bizTeacherChildService.updateBizTeacherChild(bizTeacherChild));
+    }
 
     /**
      * 查询教师子女与妇幼档案列表
@@ -77,6 +114,7 @@ public class BizTeacherChildController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody BizTeacherChild bizTeacherChild)
     {
+        bizTeacherChild.setUserId(SecurityUtils.getUserId());
         return toAjax(bizTeacherChildService.insertBizTeacherChild(bizTeacherChild));
     }
 

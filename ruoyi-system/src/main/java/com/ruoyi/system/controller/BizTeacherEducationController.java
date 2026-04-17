@@ -1,6 +1,8 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,44 @@ public class BizTeacherEducationController extends BaseController
 {
     @Autowired
     private IBizTeacherEducationService bizTeacherEducationService;
+
+    //自定义接口部分
+
+    /*
+     * 教师提交历年学习经历与证书申请
+     */
+    @Log(title = "教师历年学习经历与证书", businessType = BusinessType.INSERT)
+    @PostMapping("/apply")
+    public AjaxResult apply(@RequestBody BizTeacherEducation bizTeacherEducation) {
+        //自动设置用户id
+        bizTeacherEducation.setUserId(SecurityUtils.getUserId());
+        bizTeacherEducation.setStatus(0L);
+        return toAjax(bizTeacherEducationService.insertBizTeacherEducation(bizTeacherEducation));
+    }
+
+    /*
+     * 教师历年学习经历与证书审批同意
+     */
+    @Log(title = "教师历年学习经历与证书", businessType = BusinessType.UPDATE)
+    @PutMapping("/approve")
+    public AjaxResult approve(@RequestBody BizTeacherEducation bizTeacherEducation) {
+        bizTeacherEducation.setStatus(1L);
+        bizTeacherEducation.setCause("");
+        return toAjax(bizTeacherEducationService.updateBizTeacherEducation(bizTeacherEducation));
+    }
+
+    /*
+     * 教师历年学习经历与证书审批驳回
+     */
+    @Log(title = "教师历年学习经历与证书", businessType = BusinessType.UPDATE)
+    @PutMapping("/reject")
+    public AjaxResult reject(@RequestBody BizTeacherEducation bizTeacherEducation) {
+        bizTeacherEducation.setStatus(2L);
+        bizTeacherEducation.setCause(bizTeacherEducation.getCause());
+        return toAjax(bizTeacherEducationService.updateBizTeacherEducation(bizTeacherEducation));
+    }
+
+
 
     /**
      * 查询教师历年学习经历与证书列表
@@ -77,6 +117,7 @@ public class BizTeacherEducationController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody BizTeacherEducation bizTeacherEducation)
     {
+        bizTeacherEducation.setUserId(SecurityUtils.getUserId());
         return toAjax(bizTeacherEducationService.insertBizTeacherEducation(bizTeacherEducation));
     }
 

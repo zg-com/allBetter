@@ -12,7 +12,7 @@ import com.ruoyi.system.service.IBizTeacherCompanyService;
  * 教师个人创业情况Service业务层处理
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-17
  */
 @Service
 public class BizTeacherCompanyServiceImpl implements IBizTeacherCompanyService 

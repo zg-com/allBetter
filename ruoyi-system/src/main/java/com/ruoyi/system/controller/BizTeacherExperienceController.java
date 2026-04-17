@@ -1,6 +1,9 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.domain.BizStudentProfile;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,43 @@ public class BizTeacherExperienceController extends BaseController
 {
     @Autowired
     private IBizTeacherExperienceService bizTeacherExperienceService;
+
+
+    //自定义接口部分
+
+    /* *
+     * 教师提交兼职与访学经历申请
+     */
+    @Log(title = "教师兼职与访学经历", businessType = BusinessType.INSERT)
+    @PostMapping("/apply")
+    public AjaxResult apply(@RequestBody BizTeacherExperience bizTeacherExperience) {
+        //自动设置用户id
+        bizTeacherExperience.setUserId(SecurityUtils.getUserId());
+        bizTeacherExperience.setStatus(0L);
+        return toAjax(bizTeacherExperienceService.insertBizTeacherExperience(bizTeacherExperience));
+    }
+
+    /* *
+     * 教师兼职与访学经历审批同意
+     */
+    @Log(title = "教师兼职与访学经历", businessType = BusinessType.UPDATE)
+    @PutMapping("/approve")
+    public AjaxResult approve(@RequestBody BizTeacherExperience bizTeacherExperience) {
+        bizTeacherExperience.setStatus(1L);
+        bizTeacherExperience.setCause("");
+        return toAjax(bizTeacherExperienceService.updateBizTeacherExperience(bizTeacherExperience));
+    }
+
+    /* *
+     * 教师兼职与访学经历审批驳回
+     */
+    @Log(title = "教师兼职与访学经历", businessType = BusinessType.UPDATE)
+    @PutMapping("/reject")
+    public AjaxResult reject(@RequestBody BizTeacherExperience bizTeacherExperience) {
+        bizTeacherExperience.setStatus(2L);
+        bizTeacherExperience.setCause(bizTeacherExperience.getCause());
+        return toAjax(bizTeacherExperienceService.updateBizTeacherExperience(bizTeacherExperience));
+    }
 
     /**
      * 查询教师兼职与访学经历列表
@@ -77,6 +117,7 @@ public class BizTeacherExperienceController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody BizTeacherExperience bizTeacherExperience)
     {
+        bizTeacherExperience.setUserId(SecurityUtils.getUserId());
         return toAjax(bizTeacherExperienceService.insertBizTeacherExperience(bizTeacherExperience));
     }
 
