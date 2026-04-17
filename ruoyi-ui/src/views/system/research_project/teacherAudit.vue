@@ -1,22 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="关联教师的主键(负责人)" prop="userId">
-        <el-input
-          v-model="queryParams.userId"
-          placeholder="请输入关联教师的主键(负责人)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="项目编号" prop="projectNo">
-        <el-input
-          v-model="queryParams.projectNo"
-          placeholder="请输入项目编号"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="项目名称" prop="projectName">
         <el-input
           v-model="queryParams.projectName"
@@ -25,58 +10,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="项目来源" prop="projectSource">
-        <el-input
-          v-model="queryParams.projectSource"
-          placeholder="请输入项目来源"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
       <el-form-item label="负责人" prop="leaderName">
         <el-input
           v-model="queryParams.leaderName"
           placeholder="请输入负责人"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="项目签署所属年度" prop="signYear">
-        <el-input
-          v-model="queryParams.signYear"
-          placeholder="请输入项目签署所属年度"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="合同签订日期" prop="contractStartDate">
-        <el-date-picker clearable
-          v-model="queryParams.contractStartDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择合同签订日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="合同截止日期" prop="contractEndDate">
-        <el-date-picker clearable
-          v-model="queryParams.contractEndDate"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="请选择合同截止日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="合同金额(万元)" prop="contractAmount">
-        <el-input
-          v-model="queryParams.contractAmount"
-          placeholder="请输入合同金额(万元)"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="到账金额(万元)" prop="arrivedAmount">
-        <el-input
-          v-model="queryParams.arrivedAmount"
-          placeholder="请输入到账金额(万元)"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -96,29 +33,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['system:research_project:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['system:research_project:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['system:research_project:remove']"
-        >删除</el-button>
+        >申请</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -135,8 +50,7 @@
 
     <el-table v-loading="loading" :data="research_projectList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="主键ID" align="center" prop="id" />
-      <el-table-column label="关联教师的主键(负责人)" align="center" prop="userId" />
+      <el-table-column label="负责人ID" align="center" prop="userId" />
       <el-table-column label="项目编号" align="center" prop="projectNo" />
       <el-table-column label="项目名称" align="center" prop="projectName" />
       <el-table-column label="项目来源" align="center" prop="projectSource" />
@@ -164,15 +78,13 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:research_project:edit']"
-          >修改</el-button>
+          >修改申请</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:research_project:remove']"
-          >删除</el-button>
+          >撤回申请</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -189,7 +101,7 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="负责人" prop="userId">
-          <span style="font-size: 16px">由项目负责老师申请，系统负责人自动绑定此账号</span>
+          <el-input v-model="form.userId" :placeholder = "this.queryParams.userId + '   默认绑定本账号为负责人'" disabled />
         </el-form-item>
         <el-form-item label="项目编号" prop="projectNo">
           <el-input v-model="form.projectNo" placeholder="请输入项目编号" />
@@ -208,18 +120,18 @@
         </el-form-item>
         <el-form-item label="合同签订日期" prop="contractStartDate">
           <el-date-picker clearable
-            v-model="form.contractStartDate"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择合同签订日期">
+                          v-model="form.contractStartDate"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="请选择合同签订日期">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="合同截止日期" prop="contractEndDate">
           <el-date-picker clearable
-            v-model="form.contractEndDate"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择合同截止日期">
+                          v-model="form.contractEndDate"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="请选择合同截止日期">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="合同金额(万元)" prop="contractAmount">
@@ -231,9 +143,6 @@
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="驳回原因" prop="cause">
-          <el-input v-model="form.cause" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -244,11 +153,13 @@
 </template>
 
 <script>
-import { listResearch_project, getResearch_project, delResearch_project, addResearch_project, updateResearch_project } from "@/api/system/research_project"
+import { listResearch_project, getResearch_project, delResearch_project, addResearch_project, updateResearch_project,approveProfile,rejectProfile } from "@/api/system/research_project"
 
 export default {
   name: "Research_project",
+
   data() {
+
     return {
       // 遮罩层
       loading: true,
@@ -299,6 +210,8 @@ export default {
     }
   },
   created() {
+    const currentUserId = this.$store.state.user.id
+    this.queryParams.userId = currentUserId
     this.getList()
   },
   methods: {
@@ -407,6 +320,41 @@ export default {
       this.download('system/research_project/export', {
         ...this.queryParams
       }, `research_project_${new Date().getTime()}.xlsx`)
+    },
+    /*批准请求*/
+    handleApprove(row) {
+      // 1. 弹出二次确认框，防止管理员手滑点错
+      this.$modal.confirm('确定要通过教师 "' + row.realName + '" 的档案申请吗？').then(function() {
+        // 2. 点击确定后，调用后端同意接口
+        return approveProfile(row.id);
+      }).then(() => {
+        // 3. 接口调用成功后，刷新当前表格，并提示成功
+        this.getList();
+        this.$modal.msgSuccess("已成功通过申请！");
+      }).catch(() => {});
+    },
+    handleReject(row) {
+      // 1. 使用极其优雅的 $prompt 直接呼出一个带输入框的弹窗！
+      this.$prompt('请输入驳回原因', '驳回申请', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /\S/, // 校验规则：不能为空
+        inputErrorMessage: '驳回原因不能为空！'
+      }).then(({ value }) => {
+        // 2. value 就是管理员在弹窗里填写的驳回原因
+        const data = {
+          id: row.id,
+          cause: value // 组装成后端需要的 JSON 格式
+        };
+        // 3. 调用后端驳回接口
+        return rejectProfile(data);
+      }).then(() => {
+        // 4. 成功后刷新表格并提示
+        this.getList();
+        this.$modal.msgSuccess("已驳回该申请！");
+      }).catch(() => {
+        // 取消操作时不做任何事
+      });
     }
   }
 }

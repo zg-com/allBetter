@@ -9,7 +9,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 大创项目管理对象 biz_innovation_project
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-17
  */
 public class BizInnovationProject extends BaseEntity
 {
@@ -57,6 +57,18 @@ public class BizInnovationProject extends BaseEntity
     /** 项目状态(0进行中 1已结题) */
     @Excel(name = "项目状态(0进行中 1已结题)")
     private String status;
+
+    /** 用户名id */
+    @Excel(name = "用户名id")
+    private Long userId;
+
+    /** 当前状态（0：申请中、1：审核已通过、2：申请已驳回） */
+    @Excel(name = "当前状态", readConverterExp = "0=：申请中、1：审核已通过、2：申请已驳回")
+    private Long status1;
+
+    /** 驳回原因 */
+    @Excel(name = "驳回原因")
+    private String cause;
 
     public void setId(Long id) 
     {
@@ -168,6 +180,36 @@ public class BizInnovationProject extends BaseEntity
         return status;
     }
 
+    public void setUserId(Long userId) 
+    {
+        this.userId = userId;
+    }
+
+    public Long getUserId() 
+    {
+        return userId;
+    }
+
+    public void setStatus1(Long status1) 
+    {
+        this.status1 = status1;
+    }
+
+    public Long getStatus1() 
+    {
+        return status1;
+    }
+
+    public void setCause(String cause) 
+    {
+        this.cause = cause;
+    }
+
+    public String getCause() 
+    {
+        return cause;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -187,6 +229,9 @@ public class BizInnovationProject extends BaseEntity
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
+            .append("userId", getUserId())
+            .append("status1", getStatus1())
+            .append("cause", getCause())
             .toString();
     }
 }

@@ -21,10 +21,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"    column="update_by"    />
         <result property="updateTime"    column="update_time"    />
         <result property="remark"    column="remark"    />
+        <result property="status"    column="status"    />
+        <result property="cause"    column="cause"    />
     </resultMap>
 
     <sql id="selectBizResearchProjectVo">
-        select id, user_id, project_no, project_name, project_source, leader_name, sign_year, contract_start_date, contract_end_date, contract_amount, arrived_amount, create_by, create_time, update_by, update_time, remark from biz_research_project
+        select id, user_id, project_no, project_name, project_source, leader_name, sign_year, contract_start_date, contract_end_date, contract_amount, arrived_amount, create_by, create_time, update_by, update_time, remark, status, cause from biz_research_project
     </sql>
 
     <select id="selectBizResearchProjectList" parameterType="BizResearchProject" resultMap="BizResearchProjectResult">
@@ -40,6 +42,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="contractEndDate != null "> and contract_end_date = #{contractEndDate}</if>
             <if test="contractAmount != null "> and contract_amount = #{contractAmount}</if>
             <if test="arrivedAmount != null "> and arrived_amount = #{arrivedAmount}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="cause != null  and cause != ''"> and cause = #{cause}</if>
         </where>
     </select>
     
@@ -66,6 +70,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="remark != null">remark,</if>
+            <if test="status != null">status,</if>
+            <if test="cause != null">cause,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
@@ -83,6 +89,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="remark != null">#{remark},</if>
+            <if test="status != null">#{status},</if>
+            <if test="cause != null">#{cause},</if>
          </trim>
     </insert>
 
@@ -104,6 +112,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="remark != null">remark = #{remark},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="cause != null">cause = #{cause},</if>
         </trim>
         where id = #{id}
     </update>

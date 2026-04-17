@@ -1,17 +1,12 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -25,7 +20,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 科研项目经费与周期管理Controller
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-17
  */
 @RestController
 @RequestMapping("/system/research_project")
@@ -33,6 +28,44 @@ public class BizResearchProjectController extends BaseController
 {
     @Autowired
     private IBizResearchProjectService bizResearchProjectService;
+
+    // 自定义接口
+
+    /*
+     *申请科研项目经费与周期管理
+     */
+    @Log(title = "科研项目经费与周期管理", businessType = BusinessType.INSERT)
+    @PostMapping("/apply")
+    public AjaxResult apply(@RequestBody BizResearchProject bizResearchProject)
+    {
+        bizResearchProject.setUserId(SecurityUtils.getUserId());
+        bizResearchProject.setStatus(0L);
+        return toAjax(bizResearchProjectService.insertBizResearchProject(bizResearchProject));
+    }
+
+    /*
+     *同意科研项目经费与周期管理
+     */
+    @Log(title = "同意科研项目经费与周期管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/approve")
+    public AjaxResult approve(@RequestBody BizResearchProject bizResearchProject)
+    {
+        bizResearchProject.setStatus(1L);
+        bizResearchProject.setCause("");
+        return toAjax(bizResearchProjectService.updateBizResearchProject(bizResearchProject));
+    }
+
+    /*
+     *拒绝科研项目经费与周期管理
+     */
+    @Log(title = "拒绝科研项目经费与周期管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/reject")
+    public AjaxResult reject(@RequestBody BizResearchProject bizResearchProject)
+    {
+        bizResearchProject.setStatus(2L);
+        bizResearchProject.setCause(bizResearchProject.getCause());
+        return toAjax(bizResearchProjectService.updateBizResearchProject(bizResearchProject));
+    }
 
     /**
      * 查询科研项目经费与周期管理列表
@@ -77,6 +110,7 @@ public class BizResearchProjectController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody BizResearchProject bizResearchProject)
     {
+        bizResearchProject.setUserId(SecurityUtils.getUserId());
         return toAjax(bizResearchProjectService.insertBizResearchProject(bizResearchProject));
     }
 

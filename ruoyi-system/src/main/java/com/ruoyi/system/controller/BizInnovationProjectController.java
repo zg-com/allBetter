@@ -1,6 +1,8 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 大创项目管理Controller
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-17
  */
 @RestController
 @RequestMapping("/system/innovation_project")
@@ -33,6 +35,49 @@ public class BizInnovationProjectController extends BaseController
 {
     @Autowired
     private IBizInnovationProjectService bizInnovationProjectService;
+
+    //自定义接口
+
+    /*
+     * 申请大创项目管理
+     */
+    @Log(title = "大创项目管理", businessType = BusinessType.INSERT)
+    @PostMapping("/apply")
+    public AjaxResult apply(@RequestBody BizInnovationProject bizInnovationProject)
+    {
+        if(bizInnovationProject.getLeaderNo()==null){
+            bizInnovationProject.setLeaderNo(SecurityUtils.getUsername());
+        }
+        if(bizInnovationProject.getUserId()==null){
+            bizInnovationProject.setUserId(SecurityUtils.getUserId());
+        }
+        bizInnovationProject.setStatus1(0L);
+        return toAjax(bizInnovationProjectService.insertBizInnovationProject(bizInnovationProject));
+    }
+
+    /*
+     * 同意大创项目管理
+     */
+    @Log(title = "同意大创项目管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/approve")
+    public AjaxResult approve(@RequestBody BizInnovationProject bizInnovationProject)
+    {
+        bizInnovationProject.setStatus1(1L);
+        bizInnovationProject.setCause("");
+        return toAjax(bizInnovationProjectService.updateBizInnovationProject(bizInnovationProject));
+    }
+
+    /*
+     * 拒绝大创项目管理
+     */
+    @Log(title = "拒绝大创项目管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/reject")
+    public AjaxResult reject(@RequestBody BizInnovationProject bizInnovationProject)
+    {
+        bizInnovationProject.setStatus1(2L);
+        bizInnovationProject.setCause(bizInnovationProject.getCause());
+        return toAjax(bizInnovationProjectService.updateBizInnovationProject(bizInnovationProject));
+    }
 
     /**
      * 查询大创项目管理列表
