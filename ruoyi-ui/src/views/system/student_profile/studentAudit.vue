@@ -124,11 +124,7 @@
 <script>
 import { listStudent_profile, getStudent_profile, delStudent_profile, addStudent_profile, updateStudent_profile,applyProfile} from "@/api/system/student_profile"
 
-// 1. 从 localStorage 拿用户信息
-const user = JSON.parse(localStorage.getItem('userInfo') || '{}')
 
-// 2. 拿到 id
-const userId = user.id || user.userId
 
 export default {
   name: "Student_profile",
@@ -156,7 +152,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        userId: userId,
+        userId: null,
         studentNo: null,
         realName: null,
         gender: null,
@@ -180,6 +176,7 @@ export default {
     }
   },
   created() {
+    this.queryParams.userId = this.$store.state.user.id;
     this.getList()
   },
   methods: {

@@ -501,7 +501,7 @@ export default {
     }
   },
   created() {
-    // console.log("6666"+ this.$store.state.user.id);
+    console.log("6666"+ this.$store.state.user.id);
     this.queryParams.userId = this.$store.state.user.id;
 
     // 👉 赋值完成后，再去调用向后端发请求查数据的函数
