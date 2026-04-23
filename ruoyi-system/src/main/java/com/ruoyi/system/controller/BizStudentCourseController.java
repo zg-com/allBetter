@@ -34,6 +34,9 @@ public class BizStudentCourseController extends BaseController
     @Autowired
     private IBizStudentCourseService bizStudentCourseService;
 
+    //自定义接口部分
+
+
     /**
      * 查询学生选课与成绩列表
      */
