@@ -114,7 +114,7 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="课程代码" prop="courseCode">
-          <el-input v-model="form.courseCode" placeholder="请输入课程代码" />
+          <el-input v-model="form.courseCode" placeholder="请可不填，默认自动生成" />
         </el-form-item>
         <el-form-item label="课程名称" prop="courseName">
           <el-input v-model="form.courseName" placeholder="请输入课程名称" />
@@ -196,18 +196,12 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        courseCode: [
-          { required: true, message: "课程代码不能为空", trigger: "blur" }
-        ],
         courseName: [
           { required: true, message: "课程名称不能为空", trigger: "blur" }
         ],
         credits: [
           { required: true, message: "课程学分(如:2.5)不能为空", trigger: "blur" }
-        ],
-        teacherNo: [
-          { required: true, message: "任课教师id不能为空", trigger: "blur" }
-        ],
+        ]
       }
     }
   },

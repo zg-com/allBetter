@@ -58,4 +58,18 @@ public interface BizCourseMapper
      * @return 结果
      */
     public int deleteBizCourseByIds(Long[] ids);
+
+    /**
+     * 选课：课程当前人数 +1（原子操作）
+     * @param courseId 课程ID
+     * @return 影响的行数
+     */
+    public int incrementCourseNum(Long courseId);
+
+    /**
+     * 退选：课程当前人数 -1（原子操作）
+     * @param courseId 课程ID
+     * @return 影响的行数
+     */
+    public int decrementCourseNum(Long courseId);
 }

@@ -1,6 +1,8 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.uuid.IdUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +47,10 @@ public class BizCourseController extends BaseController
     {
         if (bizCourse.getTeacherNo() == null){
             bizCourse.setTeacherNo(getUserId());
+        }
+        if(bizCourse.getCourseCode() == null ){
+            String code = "SC_" + IdUtils.fastSimpleUUID().substring(0,8).toUpperCase();
+            bizCourse.setCourseCode(code);
         }
         bizCourse.setStatus(0L);
         return toAjax(bizCourseService.insertBizCourse(bizCourse));

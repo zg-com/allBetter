@@ -1,6 +1,8 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +82,7 @@ public class BizStudentCourseController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody BizStudentCourse bizStudentCourse)
     {
+        bizStudentCourse.setStudentNo(SecurityUtils.getUserId().toString());
         return toAjax(bizStudentCourseService.insertBizStudentCourse(bizStudentCourse));
     }
 

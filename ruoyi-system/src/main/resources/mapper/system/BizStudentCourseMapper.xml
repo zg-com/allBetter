@@ -15,6 +15,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="chooseStatus"    column="choose_status"    />
         <result property="learnStatus"    column="learn_status"    />
         <result property="userId"    column="user_id"    />
+        <result property="courseCode" column="course_code" />
+        <result property="courseName" column="course_name" />
+        <result property="teacherName" column="teacher_name" />
+        <result property="credits" column="credits" />
+        <result property="semester" column="semester" />
     </resultMap>
 
     <sql id="selectBizStudentCourseVo">
@@ -22,15 +27,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <select id="selectBizStudentCourseList" parameterType="BizStudentCourse" resultMap="BizStudentCourseResult">
-        <include refid="selectBizStudentCourseVo"/>
-        <where>  
-            <if test="studentNo != null  and studentNo != ''"> and student_no = #{studentNo}</if>
-            <if test="courseId != null "> and course_id = #{courseId}</if>
-            <if test="score != null "> and score = #{score}</if>
-            <if test="earnedCredits != null "> and earned_credits = #{earnedCredits}</if>
-            <if test="chooseStatus != null "> and choose_status = #{chooseStatus}</if>
-            <if test="learnStatus != null "> and learn_status = #{learnStatus}</if>
-            <if test="userId != null "> and user_id = #{userId}</if>
+        SELECT
+        -- 1. 中间表自己的业务数据
+        sc.id, sc.student_no, sc.user_id, sc.course_id,
+        sc.score, sc.earned_credits, sc.choose_status, sc.learn_status,
+        -- 2. 隔壁课程表借过来的展示数据
+        c.course_code, c.course_name, c.teacher_name, c.credits, c.semester
+        FROM biz_student_course sc
+        LEFT JOIN biz_course c ON sc.course_id = c.id
+        <where>
+            <if test="userId != null"> and sc.user_id = #{userId}</if>
         </where>
     </select>
     
@@ -80,6 +86,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </trim>
         where id = #{id}
     </update>
+
 
     <delete id="deleteBizStudentCourseById" parameterType="Long">
         delete from biz_student_course where id = #{id}

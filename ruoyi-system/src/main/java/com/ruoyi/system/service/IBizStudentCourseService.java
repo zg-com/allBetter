@@ -58,4 +58,6 @@ public interface IBizStudentCourseService
      * @return 结果
      */
     public int deleteBizStudentCourseById(Long id);
+
+
 }

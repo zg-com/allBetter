@@ -43,9 +43,68 @@ public class BizStudentCourse extends BaseEntity
     @Excel(name = "修读状态：0：未修读，1：正在修读，2：已修读")
     private Long learnStatus;
 
+
     /** 学生用户ID */
     @Excel(name = "学生用户ID")
     private Long userId;
+
+    // ================= 连表查询的课程附加字段 =================
+
+    /** 课程代码 */
+    private String courseCode;
+
+    /** 课程名称 */
+    private String courseName;
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public BigDecimal getCredits() {
+        return credits;
+    }
+
+    public void setCredits(BigDecimal credits) {
+        this.credits = credits;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
+    /** 任课教师 */
+    private String teacherName;
+
+    /** 学分 (注意：对应数据库 decimal，必须用 BigDecimal) */
+    private BigDecimal credits;
+
+    /** 开课学期 */
+    private String semester;
+
 
     public void setId(Long id) 
     {

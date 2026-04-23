@@ -77,6 +77,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
+    <update id="incrementCourseNum" parameterType="Long">
+        UPDATE biz_course
+        SET current_numofpeople = current_numofpeople + 1
+        WHERE id = #{courseId}
+          AND current_numofpeople &lt; volume
+    </update>
+
+    <update id="decrementCourseNum" parameterType="Long">
+        UPDATE biz_course
+        SET current_numofpeople = current_numofpeople - 1
+        WHERE id = #{courseId}
+          AND current_numofpeople &gt; 0
+    </update>
+
     <update id="updateBizCourse" parameterType="BizCourse">
         update biz_course
         <trim prefix="SET" suffixOverrides=",">
