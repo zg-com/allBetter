@@ -1,6 +1,8 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 学生竞赛获奖全纪录Controller
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-23
  */
 @RestController
 @RequestMapping("/system/comp_award")
@@ -33,6 +35,45 @@ public class BizCompetitionAwardController extends BaseController
 {
     @Autowired
     private IBizCompetitionAwardService bizCompetitionAwardService;
+
+    //自定义接口部分
+
+    /*
+     *学生竞赛获奖申请
+     */
+    @Log(title = "学生竞赛获奖申请", businessType = BusinessType.INSERT)
+    @PostMapping("/apply")
+    public AjaxResult apply(@RequestBody BizCompetitionAward bizCompetitionAward) {
+        if(bizCompetitionAward.getUserId()==null){
+            bizCompetitionAward.setUserId(SecurityUtils.getUserId());
+            bizCompetitionAward.setStudentNo(SecurityUtils.getUserId().toString());
+        }
+        bizCompetitionAward.setStatus(0L);
+        return toAjax(bizCompetitionAwardService.insertBizCompetitionAward(bizCompetitionAward));
+    }
+
+    /*
+     *学生竞赛获奖审核
+     */
+    @Log(title = "学生竞赛获奖审核", businessType = BusinessType.UPDATE)
+    @PutMapping("/approve")
+    public AjaxResult approve(@RequestBody BizCompetitionAward bizCompetitionAward){
+        bizCompetitionAward.setStatus(1L);
+        bizCompetitionAward.setCause("");
+        return toAjax(bizCompetitionAwardService.updateBizCompetitionAward(bizCompetitionAward));
+    }
+
+    /*
+     *学生竞赛获奖驳回
+     */
+    @Log(title = "学生竞赛获奖驳回", businessType = BusinessType.UPDATE)
+    @PutMapping("/reject")
+    public AjaxResult reject(@RequestBody BizCompetitionAward bizCompetitionAward) {
+        bizCompetitionAward.setStatus(2L);
+        bizCompetitionAward.setCause(bizCompetitionAward.getCause());
+        return toAjax(bizCompetitionAwardService.updateBizCompetitionAward(bizCompetitionAward));
+    }
+
 
     /**
      * 查询学生竞赛获奖全纪录列表

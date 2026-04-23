@@ -1,6 +1,8 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 科研奖励管理Controller
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-23
  */
 @RestController
 @RequestMapping("/system/research_award")
@@ -33,6 +35,45 @@ public class BizResearchAwardController extends BaseController
 {
     @Autowired
     private IBizResearchAwardService bizResearchAwardService;
+
+    //自定义接口部分
+
+    /*
+    *科研奖励申请
+    */
+    @Log(title = "科研奖励申请", businessType = BusinessType.INSERT)
+    @PostMapping("/apply")
+    public AjaxResult apply(@RequestBody BizResearchAward bizResearchAward)
+    {
+        if(bizResearchAward.getUserId() == null) {
+            bizResearchAward.setUserId(SecurityUtils.getUserId());
+        }
+        bizResearchAward.setStatus(0L);
+        return toAjax(bizResearchAwardService.insertBizResearchAward(bizResearchAward));
+    }
+
+    /*
+    *科研奖励审核
+    */
+    @Log(title = "科研奖励审核", businessType = BusinessType.UPDATE)
+    @PutMapping("/approve")
+    public AjaxResult approve(@RequestBody BizResearchAward bizResearchAward){
+        bizResearchAward.setStatus(1L);
+        bizResearchAward.setCause("");
+        return toAjax(bizResearchAwardService.updateBizResearchAward(bizResearchAward));
+    }
+
+    /*
+    * 科研奖励驳回
+    */
+    @Log(title = "科研奖励驳回", businessType = BusinessType.UPDATE)
+    @PutMapping("/reject")
+    public AjaxResult reject(@RequestBody BizResearchAward bizResearchAward){
+        bizResearchAward.setStatus(2L);
+        bizResearchAward.setCause(bizResearchAward.getCause());
+        return toAjax(bizResearchAwardService.updateBizResearchAward(bizResearchAward));
+    }
+
 
     /**
      * 查询科研奖励管理列表

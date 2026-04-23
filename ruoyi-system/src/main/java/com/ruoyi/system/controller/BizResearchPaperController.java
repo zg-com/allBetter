@@ -1,6 +1,8 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 科研论文全纪录Controller
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-23
  */
 @RestController
 @RequestMapping("/system/paper")
@@ -33,6 +35,45 @@ public class BizResearchPaperController extends BaseController
 {
     @Autowired
     private IBizResearchPaperService bizResearchPaperService;
+
+    //自定义接口部分
+
+    /*
+    *科研论文申请
+    */
+    @Log(title = "科研论文申请", businessType = BusinessType.INSERT)
+    @PostMapping("/apply")
+    public AjaxResult apply(@RequestBody BizResearchPaper bizResearchPaper)
+    {
+        if(bizResearchPaper.getUserId()==null){
+            bizResearchPaper.setUserId(SecurityUtils.getUserId());
+        }
+        bizResearchPaper.setStatus(0L);
+        return toAjax(bizResearchPaperService.insertBizResearchPaper(bizResearchPaper));
+    }
+
+    /*
+    *科研论文审核
+    */
+    @Log(title = "科研论文审核", businessType = BusinessType.UPDATE)
+    @PutMapping("/approve")
+    public AjaxResult approve(@RequestBody BizResearchPaper bizResearchPaper)
+    {
+        bizResearchPaper.setStatus(1L);
+        bizResearchPaper.setCause("");
+        return toAjax(bizResearchPaperService.updateBizResearchPaper(bizResearchPaper));
+    }
+
+    /*
+    *科研论文驳回
+    */
+    @Log(title = "科研论文驳回", businessType = BusinessType.UPDATE)
+    @PutMapping("/reject")
+    public AjaxResult reject(@RequestBody BizResearchPaper bizResearchPaper){
+        bizResearchPaper.setStatus(2L);
+        bizResearchPaper.setCause(bizResearchPaper.getCause());
+        return toAjax(bizResearchPaperService.updateBizResearchPaper(bizResearchPaper));
+    }
 
     /**
      * 查询科研论文全纪录列表

@@ -27,10 +27,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"    column="update_by"    />
         <result property="updateTime"    column="update_time"    />
         <result property="remark"    column="remark"    />
+        <result property="status"    column="status"    />
+        <result property="cause"    column="cause"    />
     </resultMap>
 
     <sql id="selectBizResearchPaperVo">
-        select id, user_id, paper_type, paper_title, journal_or_conf, author_info, corr_author_info, is_first_unit, attribution, points, sci_zone, is_recommended, ccf_zone, is_excellent_leading, is_highly_cited, is_esi, award_level, create_by, create_time, update_by, update_time, remark from biz_research_paper
+        select id, user_id, paper_type, paper_title, journal_or_conf, author_info, corr_author_info, is_first_unit, attribution, points, sci_zone, is_recommended, ccf_zone, is_excellent_leading, is_highly_cited, is_esi, award_level, create_by, create_time, update_by, update_time, remark, status, cause from biz_research_paper
     </sql>
 
     <select id="selectBizResearchPaperList" parameterType="BizResearchPaper" resultMap="BizResearchPaperResult">
@@ -52,6 +54,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isHighlyCited != null  and isHighlyCited != ''"> and is_highly_cited = #{isHighlyCited}</if>
             <if test="isEsi != null  and isEsi != ''"> and is_esi = #{isEsi}</if>
             <if test="awardLevel != null  and awardLevel != ''"> and award_level = #{awardLevel}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="cause != null  and cause != ''"> and cause = #{cause}</if>
         </where>
     </select>
     
@@ -84,6 +88,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="remark != null">remark,</if>
+            <if test="status != null">status,</if>
+            <if test="cause != null">cause,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
@@ -107,6 +113,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="remark != null">#{remark},</if>
+            <if test="status != null">#{status},</if>
+            <if test="cause != null">#{cause},</if>
          </trim>
     </insert>
 
@@ -134,6 +142,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="remark != null">remark = #{remark},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="cause != null">cause = #{cause},</if>
         </trim>
         where id = #{id}
     </update>

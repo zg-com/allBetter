@@ -127,7 +127,7 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="负责人" prop="userId">
-          <span style="font-size: 16px">由项目负责老师申请，系统负责人自动绑定此账号</span>
+          <el-input v-model="form.userId" :placeholder = "this.$store.state.user.id + '   默认绑定本账号为负责人'" />
         </el-form-item>
         <el-form-item label="项目编号" prop="projectNo">
           <el-input v-model="form.projectNo" placeholder="请输入项目编号" />

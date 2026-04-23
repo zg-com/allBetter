@@ -88,16 +88,18 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:course:edit']"
-          >修改</el-button>
+            @click="handleApprove(scope.row)"
+            style="color:#67C23A;"
+            v-hasPermi="['system:profile:edit']"
+          >同意</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['system:course:remove']"
-          >删除</el-button>
+            @click="handleReject(scope.row)"
+            style="color: #F56C6C;"
+            v-hasPermi="['system:profile:remove']"
+          >驳回</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -130,12 +132,6 @@
         </el-form-item>
         <el-form-item label="课程描述" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="任课教师id" prop="teacherNo">
-          <el-input v-model="form.teacherNo" placeholder="请输入任课教师id" />
-        </el-form-item>
-        <el-form-item label="课程驳回原因" prop="cause">
-          <el-input v-model="form.cause" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="课程容量" prop="volume">
           <el-input v-model="form.volume" placeholder="请输入课程容量" />
@@ -203,15 +199,13 @@ export default {
           { required: true, message: "课程名称不能为空", trigger: "blur" }
         ],
         credits: [
-          { required: true, message: "课程学分(如:2.5)不能为空", trigger: "blur" }
-        ],
-        teacherNo: [
-          { required: true, message: "任课教师id不能为空", trigger: "blur" }
-        ],
+          { required: true, message: "课程学分不能为空", trigger: "blur" }
+        ]
       }
     }
   },
   created() {
+    this.queryParams.status = 0
     this.getList()
   },
   methods: {
@@ -315,6 +309,41 @@ export default {
       this.download('system/course/export', {
         ...this.queryParams
       }, `course_${new Date().getTime()}.xlsx`)
+    },
+    /*批准请求*/
+    handleApprove(row) {
+      // 1. 弹出二次确认框，防止管理员手滑点错
+      this.$modal.confirm('确定要通过教师 "' + row.realName + '" 的档案申请吗？').then(function() {
+        // 2. 点击确定后，调用后端同意接口
+        return approveProfile(row.id);
+      }).then(() => {
+        // 3. 接口调用成功后，刷新当前表格，并提示成功
+        this.getList();
+        this.$modal.msgSuccess("已成功通过申请！");
+      }).catch(() => {});
+    },
+    handleReject(row) {
+      // 1. 使用极其优雅的 $prompt 直接呼出一个带输入框的弹窗！
+      this.$prompt('请输入驳回原因', '驳回申请', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /\S/, // 校验规则：不能为空
+        inputErrorMessage: '驳回原因不能为空！'
+      }).then(({ value }) => {
+        // 2. value 就是管理员在弹窗里填写的驳回原因
+        const data = {
+          id: row.id,
+          cause: value // 组装成后端需要的 JSON 格式
+        };
+        // 3. 调用后端驳回接口
+        return rejectProfile(data);
+      }).then(() => {
+        // 4. 成功后刷新表格并提示
+        this.getList();
+        this.$modal.msgSuccess("已驳回该申请！");
+      }).catch(() => {
+        // 取消操作时不做任何事
+      });
     }
   }
 }

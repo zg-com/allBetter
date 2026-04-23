@@ -12,7 +12,7 @@ import com.ruoyi.system.service.IBizResearchPaperService;
  * 科研论文全纪录Service业务层处理
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-23
  */
 @Service
 public class BizResearchPaperServiceImpl implements IBizResearchPaperService 
@@ -53,14 +53,7 @@ public class BizResearchPaperServiceImpl implements IBizResearchPaperService
     @Override
     public int insertBizResearchPaper(BizResearchPaper bizResearchPaper)
     {
-
         bizResearchPaper.setCreateTime(DateUtils.getNowDate());
-        //// 获取当前登录用户的 ID，并自动绑定给这篇论文
-        //Long currentUserId = com.ruoyi.common.utils.SecurityUtils.getUserId();
-        //bizResearchPaper.setUserId(currentUserId);
-        if(bizResearchPaper.getPaperType() == null){
-            bizResearchPaper.setPaperType("1");
-        }
         return bizResearchPaperMapper.insertBizResearchPaper(bizResearchPaper);
     }
 

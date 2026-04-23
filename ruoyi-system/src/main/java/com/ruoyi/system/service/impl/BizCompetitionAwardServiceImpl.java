@@ -12,7 +12,7 @@ import com.ruoyi.system.service.IBizCompetitionAwardService;
  * 学生竞赛获奖全纪录Service业务层处理
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-23
  */
 @Service
 public class BizCompetitionAwardServiceImpl implements IBizCompetitionAwardService 
@@ -54,8 +54,6 @@ public class BizCompetitionAwardServiceImpl implements IBizCompetitionAwardServi
     public int insertBizCompetitionAward(BizCompetitionAward bizCompetitionAward)
     {
         bizCompetitionAward.setCreateTime(DateUtils.getNowDate());
-        //Long currentUserId = com.ruoyi.common.utils.SecurityUtils.getUserId();
-        //bizCompetitionAward.setStudentNo(currentUserId.toString());
         return bizCompetitionAwardMapper.insertBizCompetitionAward(bizCompetitionAward);
     }
 

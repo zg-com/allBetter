@@ -43,7 +43,7 @@ export function delChild(id) {
   })
 }
 
-//老师提交申请
+//提交申请
 export function applyProfile(data){
   return request({
     url: '/system/child/apply',
@@ -52,7 +52,7 @@ export function applyProfile(data){
   })
 }
 
-//同意教师认识档案批准
+//同意批准申请
 export function approveProfile(id) {
   return request({
     url: '/system/child/approve',
@@ -62,7 +62,7 @@ export function approveProfile(id) {
 }
 
 
-//  驳回教师档案申请
+//  驳回申请
 export function rejectProfile(data) {
   return request({
     url: '/system/child/reject', // 这是你刚才测试的那个驳回接口

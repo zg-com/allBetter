@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.BizCompetitionAward;
  * 学生竞赛获奖全纪录Mapper接口
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-23
  */
 public interface BizCompetitionAwardMapper 
 {

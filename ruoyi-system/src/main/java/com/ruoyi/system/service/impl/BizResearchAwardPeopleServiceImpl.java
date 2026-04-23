@@ -11,7 +11,7 @@ import com.ruoyi.system.service.IBizResearchAwardPeopleService;
  * 科研奖励关联Service业务层处理
  * 
  * @author ruoyi
- * @date 2026-04-10
+ * @date 2026-04-23
  */
 @Service
 public class BizResearchAwardPeopleServiceImpl implements IBizResearchAwardPeopleService 

@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.BizResearchAward;
  * 科研奖励管理Service接口
  * 
  * @author ruoyi
- * @date 2026-03-27
+ * @date 2026-04-23
  */
 public interface IBizResearchAwardService 
 {

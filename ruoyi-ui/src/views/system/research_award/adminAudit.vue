@@ -1,19 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-
-      <el-form-item label="项目名称" prop="projectName">
+      <el-form-item label="奖励名称" prop="awardName">
         <el-input
-          v-model="queryParams.projectName"
-          placeholder="请输入项目名称"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="负责人" prop="leaderName">
-        <el-input
-          v-model="queryParams.leaderName"
-          placeholder="请输入负责人"
+          v-model="queryParams.awardName"
+          placeholder="请输入奖励名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -32,8 +23,30 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['system:research_project:add']"
-        >申请</el-button>
+          v-hasPermi="['system:research_award:add']"
+        >新增</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="success"
+          plain
+          icon="el-icon-edit"
+          size="mini"
+          :disabled="single"
+          @click="handleUpdate"
+          v-hasPermi="['system:research_award:edit']"
+        >修改</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="danger"
+          plain
+          icon="el-icon-delete"
+          size="mini"
+          :disabled="multiple"
+          @click="handleDelete"
+          v-hasPermi="['system:research_award:remove']"
+        >删除</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -42,32 +55,29 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['system:research_project:export']"
+          v-hasPermi="['system:research_award:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="research_projectList" @selection-change="handleSelectionChange">
+    <el-table v-loading="loading" :data="research_awardList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="负责人ID" align="center" prop="userId" />
-      <el-table-column label="项目编号" align="center" prop="projectNo" />
-      <el-table-column label="项目名称" align="center" prop="projectName" />
-      <el-table-column label="项目来源" align="center" prop="projectSource" />
-      <el-table-column label="负责人" align="center" prop="leaderName" />
-      <el-table-column label="项目签署所属年度" align="center" prop="signYear" />
-      <el-table-column label="合同签订日期" align="center" prop="contractStartDate" width="180">
+      <el-table-column label="申报人" align="center" prop="userId" />
+      <el-table-column label="奖励名称" align="center" prop="awardName" />
+      <el-table-column label="成果名称" align="center" prop="achievementName" />
+      <el-table-column label="获奖级别" align="center" prop="awardLevel" />
+      <el-table-column label="获奖日期" align="center" prop="awardDate" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.contractStartDate, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.awardDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="合同截止日期" align="center" prop="contractEndDate" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.contractEndDate, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="合同金额(万元)" align="center" prop="contractAmount" />
-      <el-table-column label="到账金额(万元)" align="center" prop="arrivedAmount" />
+      <el-table-column label="所有完成人(逗号/顿号分隔)" align="center" prop="allContributors" />
+      <el-table-column label="发证机关" align="center" prop="issuingAuthority" />
+      <el-table-column label="获奖等级" align="center" prop="awardGrade" />
+      <el-table-column label="单位排名" align="center" prop="unitRank" />
+      <el-table-column label="证书号" align="center" prop="certNumber" />
+      <el-table-column label="主要成果" align="center" prop="mainAchievement" />
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="当前状态" align="center" prop="status" />
       <el-table-column label="驳回原因" align="center" prop="cause" />
@@ -77,14 +87,18 @@
             size="mini"
             type="text"
             icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-          >修改申请</el-button>
+            @click="handleApprove(scope.row)"
+            style="color:#67C23A;"
+            v-hasPermi="['system:profile:edit']"
+          >同意</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-          >撤回申请</el-button>
+            @click="handleReject(scope.row)"
+            style="color: #F56C6C;"
+            v-hasPermi="['system:profile:remove']"
+          >驳回</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -97,48 +111,46 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改科研项目经费与周期管理对话框 -->
+    <!-- 添加或修改科研奖励管理对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="负责人" prop="userId">
-          <el-input v-model="form.userId" :placeholder = "this.queryParams.userId + '   默认绑定本账号为负责人'" />
+        <el-form-item label="关联教师的主键(申报人)" prop="userId">
+          <el-input v-model="form.userId" :placeholder = "this.queryParams.userId + '   默认绑定本账号为负责人'"/>
         </el-form-item>
-        <el-form-item label="项目编号" prop="projectNo">
-          <el-input v-model="form.projectNo" placeholder="请输入项目编号" />
+        <el-form-item label="奖励名称" prop="awardName">
+          <el-input v-model="form.awardName" placeholder="请输入奖励名称" />
         </el-form-item>
-        <el-form-item label="项目名称" prop="projectName">
-          <el-input v-model="form.projectName" placeholder="请输入项目名称" />
+        <el-form-item label="成果名称" prop="achievementName">
+          <el-input v-model="form.achievementName" placeholder="请输入成果名称" />
         </el-form-item>
-        <el-form-item label="项目来源" prop="projectSource">
-          <el-input v-model="form.projectSource" placeholder="请输入项目来源" />
+        <el-form-item label="获奖级别" prop="awardLevel">
+          <el-input v-model="form.awardLevel" placeholder="请输入获奖级别" />
         </el-form-item>
-        <el-form-item label="负责人" prop="leaderName">
-          <el-input v-model="form.leaderName" placeholder="请输入负责人" />
-        </el-form-item>
-        <el-form-item label="项目签署所属年度" prop="signYear">
-          <el-input v-model="form.signYear" placeholder="请输入项目签署所属年度" />
-        </el-form-item>
-        <el-form-item label="合同签订日期" prop="contractStartDate">
+        <el-form-item label="获奖日期" prop="awardDate">
           <el-date-picker clearable
-                          v-model="form.contractStartDate"
+                          v-model="form.awardDate"
                           type="date"
                           value-format="yyyy-MM-dd"
-                          placeholder="请选择合同签订日期">
+                          placeholder="请选择获奖日期">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="合同截止日期" prop="contractEndDate">
-          <el-date-picker clearable
-                          v-model="form.contractEndDate"
-                          type="date"
-                          value-format="yyyy-MM-dd"
-                          placeholder="请选择合同截止日期">
-          </el-date-picker>
+        <el-form-item label="所有完成人(逗号/顿号分隔)" prop="allContributors">
+          <el-input v-model="form.allContributors" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="合同金额(万元)" prop="contractAmount">
-          <el-input v-model="form.contractAmount" placeholder="请输入合同金额(万元)" />
+        <el-form-item label="发证机关" prop="issuingAuthority">
+          <el-input v-model="form.issuingAuthority" placeholder="请输入发证机关" />
         </el-form-item>
-        <el-form-item label="到账金额(万元)" prop="arrivedAmount">
-          <el-input v-model="form.arrivedAmount" placeholder="请输入到账金额(万元)" />
+        <el-form-item label="获奖等级" prop="awardGrade">
+          <el-input v-model="form.awardGrade" placeholder="请输入获奖等级" />
+        </el-form-item>
+        <el-form-item label="单位排名" prop="unitRank">
+          <el-input v-model="form.unitRank" placeholder="请输入单位排名" />
+        </el-form-item>
+        <el-form-item label="证书号" prop="certNumber">
+          <el-input v-model="form.certNumber" placeholder="请输入证书号" />
+        </el-form-item>
+        <el-form-item label="主要成果" prop="mainAchievement">
+          <el-input v-model="form.mainAchievement" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
@@ -153,13 +165,11 @@
 </template>
 
 <script>
-import { listResearch_project, getResearch_project, delResearch_project, addResearch_project, updateResearch_project,approveProfile,rejectProfile } from "@/api/system/research_project"
+import { listResearch_award, getResearch_award, delResearch_award, addResearch_award, updateResearch_award,applyProfile,rejectProfile,approveProfile} from "@/api/system/research_award"
 
 export default {
-  name: "Research_project",
-
+  name: "Research_award",
   data() {
-
     return {
       // 遮罩层
       loading: true,
@@ -173,8 +183,8 @@ export default {
       showSearch: true,
       // 总条数
       total: 0,
-      // 科研项目经费与周期管理表格数据
-      research_projectList: [],
+      // 科研奖励管理表格数据
+      research_awardList: [],
       // 弹出层标题
       title: "",
       // 是否显示弹出层
@@ -184,15 +194,16 @@ export default {
         pageNum: 1,
         pageSize: 10,
         userId: null,
-        projectNo: null,
-        projectName: null,
-        projectSource: null,
-        leaderName: null,
-        signYear: null,
-        contractStartDate: null,
-        contractEndDate: null,
-        contractAmount: null,
-        arrivedAmount: null,
+        awardName: null,
+        achievementName: null,
+        awardLevel: null,
+        awardDate: null,
+        allContributors: null,
+        issuingAuthority: null,
+        awardGrade: null,
+        unitRank: null,
+        certNumber: null,
+        mainAchievement: null,
         status: null,
         cause: null
       },
@@ -200,26 +211,25 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        projectNo: [
-          { required: true, message: "项目编号不能为空", trigger: "blur" }
+        awardName: [
+          { required: true, message: "奖励名称不能为空", trigger: "blur" }
         ],
-        projectName: [
-          { required: true, message: "项目名称不能为空", trigger: "blur" }
+        achievementName: [
+          { required: true, message: "成果名称不能为空", trigger: "blur" }
         ],
       }
     }
   },
   created() {
-    const currentUserId = this.$store.state.user.id
-    this.queryParams.userId = currentUserId
+    this.queryParams.status = 0
     this.getList()
   },
   methods: {
-    /** 查询科研项目经费与周期管理列表 */
+    /** 查询科研奖励管理列表 */
     getList() {
       this.loading = true
-      listResearch_project(this.queryParams).then(response => {
-        this.research_projectList = response.rows
+      listResearch_award(this.queryParams).then(response => {
+        this.research_awardList = response.rows
         this.total = response.total
         this.loading = false
       })
@@ -234,15 +244,16 @@ export default {
       this.form = {
         id: null,
         userId: null,
-        projectNo: null,
-        projectName: null,
-        projectSource: null,
-        leaderName: null,
-        signYear: null,
-        contractStartDate: null,
-        contractEndDate: null,
-        contractAmount: null,
-        arrivedAmount: null,
+        awardName: null,
+        achievementName: null,
+        awardLevel: null,
+        awardDate: null,
+        allContributors: null,
+        issuingAuthority: null,
+        awardGrade: null,
+        unitRank: null,
+        certNumber: null,
+        mainAchievement: null,
         createBy: null,
         createTime: null,
         updateBy: null,
@@ -273,16 +284,16 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = "添加科研项目经费与周期管理"
+      this.title = "添加科研奖励管理"
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
       const id = row.id || this.ids
-      getResearch_project(id).then(response => {
+      getResearch_award(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = "修改科研项目经费与周期管理"
+        this.title = "修改科研奖励管理"
       })
     },
     /** 提交按钮 */
@@ -290,13 +301,13 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
-            updateResearch_project(this.form).then(response => {
+            updateResearch_award(this.form).then(response => {
               this.$modal.msgSuccess("修改成功")
               this.open = false
               this.getList()
             })
           } else {
-            addResearch_project(this.form).then(response => {
+            applyProfile(this.form).then(response => {
               this.$modal.msgSuccess("新增成功")
               this.open = false
               this.getList()
@@ -308,8 +319,8 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ids = row.id || this.ids
-      this.$modal.confirm('是否确认删除科研项目经费与周期管理编号为"' + ids + '"的数据项？').then(function() {
-        return delResearch_project(ids)
+      this.$modal.confirm('是否确认删除科研奖励管理编号为"' + ids + '"的数据项？').then(function() {
+        return delResearch_award(ids)
       }).then(() => {
         this.getList()
         this.$modal.msgSuccess("删除成功")
@@ -317,9 +328,9 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('system/research_project/export', {
+      this.download('system/research_award/export', {
         ...this.queryParams
-      }, `research_project_${new Date().getTime()}.xlsx`)
+      }, `research_award_${new Date().getTime()}.xlsx`)
     },
     /*批准请求*/
     handleApprove(row) {

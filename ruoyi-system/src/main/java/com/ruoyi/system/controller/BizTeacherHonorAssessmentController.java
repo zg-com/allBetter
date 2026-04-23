@@ -34,6 +34,45 @@ public class BizTeacherHonorAssessmentController extends BaseController
     @Autowired
     private IBizTeacherHonorAssessmentService bizTeacherHonorAssessmentService;
 
+    //自定义接口部分
+
+    /**
+     * 教师荣誉与历年考核申请
+     */
+    @Log(title = "教师荣誉与历年考核申请", businessType = BusinessType.INSERT)
+    @PostMapping("/apply")
+    public AjaxResult apply(@RequestBody BizTeacherHonorAssessment bizTeacherHonorAssessment)
+    {
+        if(bizTeacherHonorAssessment.getUserId()==null){
+            bizTeacherHonorAssessment.setUserId(getUserId());
+        }
+        bizTeacherHonorAssessment.setStatus(0L);
+        return toAjax(bizTeacherHonorAssessmentService.insertBizTeacherHonorAssessment(bizTeacherHonorAssessment));
+    }
+
+    /**
+     * 教师荣誉与历年考核审批
+     */
+    @Log(title = "教师荣誉与历年考核审批通过", businessType = BusinessType.UPDATE)
+    @PutMapping("/approve")
+    public AjaxResult approve(@RequestBody BizTeacherHonorAssessment bizTeacherHonorAssessment)
+    {
+        bizTeacherHonorAssessment.setStatus(1L);
+        bizTeacherHonorAssessment.setCause("");
+        return toAjax(bizTeacherHonorAssessmentService.updateBizTeacherHonorAssessment(bizTeacherHonorAssessment));
+    }
+
+    /**
+     * 教师荣誉与历年考核审批驳回
+     */
+    @Log(title = "教师荣誉与历年考核审批驳回", businessType = BusinessType.UPDATE)
+    @PutMapping("/reject")
+    public AjaxResult reject(@RequestBody BizTeacherHonorAssessment bizTeacherHonorAssessment)
+    {
+        bizTeacherHonorAssessment.setStatus(2L);
+        return toAjax(bizTeacherHonorAssessmentService.updateBizTeacherHonorAssessment(bizTeacherHonorAssessment));
+    }
+
     /**
      * 查询教师荣誉与历年考核记录列表
      */

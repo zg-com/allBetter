@@ -34,6 +34,45 @@ public class BizCourseController extends BaseController
     @Autowired
     private IBizCourseService bizCourseService;
 
+    //自定义接口部分
+
+    /**
+     * 开课申请
+     */
+    @Log(title = "开课申请", businessType = BusinessType.INSERT)
+    @PostMapping("/apply")
+    public AjaxResult apply(@RequestBody BizCourse bizCourse)
+    {
+        if (bizCourse.getTeacherNo() == null){
+            bizCourse.setTeacherNo(getUserId());
+        }
+        bizCourse.setStatus(0L);
+        return toAjax(bizCourseService.insertBizCourse(bizCourse));
+    }
+
+    /**
+     * 课程审核
+     */
+    @Log(title = "课程审核通过", businessType = BusinessType.UPDATE)
+    @PutMapping("/approve")
+    public AjaxResult approve(@RequestBody BizCourse bizCourse)
+    {
+        bizCourse.setStatus(1L);
+        bizCourse.setCause("");
+        return toAjax(bizCourseService.updateBizCourse(bizCourse));
+    }
+
+    /**
+     * 课程审核不通过
+     */
+    @Log(title = "课程审核不通过", businessType = BusinessType.UPDATE)
+    @PutMapping("/reject")
+    public AjaxResult reject(@RequestBody BizCourse bizCourse)
+    {
+        bizCourse.setStatus(2L);
+        return toAjax(bizCourseService.updateBizCourse(bizCourse));
+    }
+
     /**
      * 查询课程信息列表
      */

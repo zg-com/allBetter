@@ -10,7 +10,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 科研奖励关联对象 biz_research_award_people
  * 
  * @author ruoyi
- * @date 2026-04-10
+ * @date 2026-04-23
  */
 public class BizResearchAwardPeople extends BaseEntity
 {

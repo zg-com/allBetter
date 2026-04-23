@@ -28,28 +28,6 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['system:assessment:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['system:assessment:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
           type="warning"
           plain
           icon="el-icon-download"
@@ -83,15 +61,13 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:assessment:edit']"
-          >修改</el-button>
+          >修改申请</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:assessment:remove']"
-          >删除</el-button>
+          >撤回申请</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -107,9 +83,6 @@
     <!-- 添加或修改教师荣誉与历年考核记录对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="教师的user_id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入教师的user_id" />
-        </el-form-item>
         <el-form-item label="年份" prop="recordYear">
           <el-input v-model="form.recordYear" placeholder="请输入年份" />
         </el-form-item>
@@ -124,14 +97,11 @@
         </el-form-item>
         <el-form-item label="发文日期/获奖日期" prop="awardDate">
           <el-date-picker clearable
-            v-model="form.awardDate"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择发文日期/获奖日期">
+                          v-model="form.awardDate"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="请选择发文日期/获奖日期">
           </el-date-picker>
-        </el-form-item>
-        <el-form-item label="驳回原因" prop="cause">
-          <el-input v-model="form.cause" type="textarea" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -143,7 +113,7 @@
 </template>
 
 <script>
-import { listAssessment, getAssessment, delAssessment, addAssessment, updateAssessment } from "@/api/system/assessment"
+import { listAssessment, getAssessment, delAssessment, addAssessment, updateAssessment, applyProfile, approveProfile, rejectProfile } from "@/api/system/assessment"
 
 export default {
   name: "Assessment",
@@ -192,6 +162,8 @@ export default {
     }
   },
   created() {
+    const currentUserId = this.$store.state.user.id
+    this.queryParams.userId = currentUserId
     this.getList()
   },
   methods: {
@@ -269,7 +241,7 @@ export default {
               this.getList()
             })
           } else {
-            addAssessment(this.form).then(response => {
+            applyProfile(this.form).then(response => {
               this.$modal.msgSuccess("新增成功")
               this.open = false
               this.getList()
@@ -293,6 +265,41 @@ export default {
       this.download('system/assessment/export', {
         ...this.queryParams
       }, `assessment_${new Date().getTime()}.xlsx`)
+    },
+    /*批准请求*/
+    handleApprove(row) {
+      // 1. 弹出二次确认框，防止管理员手滑点错
+      this.$modal.confirm('确定要通过教师 "' + row.realName + '" 的档案申请吗？').then(function() {
+        // 2. 点击确定后，调用后端同意接口
+        return approveProfile(row.id);
+      }).then(() => {
+        // 3. 接口调用成功后，刷新当前表格，并提示成功
+        this.getList();
+        this.$modal.msgSuccess("已成功通过申请！");
+      }).catch(() => {});
+    },
+    handleReject(row) {
+      // 1. 使用极其优雅的 $prompt 直接呼出一个带输入框的弹窗！
+      this.$prompt('请输入驳回原因', '驳回申请', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /\S/, // 校验规则：不能为空
+        inputErrorMessage: '驳回原因不能为空！'
+      }).then(({ value }) => {
+        // 2. value 就是管理员在弹窗里填写的驳回原因
+        const data = {
+          id: row.id,
+          cause: value // 组装成后端需要的 JSON 格式
+        };
+        // 3. 调用后端驳回接口
+        return rejectProfile(data);
+      }).then(() => {
+        // 4. 成功后刷新表格并提示
+        this.getList();
+        this.$modal.msgSuccess("已驳回该申请！");
+      }).catch(() => {
+        // 取消操作时不做任何事
+      });
     }
   }
 }

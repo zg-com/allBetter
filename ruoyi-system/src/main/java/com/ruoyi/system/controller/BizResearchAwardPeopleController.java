@@ -25,7 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 科研奖励关联Controller
  * 
  * @author ruoyi
- * @date 2026-04-10
+ * @date 2026-04-23
  */
 @RestController
 @RequestMapping("/system/award_people")

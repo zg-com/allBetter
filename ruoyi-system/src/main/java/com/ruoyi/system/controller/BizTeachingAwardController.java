@@ -34,6 +34,44 @@ public class BizTeachingAwardController extends BaseController
     @Autowired
     private IBizTeachingAwardService bizTeachingAwardService;
 
+    //自定义接口部分
+
+    /*
+    * 教研奖励申请
+     */
+    @Log(title = "教研奖励申请", businessType = BusinessType.INSERT)
+    @PostMapping("/apply")
+    public AjaxResult apply(@RequestBody BizTeachingAward bizTeachingAward)
+    {
+        bizTeachingAward.setUserId(getUserId());
+        bizTeachingAward.setStatus(0L);
+        return toAjax(bizTeachingAwardService.insertBizTeachingAward(bizTeachingAward));
+    }
+
+    /*
+    * 教研奖励审核同意
+     */
+    @Log(title = "教研奖励审核同意", businessType = BusinessType.UPDATE)
+    @PutMapping("/approve")
+    public AjaxResult approve(@RequestBody BizTeachingAward bizTeachingAward)
+    {
+        bizTeachingAward.setStatus(1L);
+        bizTeachingAward.setCause("");
+        return toAjax(bizTeachingAwardService.updateBizTeachingAward(bizTeachingAward));
+    }
+
+    /*
+    * 教研奖励审核拒绝
+     */
+    @Log(title = "教研奖励审核拒绝", businessType = BusinessType.UPDATE)
+    @PutMapping("/reject")
+    public AjaxResult reject(@RequestBody BizTeachingAward bizTeachingAward)
+    {
+        bizTeachingAward.setStatus(2L);
+        bizTeachingAward.setCause(bizTeachingAward.getCause());
+        return toAjax(bizTeachingAwardService.updateBizTeachingAward(bizTeachingAward));
+    }
+
     /**
      * 查询教研奖励列表
      */
