@@ -163,14 +163,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:student_profile:edit']"
+            v-hasPermi="['system:profile:edit']"
           >修改申请</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:student_profile:remove']"
+            v-hasPermi="['system:profile:remove']"
 
           >撤回申请</el-button>
         </template>

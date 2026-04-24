@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,7 @@ public class SysDashboardController {
 
         return AjaxResult.success(data);
     }
+    @PreAuthorize("@ss.hasPermi('system:dashboard:research')")
     @GetMapping("/researchChart")
     public AjaxResult getResearchChart() {
         List<Map<String, Object>> list = dashboardMapper.getResearchFundChart();
@@ -47,6 +49,7 @@ public class SysDashboardController {
     public AjaxResult getCourseStatusChart() {
         return AjaxResult.success(dashboardMapper.getCourseStatusStat());
     }
+    @PreAuthorize("@ss.hasPermi('system:dashboard:teaching')")
     @GetMapping("/saturationChart")
     public AjaxResult getSaturationChart() {
         return AjaxResult.success(dashboardMapper.getCourseSaturationStat());

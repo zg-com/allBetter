@@ -36,6 +36,7 @@ public class BizStudentCourseController extends BaseController
     @Autowired
     private IBizStudentCourseService bizStudentCourseService;
 
+
     //自定义接口部分
 
 
@@ -107,4 +108,5 @@ public class BizStudentCourseController extends BaseController
     {
         return toAjax(bizStudentCourseService.deleteBizStudentCourseByIds(ids));
     }
+
 }

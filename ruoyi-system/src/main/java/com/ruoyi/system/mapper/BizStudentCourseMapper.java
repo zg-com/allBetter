@@ -72,4 +72,11 @@ public interface BizStudentCourseMapper
      * @return 影响的行数
      */
     public int decrementCourseNum(Long courseId);
+
+    /**
+     * 一键开课：批量更新选课状态
+     * * @param courseId 课程ID
+     * @return 影响行数
+     */
+    public int startCourse(Long courseId);
 }

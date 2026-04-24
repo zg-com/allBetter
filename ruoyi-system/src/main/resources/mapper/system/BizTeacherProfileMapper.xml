@@ -69,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectBizTeacherProfileList" parameterType="BizTeacherProfile" resultMap="BizTeacherProfileResult">
         <include refid="selectBizTeacherProfileVo"/>
-        <where>  
+        <where>
             <if test="userId != null "> and user_id = #{userId}</if>
             <if test="teacherNo != null  and teacherNo != ''"> and teacher_no = #{teacherNo}</if>
             <if test="realName != null  and realName != ''"> and real_name like concat('%', #{realName}, '%')</if>
@@ -122,7 +122,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="cause != null  and cause != ''"> and cause = #{cause}</if>
         </where>
     </select>
-    
+
     <select id="selectBizTeacherProfileById" parameterType="Long" resultMap="BizTeacherProfileResult">
         <include refid="selectBizTeacherProfileVo"/>
         where id = #{id}

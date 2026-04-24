@@ -60,4 +60,18 @@ public interface IBizStudentCourseService
     public int deleteBizStudentCourseById(Long id);
 
 
+    /**
+     * 一键开课：将该课程下所有未开始的学生状态更新为修读中
+     * * @param courseId 课程ID
+     * @return 结果
+     */
+    public int startCourse(Long courseId);
+
+    /**
+     * 教师打分并结课
+     * * @param sc 选课信息（包含成绩、状态等）
+     * @return 结果
+     */
+    public int updateStudentCourse(BizStudentCourse sc);
+
 }

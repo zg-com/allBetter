@@ -129,7 +129,28 @@ public class BizStudentCourseServiceImpl implements IBizStudentCourseService
         return 0;
     }
 
+    /**
+     * 一键开课：将该课程下所有未开始的学生状态更新为修读中
+     */
+    @Override
+    public int startCourse(Long courseId) {
+        // 调用 Mapper 层执行自定义的批量更新 SQL
+        return bizStudentCourseMapper.startCourse(courseId);
+    }
 
+    /**
+     * 教师打分并结课
+     */
+    @Override
+    public int updateStudentCourse(BizStudentCourse sc) {
+        // 这里可以做一些业务校验，比如：判断成绩是否在 0-100 之间
+        if (sc.getScore() != null && (sc.getScore().doubleValue() < 0 || sc.getScore().doubleValue() > 100)) {
+            throw new ServiceException("打分成绩必须在0-100之间");
+        }
+
+        // 🚀 核心技巧：直接复用若依自带的单条更新方法，无需写新 SQL！
+        return bizStudentCourseMapper.updateBizStudentCourse(sc);
+    }
 
 
 }

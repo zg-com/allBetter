@@ -98,4 +98,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+    <select id="selectStudentCourseList" resultMap="BizStudentCourseResult">
+        SELECT sc.*, c.course_name, s.student_name
+        FROM biz_student_course sc
+        LEFT JOIN biz_course c ON sc.course_id = c.course_id
+        LEFT JOIN biz_student_profile s ON sc.student_id = s.student_id
+        <where>
+            <if test="teacherId != null">
+                AND c.teacher_id = #{teacherId}
+            </if>
+            <if test="courseId != null"> AND sc.course_id = #{courseId} </if>
+        </where>
+    </select>
+
+    <update id="startCourse" parameterType="Long">
+        UPDATE biz_student_course
+        SET learn_status = 1
+        WHERE course_id = #{courseId}
+          AND learn_status = 0
+    </update>
 </mapper>

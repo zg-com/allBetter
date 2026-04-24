@@ -56,8 +56,32 @@ public class BizStudentCourse extends BaseEntity
     /** 课程名称 */
     private String courseName;
 
+
+    //
+    /** 学生姓名 (来自档案表 biz_student_profile) */
+    private String studentName;
+
+    /** 所属学院 (来自档案表 biz_student_profile) */
+    private String college;
+
     public String getCourseName() {
         return courseName;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getCollege() {
+        return college;
+    }
+
+    public void setCollege(String college) {
+        this.college = college;
     }
 
     public void setCourseName(String courseName) {

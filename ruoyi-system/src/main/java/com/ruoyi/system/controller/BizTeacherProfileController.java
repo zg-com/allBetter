@@ -44,6 +44,7 @@ public class BizTeacherProfileController extends BaseController {
     public AjaxResult apply(@RequestBody BizTeacherProfile bizTeacherProfile) {
         //自动设置用户id
         bizTeacherProfile.setUserId(SecurityUtils.getUserId());
+        bizTeacherProfile.setTeacherNo(SecurityUtils.getUsername());
         bizTeacherProfile.setStatus(0L);
         return toAjax(bizTeacherProfileService.insertBizTeacherProfile(bizTeacherProfile));
     }

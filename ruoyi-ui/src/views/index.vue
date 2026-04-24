@@ -2,9 +2,19 @@
   <div class="dashboard-editor-container">
     <div class="view-switcher" style="text-align: center; margin-bottom: 20px;">
       <el-radio-group v-model="currentView" size="medium">
+
         <el-radio-button label="Overview">🌟 全院概览</el-radio-button>
-        <el-radio-button label="Research">🔬 科研与人才</el-radio-button>
-        <el-radio-button label="Teaching">📚 教务与学工</el-radio-button>
+
+        <el-radio-button
+          v-if="checkRole(['admin', 'teacher'])"
+          label="Research">🔬 科研与人才
+        </el-radio-button>
+
+        <el-radio-button
+          v-if="checkRole(['admin'])"
+          label="Teaching">📚 教务与学工
+        </el-radio-button>
+
       </el-radio-group>
     </div>
 
@@ -108,6 +118,12 @@ export default {
       getCourseStatusChart().then(res => { this.courseStatusChartData = res.data });
       getSaturationChart().then(res => { this.saturationChartData = res.data });
       getLearnStatusChart().then(res => { this.learnStatusChartData = res.data });
+    },
+    /** 检查用户是否拥有某角色 */
+    checkRole(roles) {
+      // 若依自带的权限判断工具类
+      const userRoles = this.$store.state.user.roles;
+      return roles.some(v => userRoles.includes(v));
     }
   }
 }

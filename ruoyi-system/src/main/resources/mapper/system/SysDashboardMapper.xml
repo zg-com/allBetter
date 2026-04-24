@@ -5,7 +5,12 @@
 <mapper namespace="com.ruoyi.system.mapper.SysDashboardMapper">
 
     <select id="getStudentCount" resultType="int">
-        SELECT COUNT(1) FROM biz_student_profile
+        SELECT COUNT(u.user_id)
+        FROM sys_user u
+                 LEFT JOIN sys_dept d ON u.dept_id = d.dept_id
+        WHERE u.del_flag = '0' -- 排除已删除的废弃账号
+          -- 🎯 核心过滤：只统计这两个学生系部的人数，排除“教师”部门
+          AND d.dept_name IN ('计算机科学与技术', '软件工程')
     </select>
 
     <select id="getCourseCount" resultType="int">
@@ -50,11 +55,14 @@
 
     <select id="getStudentCollegeStat" resultType="java.util.Map">
         SELECT
-            IFNULL(college, '未分配学院') as name,
-            COUNT(1) as value
-        FROM biz_student_profile
-        GROUP BY college
-        ORDER BY value ASC
+            d.dept_name as name,
+            COUNT(u.user_id) as value
+        FROM sys_user u
+            LEFT JOIN sys_dept d ON u.dept_id = d.dept_id
+        WHERE u.del_flag = '0' -- 排除已删除的账号
+          AND d.dept_name IN ('计算机科学与技术', '教师', '软件工程') -- 精准狙击你截图里的部门名称
+        GROUP BY d.dept_name
+        ORDER BY value DESC
     </select>
     <select id="getCourseStatusStat" resultType="java.util.Map">
         SELECT

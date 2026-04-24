@@ -38,7 +38,7 @@ export default {
       const seriesData = data.map(item => item.value);
 
       this.chart.setOption({
-        title: { text: '各学院在校生人数排行', textStyle: { fontSize: 16, color: '#666' } },
+        title: { text: '平台各系部师生入驻分布', textStyle: { fontSize: 16, color: '#666' } },
         tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
         grid: { left: '3%', right: '10%', bottom: '3%', containLabel: true },
         xAxis: {
@@ -53,7 +53,7 @@ export default {
         },
         series: [
           {
-            name: '在校生人数',
+            name: '系统用户数',
             type: 'bar',
             barWidth: '50%', // 条形的宽度
             label: {
