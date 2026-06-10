@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BusPowerDataMapper">
+    
+    <resultMap type="BusPowerData" id="BusPowerDataResult">
+        <result property="dataId"    column="data_id"    />
+        <result property="recordTime"    column="record_time"    />
+        <result property="actualLoad"    column="actual_load"    />
+        <result property="millAPriWind149"    column="mill_a_pri_wind_149"    />
+        <result property="millBPriWind164"    column="mill_b_pri_wind_164"    />
+        <result property="millCPriWind175"    column="mill_c_pri_wind_175"    />
+        <result property="millAPriTotal183"    column="mill_a_pri_total_183"    />
+        <result property="millBPriTotal184"    column="mill_b_pri_total_184"    />
+        <result property="pipeA11WindSpd30"    column="pipe_a11_wind_spd_30"    />
+        <result property="pipeA12CoalCon73"    column="pipe_a12_coal_con_73"    />
+        <result property="pipeA12WindSpd31"    column="pipe_a12_wind_spd_31"    />
+        <result property="pipeA13WindSpd32"    column="pipe_a13_wind_spd_32"    />
+        <result property="pipeA14WindSpd33"    column="pipe_a14_wind_spd_33"    />
+        <result property="pipeA21WindSpd34"    column="pipe_a21_wind_spd_34"    />
+        <result property="pipeA22WindSpd35"    column="pipe_a22_wind_spd_35"    />
+        <result property="pipeA23WindSpd36"    column="pipe_a23_wind_spd_36"    />
+        <result property="pipeA24WindSpd37"    column="pipe_a24_wind_spd_37"    />
+        <result property="pipeB11WindSpd38"    column="pipe_b11_wind_spd_38"    />
+        <result property="pipeB14WindSpd41"    column="pipe_b14_wind_spd_41"    />
+        <result property="pipeB21CoalCon95"    column="pipe_b21_coal_con_95"    />
+        <result property="pipeB22CoalCon296"    column="pipe_b22_coal_con_2_96"    />
+        <result property="pipeB22CoalCon97"    column="pipe_b22_coal_con_97"    />
+        <result property="pipeB23CoalCon99"    column="pipe_b23_coal_con_99"    />
+        <result property="pipeB24CoalCon101"    column="pipe_b24_coal_con_101"    />
+        <result property="pipeC11CoalCon103"    column="pipe_c11_coal_con_103"    />
+        <result property="pipeC12CoalCon105"    column="pipe_c12_coal_con_105"    />
+        <result property="pipeC13CoalCon107"    column="pipe_c13_coal_con_107"    />
+        <result property="pipeC14CoalCon109"    column="pipe_c14_coal_con_109"    />
+        <result property="reheaterScrTubeTemp338"    column="reheater_scr_tube_temp_338"    />
+        <result property="reheaterInletGasTempA358"    column="reheater_inlet_gas_temp_a_358"    />
+        <result property="reheaterInletGasTempB359"    column="reheater_inlet_gas_temp_b_359"    />
+        <result property="reheaterEndTubeTempRow2344"    column="reheater_end_tube_temp_row2_344"    />
+        <result property="reheaterEndTubeTempRow67357"    column="reheater_end_tube_temp_row67_357"    />
+        <result property="drumPressureAvg234"    column="drum_pressure_avg_234"    />
+        <result property="drumWaterLevel1239"    column="drum_water_level_1239"    />
+        <result property="totalPriWind199"    column="total_pri_wind_199"    />
+        <result property="totalSecWind200"    column="total_sec_wind_200"    />
+        <result property="totalWind198"    column="total_wind_198"    />
+        <result property="swingAngleAvg280"    column="swing_angle_avg_280"    />
+        <result property="swingAngleUpper284"    column="swing_angle_upper_284"    />
+        <result property="swingAngleLower283"    column="swing_angle_lower_283"    />
+        <result property="coalFeederB1120"    column="coal_feeder_b1_120"    />
+        <result property="coalFeederB1121"    column="coal_feeder_b1_121"    />
+        <result property="coalFeederB2126"    column="coal_feeder_b2_126"    />
+        <result property="coalFeederB2127"    column="coal_feeder_b2_127"    />
+        <result property="coalFeederC1122"    column="coal_feeder_c1_122"    />
+        <result property="coalFeederC1123"    column="coal_feeder_c1_123"    />
+        <result property="blowerAOut1177"    column="blower_a_out_1_177"    />
+        <result property="blowerAOut2179"    column="blower_a_out_2_179"    />
+        <result property="blowerAOut3181"    column="blower_a_out_3_181"    />
+        <result property="blowerBOut1178"    column="blower_b_out_1_178"    />
+        <result property="blowerBOut2180"    column="blower_b_out_2_180"    />
+        <result property="blowerBOut3182"    column="blower_b_out_3_182"    />
+        <result property="otherSensors"    column="other_sensors"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectBusPowerDataVo">
+        select data_id, record_time, actual_load, mill_a_pri_wind_149, mill_b_pri_wind_164, mill_c_pri_wind_175, mill_a_pri_total_183, mill_b_pri_total_184, pipe_a11_wind_spd_30, pipe_a12_coal_con_73, pipe_a12_wind_spd_31, pipe_a13_wind_spd_32, pipe_a14_wind_spd_33, pipe_a21_wind_spd_34, pipe_a22_wind_spd_35, pipe_a23_wind_spd_36, pipe_a24_wind_spd_37, pipe_b11_wind_spd_38, pipe_b14_wind_spd_41, pipe_b21_coal_con_95, pipe_b22_coal_con_2_96, pipe_b22_coal_con_97, pipe_b23_coal_con_99, pipe_b24_coal_con_101, pipe_c11_coal_con_103, pipe_c12_coal_con_105, pipe_c13_coal_con_107, pipe_c14_coal_con_109, reheater_scr_tube_temp_338, reheater_inlet_gas_temp_a_358, reheater_inlet_gas_temp_b_359, reheater_end_tube_temp_row2_344, reheater_end_tube_temp_row67_357, drum_pressure_avg_234, drum_water_level_1239, total_pri_wind_199, total_sec_wind_200, total_wind_198, swing_angle_avg_280, swing_angle_upper_284, swing_angle_lower_283, coal_feeder_b1_120, coal_feeder_b1_121, coal_feeder_b2_126, coal_feeder_b2_127, coal_feeder_c1_122, coal_feeder_c1_123, blower_a_out_1_177, blower_a_out_2_179, blower_a_out_3_181, blower_b_out_1_178, blower_b_out_2_180, blower_b_out_3_182, other_sensors, create_time from bus_power_data
+    </sql>
+
+    <select id="selectBusPowerDataList" parameterType="BusPowerData" resultMap="BusPowerDataResult">
+        <include refid="selectBusPowerDataVo"/>
+        <where>  
+            <if test="recordTime != null "> and record_time = #{recordTime}</if>
+            <if test="actualLoad != null "> and actual_load = #{actualLoad}</if>
+            <if test="millAPriWind149 != null "> and mill_a_pri_wind_149 = #{millAPriWind149}</if>
+            <if test="millBPriWind164 != null "> and mill_b_pri_wind_164 = #{millBPriWind164}</if>
+            <if test="millCPriWind175 != null "> and mill_c_pri_wind_175 = #{millCPriWind175}</if>
+            <if test="millAPriTotal183 != null "> and mill_a_pri_total_183 = #{millAPriTotal183}</if>
+            <if test="millBPriTotal184 != null "> and mill_b_pri_total_184 = #{millBPriTotal184}</if>
+            <if test="pipeA11WindSpd30 != null "> and pipe_a11_wind_spd_30 = #{pipeA11WindSpd30}</if>
+            <if test="pipeA12CoalCon73 != null "> and pipe_a12_coal_con_73 = #{pipeA12CoalCon73}</if>
+            <if test="pipeA12WindSpd31 != null "> and pipe_a12_wind_spd_31 = #{pipeA12WindSpd31}</if>
+            <if test="pipeA13WindSpd32 != null "> and pipe_a13_wind_spd_32 = #{pipeA13WindSpd32}</if>
+            <if test="pipeA14WindSpd33 != null "> and pipe_a14_wind_spd_33 = #{pipeA14WindSpd33}</if>
+            <if test="pipeA21WindSpd34 != null "> and pipe_a21_wind_spd_34 = #{pipeA21WindSpd34}</if>
+            <if test="pipeA22WindSpd35 != null "> and pipe_a22_wind_spd_35 = #{pipeA22WindSpd35}</if>
+            <if test="pipeA23WindSpd36 != null "> and pipe_a23_wind_spd_36 = #{pipeA23WindSpd36}</if>
+            <if test="pipeA24WindSpd37 != null "> and pipe_a24_wind_spd_37 = #{pipeA24WindSpd37}</if>
+            <if test="pipeB11WindSpd38 != null "> and pipe_b11_wind_spd_38 = #{pipeB11WindSpd38}</if>
+            <if test="pipeB14WindSpd41 != null "> and pipe_b14_wind_spd_41 = #{pipeB14WindSpd41}</if>
+            <if test="pipeB21CoalCon95 != null "> and pipe_b21_coal_con_95 = #{pipeB21CoalCon95}</if>
+            <if test="pipeB22CoalCon296 != null "> and pipe_b22_coal_con_2_96 = #{pipeB22CoalCon296}</if>
+            <if test="pipeB22CoalCon97 != null "> and pipe_b22_coal_con_97 = #{pipeB22CoalCon97}</if>
+            <if test="pipeB23CoalCon99 != null "> and pipe_b23_coal_con_99 = #{pipeB23CoalCon99}</if>
+            <if test="pipeB24CoalCon101 != null "> and pipe_b24_coal_con_101 = #{pipeB24CoalCon101}</if>
+            <if test="pipeC11CoalCon103 != null "> and pipe_c11_coal_con_103 = #{pipeC11CoalCon103}</if>
+            <if test="pipeC12CoalCon105 != null "> and pipe_c12_coal_con_105 = #{pipeC12CoalCon105}</if>
+            <if test="pipeC13CoalCon107 != null "> and pipe_c13_coal_con_107 = #{pipeC13CoalCon107}</if>
+            <if test="pipeC14CoalCon109 != null "> and pipe_c14_coal_con_109 = #{pipeC14CoalCon109}</if>
+            <if test="reheaterScrTubeTemp338 != null "> and reheater_scr_tube_temp_338 = #{reheaterScrTubeTemp338}</if>
+            <if test="reheaterInletGasTempA358 != null "> and reheater_inlet_gas_temp_a_358 = #{reheaterInletGasTempA358}</if>
+            <if test="reheaterInletGasTempB359 != null "> and reheater_inlet_gas_temp_b_359 = #{reheaterInletGasTempB359}</if>
+            <if test="reheaterEndTubeTempRow2344 != null "> and reheater_end_tube_temp_row2_344 = #{reheaterEndTubeTempRow2344}</if>
+            <if test="reheaterEndTubeTempRow67357 != null "> and reheater_end_tube_temp_row67_357 = #{reheaterEndTubeTempRow67357}</if>
+            <if test="drumPressureAvg234 != null "> and drum_pressure_avg_234 = #{drumPressureAvg234}</if>
+            <if test="drumWaterLevel1239 != null "> and drum_water_level_1239 = #{drumWaterLevel1239}</if>
+            <if test="totalPriWind199 != null "> and total_pri_wind_199 = #{totalPriWind199}</if>
+            <if test="totalSecWind200 != null "> and total_sec_wind_200 = #{totalSecWind200}</if>
+            <if test="totalWind198 != null "> and total_wind_198 = #{totalWind198}</if>
+            <if test="swingAngleAvg280 != null "> and swing_angle_avg_280 = #{swingAngleAvg280}</if>
+            <if test="swingAngleUpper284 != null "> and swing_angle_upper_284 = #{swingAngleUpper284}</if>
+            <if test="swingAngleLower283 != null "> and swing_angle_lower_283 = #{swingAngleLower283}</if>
+            <if test="coalFeederB1120 != null "> and coal_feeder_b1_120 = #{coalFeederB1120}</if>
+            <if test="coalFeederB1121 != null "> and coal_feeder_b1_121 = #{coalFeederB1121}</if>
+            <if test="coalFeederB2126 != null "> and coal_feeder_b2_126 = #{coalFeederB2126}</if>
+            <if test="coalFeederB2127 != null "> and coal_feeder_b2_127 = #{coalFeederB2127}</if>
+            <if test="coalFeederC1122 != null "> and coal_feeder_c1_122 = #{coalFeederC1122}</if>
+            <if test="coalFeederC1123 != null "> and coal_feeder_c1_123 = #{coalFeederC1123}</if>
+            <if test="blowerAOut1177 != null "> and blower_a_out_1_177 = #{blowerAOut1177}</if>
+            <if test="blowerAOut2179 != null "> and blower_a_out_2_179 = #{blowerAOut2179}</if>
+            <if test="blowerAOut3181 != null "> and blower_a_out_3_181 = #{blowerAOut3181}</if>
+            <if test="blowerBOut1178 != null "> and blower_b_out_1_178 = #{blowerBOut1178}</if>
+            <if test="blowerBOut2180 != null "> and blower_b_out_2_180 = #{blowerBOut2180}</if>
+            <if test="blowerBOut3182 != null "> and blower_b_out_3_182 = #{blowerBOut3182}</if>
+            <if test="otherSensors != null  and otherSensors != ''"> and other_sensors = #{otherSensors}</if>
+        </where>
+    </select>
+    
+    <select id="selectBusPowerDataByDataId" parameterType="Long" resultMap="BusPowerDataResult">
+        <include refid="selectBusPowerDataVo"/>
+        where data_id = #{dataId}
+    </select>
+
+    <insert id="insertBusPowerData" parameterType="BusPowerData" useGeneratedKeys="true" keyProperty="dataId">
+        insert into bus_power_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordTime != null">record_time,</if>
+            <if test="actualLoad != null">actual_load,</if>
+            <if test="millAPriWind149 != null">mill_a_pri_wind_149,</if>
+            <if test="millBPriWind164 != null">mill_b_pri_wind_164,</if>
+            <if test="millCPriWind175 != null">mill_c_pri_wind_175,</if>
+            <if test="millAPriTotal183 != null">mill_a_pri_total_183,</if>
+            <if test="millBPriTotal184 != null">mill_b_pri_total_184,</if>
+            <if test="pipeA11WindSpd30 != null">pipe_a11_wind_spd_30,</if>
+            <if test="pipeA12CoalCon73 != null">pipe_a12_coal_con_73,</if>
+            <if test="pipeA12WindSpd31 != null">pipe_a12_wind_spd_31,</if>
+            <if test="pipeA13WindSpd32 != null">pipe_a13_wind_spd_32,</if>
+            <if test="pipeA14WindSpd33 != null">pipe_a14_wind_spd_33,</if>
+            <if test="pipeA21WindSpd34 != null">pipe_a21_wind_spd_34,</if>
+            <if test="pipeA22WindSpd35 != null">pipe_a22_wind_spd_35,</if>
+            <if test="pipeA23WindSpd36 != null">pipe_a23_wind_spd_36,</if>
+            <if test="pipeA24WindSpd37 != null">pipe_a24_wind_spd_37,</if>
+            <if test="pipeB11WindSpd38 != null">pipe_b11_wind_spd_38,</if>
+            <if test="pipeB14WindSpd41 != null">pipe_b14_wind_spd_41,</if>
+            <if test="pipeB21CoalCon95 != null">pipe_b21_coal_con_95,</if>
+            <if test="pipeB22CoalCon296 != null">pipe_b22_coal_con_2_96,</if>
+            <if test="pipeB22CoalCon97 != null">pipe_b22_coal_con_97,</if>
+            <if test="pipeB23CoalCon99 != null">pipe_b23_coal_con_99,</if>
+            <if test="pipeB24CoalCon101 != null">pipe_b24_coal_con_101,</if>
+            <if test="pipeC11CoalCon103 != null">pipe_c11_coal_con_103,</if>
+            <if test="pipeC12CoalCon105 != null">pipe_c12_coal_con_105,</if>
+            <if test="pipeC13CoalCon107 != null">pipe_c13_coal_con_107,</if>
+            <if test="pipeC14CoalCon109 != null">pipe_c14_coal_con_109,</if>
+            <if test="reheaterScrTubeTemp338 != null">reheater_scr_tube_temp_338,</if>
+            <if test="reheaterInletGasTempA358 != null">reheater_inlet_gas_temp_a_358,</if>
+            <if test="reheaterInletGasTempB359 != null">reheater_inlet_gas_temp_b_359,</if>
+            <if test="reheaterEndTubeTempRow2344 != null">reheater_end_tube_temp_row2_344,</if>
+            <if test="reheaterEndTubeTempRow67357 != null">reheater_end_tube_temp_row67_357,</if>
+            <if test="drumPressureAvg234 != null">drum_pressure_avg_234,</if>
+            <if test="drumWaterLevel1239 != null">drum_water_level_1239,</if>
+            <if test="totalPriWind199 != null">total_pri_wind_199,</if>
+            <if test="totalSecWind200 != null">total_sec_wind_200,</if>
+            <if test="totalWind198 != null">total_wind_198,</if>
+            <if test="swingAngleAvg280 != null">swing_angle_avg_280,</if>
+            <if test="swingAngleUpper284 != null">swing_angle_upper_284,</if>
+            <if test="swingAngleLower283 != null">swing_angle_lower_283,</if>
+            <if test="coalFeederB1120 != null">coal_feeder_b1_120,</if>
+            <if test="coalFeederB1121 != null">coal_feeder_b1_121,</if>
+            <if test="coalFeederB2126 != null">coal_feeder_b2_126,</if>
+            <if test="coalFeederB2127 != null">coal_feeder_b2_127,</if>
+            <if test="coalFeederC1122 != null">coal_feeder_c1_122,</if>
+            <if test="coalFeederC1123 != null">coal_feeder_c1_123,</if>
+            <if test="blowerAOut1177 != null">blower_a_out_1_177,</if>
+            <if test="blowerAOut2179 != null">blower_a_out_2_179,</if>
+            <if test="blowerAOut3181 != null">blower_a_out_3_181,</if>
+            <if test="blowerBOut1178 != null">blower_b_out_1_178,</if>
+            <if test="blowerBOut2180 != null">blower_b_out_2_180,</if>
+            <if test="blowerBOut3182 != null">blower_b_out_3_182,</if>
+            <if test="otherSensors != null">other_sensors,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordTime != null">#{recordTime},</if>
+            <if test="actualLoad != null">#{actualLoad},</if>
+            <if test="millAPriWind149 != null">#{millAPriWind149},</if>
+            <if test="millBPriWind164 != null">#{millBPriWind164},</if>
+            <if test="millCPriWind175 != null">#{millCPriWind175},</if>
+            <if test="millAPriTotal183 != null">#{millAPriTotal183},</if>
+            <if test="millBPriTotal184 != null">#{millBPriTotal184},</if>
+            <if test="pipeA11WindSpd30 != null">#{pipeA11WindSpd30},</if>
+            <if test="pipeA12CoalCon73 != null">#{pipeA12CoalCon73},</if>
+            <if test="pipeA12WindSpd31 != null">#{pipeA12WindSpd31},</if>
+            <if test="pipeA13WindSpd32 != null">#{pipeA13WindSpd32},</if>
+            <if test="pipeA14WindSpd33 != null">#{pipeA14WindSpd33},</if>
+            <if test="pipeA21WindSpd34 != null">#{pipeA21WindSpd34},</if>
+            <if test="pipeA22WindSpd35 != null">#{pipeA22WindSpd35},</if>
+            <if test="pipeA23WindSpd36 != null">#{pipeA23WindSpd36},</if>
+            <if test="pipeA24WindSpd37 != null">#{pipeA24WindSpd37},</if>
+            <if test="pipeB11WindSpd38 != null">#{pipeB11WindSpd38},</if>
+            <if test="pipeB14WindSpd41 != null">#{pipeB14WindSpd41},</if>
+            <if test="pipeB21CoalCon95 != null">#{pipeB21CoalCon95},</if>
+            <if test="pipeB22CoalCon296 != null">#{pipeB22CoalCon296},</if>
+            <if test="pipeB22CoalCon97 != null">#{pipeB22CoalCon97},</if>
+            <if test="pipeB23CoalCon99 != null">#{pipeB23CoalCon99},</if>
+            <if test="pipeB24CoalCon101 != null">#{pipeB24CoalCon101},</if>
+            <if test="pipeC11CoalCon103 != null">#{pipeC11CoalCon103},</if>
+            <if test="pipeC12CoalCon105 != null">#{pipeC12CoalCon105},</if>
+            <if test="pipeC13CoalCon107 != null">#{pipeC13CoalCon107},</if>
+            <if test="pipeC14CoalCon109 != null">#{pipeC14CoalCon109},</if>
+            <if test="reheaterScrTubeTemp338 != null">#{reheaterScrTubeTemp338},</if>
+            <if test="reheaterInletGasTempA358 != null">#{reheaterInletGasTempA358},</if>
+            <if test="reheaterInletGasTempB359 != null">#{reheaterInletGasTempB359},</if>
+            <if test="reheaterEndTubeTempRow2344 != null">#{reheaterEndTubeTempRow2344},</if>
+            <if test="reheaterEndTubeTempRow67357 != null">#{reheaterEndTubeTempRow67357},</if>
+            <if test="drumPressureAvg234 != null">#{drumPressureAvg234},</if>
+            <if test="drumWaterLevel1239 != null">#{drumWaterLevel1239},</if>
+            <if test="totalPriWind199 != null">#{totalPriWind199},</if>
+            <if test="totalSecWind200 != null">#{totalSecWind200},</if>
+            <if test="totalWind198 != null">#{totalWind198},</if>
+            <if test="swingAngleAvg280 != null">#{swingAngleAvg280},</if>
+            <if test="swingAngleUpper284 != null">#{swingAngleUpper284},</if>
+            <if test="swingAngleLower283 != null">#{swingAngleLower283},</if>
+            <if test="coalFeederB1120 != null">#{coalFeederB1120},</if>
+            <if test="coalFeederB1121 != null">#{coalFeederB1121},</if>
+            <if test="coalFeederB2126 != null">#{coalFeederB2126},</if>
+            <if test="coalFeederB2127 != null">#{coalFeederB2127},</if>
+            <if test="coalFeederC1122 != null">#{coalFeederC1122},</if>
+            <if test="coalFeederC1123 != null">#{coalFeederC1123},</if>
+            <if test="blowerAOut1177 != null">#{blowerAOut1177},</if>
+            <if test="blowerAOut2179 != null">#{blowerAOut2179},</if>
+            <if test="blowerAOut3181 != null">#{blowerAOut3181},</if>
+            <if test="blowerBOut1178 != null">#{blowerBOut1178},</if>
+            <if test="blowerBOut2180 != null">#{blowerBOut2180},</if>
+            <if test="blowerBOut3182 != null">#{blowerBOut3182},</if>
+            <if test="otherSensors != null">#{otherSensors},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBusPowerData" parameterType="BusPowerData">
+        update bus_power_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recordTime != null">record_time = #{recordTime},</if>
+            <if test="actualLoad != null">actual_load = #{actualLoad},</if>
+            <if test="millAPriWind149 != null">mill_a_pri_wind_149 = #{millAPriWind149},</if>
+            <if test="millBPriWind164 != null">mill_b_pri_wind_164 = #{millBPriWind164},</if>
+            <if test="millCPriWind175 != null">mill_c_pri_wind_175 = #{millCPriWind175},</if>
+            <if test="millAPriTotal183 != null">mill_a_pri_total_183 = #{millAPriTotal183},</if>
+            <if test="millBPriTotal184 != null">mill_b_pri_total_184 = #{millBPriTotal184},</if>
+            <if test="pipeA11WindSpd30 != null">pipe_a11_wind_spd_30 = #{pipeA11WindSpd30},</if>
+            <if test="pipeA12CoalCon73 != null">pipe_a12_coal_con_73 = #{pipeA12CoalCon73},</if>
+            <if test="pipeA12WindSpd31 != null">pipe_a12_wind_spd_31 = #{pipeA12WindSpd31},</if>
+            <if test="pipeA13WindSpd32 != null">pipe_a13_wind_spd_32 = #{pipeA13WindSpd32},</if>
+            <if test="pipeA14WindSpd33 != null">pipe_a14_wind_spd_33 = #{pipeA14WindSpd33},</if>
+            <if test="pipeA21WindSpd34 != null">pipe_a21_wind_spd_34 = #{pipeA21WindSpd34},</if>
+            <if test="pipeA22WindSpd35 != null">pipe_a22_wind_spd_35 = #{pipeA22WindSpd35},</if>
+            <if test="pipeA23WindSpd36 != null">pipe_a23_wind_spd_36 = #{pipeA23WindSpd36},</if>
+            <if test="pipeA24WindSpd37 != null">pipe_a24_wind_spd_37 = #{pipeA24WindSpd37},</if>
+            <if test="pipeB11WindSpd38 != null">pipe_b11_wind_spd_38 = #{pipeB11WindSpd38},</if>
+            <if test="pipeB14WindSpd41 != null">pipe_b14_wind_spd_41 = #{pipeB14WindSpd41},</if>
+            <if test="pipeB21CoalCon95 != null">pipe_b21_coal_con_95 = #{pipeB21CoalCon95},</if>
+            <if test="pipeB22CoalCon296 != null">pipe_b22_coal_con_2_96 = #{pipeB22CoalCon296},</if>
+            <if test="pipeB22CoalCon97 != null">pipe_b22_coal_con_97 = #{pipeB22CoalCon97},</if>
+            <if test="pipeB23CoalCon99 != null">pipe_b23_coal_con_99 = #{pipeB23CoalCon99},</if>
+            <if test="pipeB24CoalCon101 != null">pipe_b24_coal_con_101 = #{pipeB24CoalCon101},</if>
+            <if test="pipeC11CoalCon103 != null">pipe_c11_coal_con_103 = #{pipeC11CoalCon103},</if>
+            <if test="pipeC12CoalCon105 != null">pipe_c12_coal_con_105 = #{pipeC12CoalCon105},</if>
+            <if test="pipeC13CoalCon107 != null">pipe_c13_coal_con_107 = #{pipeC13CoalCon107},</if>
+            <if test="pipeC14CoalCon109 != null">pipe_c14_coal_con_109 = #{pipeC14CoalCon109},</if>
+            <if test="reheaterScrTubeTemp338 != null">reheater_scr_tube_temp_338 = #{reheaterScrTubeTemp338},</if>
+            <if test="reheaterInletGasTempA358 != null">reheater_inlet_gas_temp_a_358 = #{reheaterInletGasTempA358},</if>
+            <if test="reheaterInletGasTempB359 != null">reheater_inlet_gas_temp_b_359 = #{reheaterInletGasTempB359},</if>
+            <if test="reheaterEndTubeTempRow2344 != null">reheater_end_tube_temp_row2_344 = #{reheaterEndTubeTempRow2344},</if>
+            <if test="reheaterEndTubeTempRow67357 != null">reheater_end_tube_temp_row67_357 = #{reheaterEndTubeTempRow67357},</if>
+            <if test="drumPressureAvg234 != null">drum_pressure_avg_234 = #{drumPressureAvg234},</if>
+            <if test="drumWaterLevel1239 != null">drum_water_level_1239 = #{drumWaterLevel1239},</if>
+            <if test="totalPriWind199 != null">total_pri_wind_199 = #{totalPriWind199},</if>
+            <if test="totalSecWind200 != null">total_sec_wind_200 = #{totalSecWind200},</if>
+            <if test="totalWind198 != null">total_wind_198 = #{totalWind198},</if>
+            <if test="swingAngleAvg280 != null">swing_angle_avg_280 = #{swingAngleAvg280},</if>
+            <if test="swingAngleUpper284 != null">swing_angle_upper_284 = #{swingAngleUpper284},</if>
+            <if test="swingAngleLower283 != null">swing_angle_lower_283 = #{swingAngleLower283},</if>
+            <if test="coalFeederB1120 != null">coal_feeder_b1_120 = #{coalFeederB1120},</if>
+            <if test="coalFeederB1121 != null">coal_feeder_b1_121 = #{coalFeederB1121},</if>
+            <if test="coalFeederB2126 != null">coal_feeder_b2_126 = #{coalFeederB2126},</if>
+            <if test="coalFeederB2127 != null">coal_feeder_b2_127 = #{coalFeederB2127},</if>
+            <if test="coalFeederC1122 != null">coal_feeder_c1_122 = #{coalFeederC1122},</if>
+            <if test="coalFeederC1123 != null">coal_feeder_c1_123 = #{coalFeederC1123},</if>
+            <if test="blowerAOut1177 != null">blower_a_out_1_177 = #{blowerAOut1177},</if>
+            <if test="blowerAOut2179 != null">blower_a_out_2_179 = #{blowerAOut2179},</if>
+            <if test="blowerAOut3181 != null">blower_a_out_3_181 = #{blowerAOut3181},</if>
+            <if test="blowerBOut1178 != null">blower_b_out_1_178 = #{blowerBOut1178},</if>
+            <if test="blowerBOut2180 != null">blower_b_out_2_180 = #{blowerBOut2180},</if>
+            <if test="blowerBOut3182 != null">blower_b_out_3_182 = #{blowerBOut3182},</if>
+            <if test="otherSensors != null">other_sensors = #{otherSensors},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where data_id = #{dataId}
+    </update>
+
+    <delete id="deleteBusPowerDataByDataId" parameterType="Long">
+        delete from bus_power_data where data_id = #{dataId}
+    </delete>
+
+    <delete id="deleteBusPowerDataByDataIds" parameterType="String">
+        delete from bus_power_data where data_id in 
+        <foreach item="dataId" collection="array" open="(" separator="," close=")">
+            #{dataId}
+        </foreach>
+    </delete>
+</mapper>
