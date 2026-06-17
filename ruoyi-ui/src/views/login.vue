@@ -164,7 +164,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image: url("../assets/images/qdu.jpg");
+  background-image: url("../assets/images/Thermal_Power_Plant .jpg");
   background-size: cover;
 }
 .title {
